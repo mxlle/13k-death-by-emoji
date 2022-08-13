@@ -13,7 +13,7 @@ export default {
     input: 'src/index.js',
     output: {
         file: `${outputDir}/game.js`,
-        name: 'js13kGame2022',
+        name: 'deathByEmoji',
         format: 'iife',
     },
     plugins: [
