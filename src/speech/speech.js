@@ -1,5 +1,6 @@
 import {createElement} from "../utils/html-utils";
 import {randomInt} from "../utils/random-utils";
+import {getLocalStorageItem, LocalStorageKey, setLocalStorageItem} from "../utils/local-storage";
 
 const synth = window.speechSynthesis;
 
@@ -29,11 +30,16 @@ export function speak(text, voice) {
 export function getVoiceListElement(voices, addRandom) {
     const voiceSelect = createElement({tag: 'select'});
 
+    const savedVoice = getLocalStorageItem(LocalStorageKey.VOICE);
+
     if (addRandom) {
         let option = createElement({tag: 'option'});
         option.textContent = 'Random';
         option.setAttribute('data-lang', 'random');
         option.setAttribute('data-name', 'random');
+        if (savedVoice === 'random') {
+            option.setAttribute('selected', 'selected');
+        }
         voiceSelect.appendChild(option);
     }
 
@@ -47,8 +53,17 @@ export function getVoiceListElement(voices, addRandom) {
 
         option.setAttribute('data-lang', voices[i].lang);
         option.setAttribute('data-name', voices[i].name);
+        if (savedVoice === voices[i].name) {
+            option.setAttribute('selected', 'selected');
+        }
         voiceSelect.appendChild(option);
     }
+
+    voiceSelect.addEventListener('change', (_event) => {
+        const selectedVoice = getSelectedVoice(voiceSelect, voices);
+        setLocalStorageItem(LocalStorageKey.LANG, selectedVoice.lang);
+        setLocalStorageItem(LocalStorageKey.VOICE, selectedVoice.name);
+    })
 
     return voiceSelect;
 }
