@@ -1,0 +1,16 @@
+@import "../../theme";
+
+.storyteller-button {
+  font-size: 4rem;
+  margin: 2rem;
+  height: 8rem;
+
+  &.activated {
+    border: 1px solid $secondary-color;
+    background-color: rgba($secondary-color, 0.1);
+    &:active,
+    &:hover {
+      background-color: rgba($secondary-color, 0.2);
+    }
+  }
+}

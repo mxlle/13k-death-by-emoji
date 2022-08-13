@@ -8,6 +8,8 @@ import {
 
 import { globals, isEndOfGame } from "../../globals";
 
+import "./storyteller.scss";
+
 let voices, voiceListElement;
 let storytellerButton;
 let languageFilter = ["en", "de", "es", "fr"];
@@ -29,7 +31,7 @@ export function createStorytellerButton() {
   storytellerButton = createElement({
     tag: "button",
     text: "📢",
-    cssClass: "speak-button",
+    cssClass: "storyteller-button",
     onClick: () => speakEmojis(),
   });
 

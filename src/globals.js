@@ -1,5 +1,4 @@
 export const globals = {
-  solution: undefined,
   clickCounter: 0,
   emojiSet: [],
   shuffledEmojis: [],

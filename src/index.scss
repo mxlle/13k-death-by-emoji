@@ -30,39 +30,10 @@ button {
   &:hover {
     background-color: rgba($main-color, 0.2);
   }
-
-  &.activated {
-    border: 1px solid $secondary-color;
-    background-color: rgba($secondary-color, 0.1);
-    &:active,
-    &:hover {
-      background-color: rgba($secondary-color, 0.2);
-    }
-  }
-}
-
-.speak-button {
-  font-size: 4rem;
-  margin: 2rem;
-  height: 8rem;
 }
 
 select {
   position: absolute;
   top: 1rem;
   right: 1rem;
-}
-
-.reset-button {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  padding: 0.2rem 0.5rem;
-}
-
-.solution {
-  margin: 3rem;
-  font-size: 2rem;
-  letter-spacing: 1rem;
-  text-align: center;
 }

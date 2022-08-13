@@ -1,4 +1,3 @@
-import { createElement } from "./utils/html-utils";
 import { animals } from "./emojis/sets";
 import { shuffleArray } from "./utils/random-utils";
 
@@ -11,6 +10,10 @@ import {
 } from "./components/storyteller";
 
 import { globals, isEndOfGame } from "./globals";
+import {
+  createSecretSequenceComponent,
+  updateSecretSequenceComponent,
+} from "./components/secret-sequence";
 
 let storytellerButton;
 
@@ -23,58 +26,25 @@ function initGameData(level) {
 function init() {
   initGameData(10);
 
-  globals.solution = createElement({
-    cssClass: "solution",
-    text: getSolutionText(),
-  });
-  document.body.appendChild(globals.solution);
+  document.body.appendChild(createSecretSequenceComponent());
 
   storytellerButton = createStorytellerButton();
   document.body.appendChild(storytellerButton);
-
-  document.body.appendChild(
-    createElement({
-      tag: "button",
-      text: "Reset",
-      cssClass: "reset-button",
-      onClick: () => window.location.reload(),
-    })
-  );
 
   createStorytellerVoiceSelector().then((element) => {
     document.body.appendChild(element);
   });
 
-  const buttonField = initEmojiButtonField(globals.emojiSet, onEmojiClick);
-  document.body.appendChild(buttonField);
+  document.body.appendChild(
+    initEmojiButtonField(globals.emojiSet, afterEmojiButtonClick)
+  );
 }
 
-function onEmojiClick(emoji, emojiButton) {
-  const correct = globals.shuffledEmojis[globals.clickCounter] === emoji;
-  emojiButton.classList.add(correct ? "correct" : "wrong");
-  setTimeout(() => {
-    emojiButton.classList.remove("wrong");
-  }, 500);
-  globals.correctMatches[globals.clickCounter] = correct;
-  globals.clickCounter++;
-  globals.solution.innerHTML = getSolutionText();
+function afterEmojiButtonClick() {
+  updateSecretSequenceComponent();
   if (isEndOfGame()) {
     endOfGame();
   }
-}
-
-function getSolutionText() {
-  const textParts = [];
-  for (let i = 0; i < globals.shuffledEmojis.length; i++) {
-    textParts.push(
-      globals.correctMatches[i]
-        ? globals.shuffledEmojis[i]
-        : i < globals.clickCounter
-        ? "❌"
-        : "❓"
-    );
-  }
-  return textParts.join(" ");
 }
 
 function endOfGame() {
