@@ -87,7 +87,6 @@ function endOfGame() {
   }
   storytellerButton.innerHTML =
     Math.round((correctCount / globals.shuffledEmojis.length) * 100) + "%";
-  storytellerButton.setAttribute("disabled", "disabled");
 }
 
 // INIT

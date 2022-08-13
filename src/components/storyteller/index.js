@@ -37,6 +37,11 @@ export function createStorytellerButton() {
 }
 
 async function speakEmojis() {
+  if (isEndOfGame()) {
+    window.location.reload();
+    return;
+  }
+
   const prevText = storytellerButton.innerHTML;
   storytellerButton.setAttribute("disabled", "disabled");
   storytellerButton.classList.add("activated");
@@ -48,8 +53,8 @@ async function speakEmojis() {
     await speakWithVoice(text);
   }
   storytellerButton.classList.remove("activated");
+  storytellerButton.removeAttribute("disabled");
   if (!isEndOfGame()) {
-    storytellerButton.removeAttribute("disabled");
     storytellerButton.innerHTML = prevText;
   }
 }
