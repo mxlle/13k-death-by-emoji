@@ -5,6 +5,7 @@ import nodeResolve from "rollup-plugin-node-resolve";
 import serve from "rollup-plugin-serve";
 import styles from "rollup-plugin-styles";
 import { terser } from "rollup-plugin-terser";
+import copy from "rollup-plugin-copy";
 
 const production = !process.env.ROLLUP_WATCH;
 const outputDir = production ? "dist" : "out";
@@ -35,6 +36,9 @@ export default {
     htmlBundle({
       template: "src/index.html",
       target: `${outputDir}/index.html`,
+    }),
+    copy({
+      targets: [{ src: "src/manifest.json", dest: `${outputDir}` }],
     }),
     !production && serve({ contentBase: outputDir, open: true }),
     !production && livereload(outputDir),

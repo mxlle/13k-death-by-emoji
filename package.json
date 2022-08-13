@@ -20,5 +20,8 @@
     "rollup-plugin-styles": "^4.0.0",
     "rollup-plugin-terser": "^7.0.2",
     "sass": "^1.54.4"
+  },
+  "dependencies": {
+    "rollup-plugin-copy": "^3.4.0"
   }
 }

@@ -3,13 +3,16 @@
 .emoji-field {
   display: grid;
   gap: 1rem;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
   grid-auto-rows: 1fr;
   margin-top: 2rem;
+  width: 90%;
+  max-width: 800px;
 }
 
 .emoji-button {
-  font-size: 3rem;
+  font-size: 2rem;
+  padding: 0.5rem;
 
   &.correct {
     border-color: $life-color;
