@@ -7,6 +7,7 @@ import {
 } from "../utils/local-storage";
 
 const synth = window.speechSynthesis;
+const randomOption = "random";
 
 export function getAvailableVoices() {
   return new Promise((resolve) => {
@@ -39,8 +40,8 @@ export function getVoiceListElement(voices, addRandom) {
   if (addRandom) {
     let option = createElement({ tag: "option" });
     option.textContent = "Random";
-    option.setAttribute("data-lang", "random");
-    option.setAttribute("data-name", "random");
+    option.setAttribute("data-lang", randomOption);
+    option.setAttribute("data-name", randomOption);
     if (savedVoice === "random") {
       option.setAttribute("selected", "selected");
     }
@@ -64,7 +65,7 @@ export function getVoiceListElement(voices, addRandom) {
   }
 
   voiceSelect.addEventListener("change", (_event) => {
-    const selectedVoice = getSelectedVoice(voiceSelect, voices);
+    const selectedVoice = getSelectedVoice(voiceSelect, voices, true);
     setLocalStorageItem(LocalStorageKey.LANG, selectedVoice.lang);
     setLocalStorageItem(LocalStorageKey.VOICE, selectedVoice.name);
   });
@@ -72,12 +73,14 @@ export function getVoiceListElement(voices, addRandom) {
   return voiceSelect;
 }
 
-export function getSelectedVoice(voiceSelect, voices) {
+export function getSelectedVoice(voiceSelect, voices, forSaving) {
   const selectedOption =
     voiceSelect.selectedOptions[0].getAttribute("data-name");
 
-  if (selectedOption === "random") {
-    return voices[randomInt(voices.length)];
+  if (selectedOption === randomOption) {
+    return forSaving
+      ? { lang: randomOption, name: randomOption }
+      : voices[randomInt(voices.length)];
   }
 
   for (let i = 0; i < voices.length; i++) {
