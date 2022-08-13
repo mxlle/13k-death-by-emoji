@@ -26,14 +26,16 @@ button {
   background-color: rgba($main-color, 0.1);
   padding: 1rem 2rem;
 
-  &:active, &:hover {
+  &:active,
+  &:hover {
     background-color: rgba($main-color, 0.2);
   }
 
   &.activated {
     border: 1px solid $secondary-color;
     background-color: rgba($secondary-color, 0.1);
-    &:active, &:hover {
+    &:active,
+    &:hover {
       background-color: rgba($secondary-color, 0.2);
     }
   }
