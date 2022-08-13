@@ -1,6 +1,4 @@
-$main-color: gold;
-$secondary-color: #992244;
-$font-family: sans-serif;
+@import "theme";
 
 html,
 body {
@@ -20,21 +18,13 @@ body {
   font-family: $font-family;
 }
 
-canvas {
-  position: absolute;
-  z-index: 10;
-  pointer-events: none;
-}
-
 button {
-  font-size: 2rem;
   font-family: $font-family;
   cursor: pointer;
   color: white;
   border: 1px solid $main-color;
   background-color: rgba($main-color, 0.1);
   padding: 1rem 2rem;
-  margin: 1rem;
 
   &:active, &:hover {
     background-color: rgba($main-color, 0.2);
@@ -47,4 +37,29 @@ button {
       background-color: rgba($secondary-color, 0.2);
     }
   }
+}
+
+.speak-button {
+  font-size: 4rem;
+  margin: 2rem;
+}
+
+select {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+.reset-button {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.2rem 0.5rem;
+}
+
+.solution {
+  margin: 3rem;
+  font-size: 2rem;
+  letter-spacing: 1rem;
+  text-align: center;
 }
