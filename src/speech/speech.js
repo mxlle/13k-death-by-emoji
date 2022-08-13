@@ -5,8 +5,10 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../utils/local-storage";
+import { globals } from "../globals";
 
 const synth = window.speechSynthesis;
+const utterThis = new SpeechSynthesisUtterance();
 const randomOption = "random";
 
 export function getAvailableVoices() {
@@ -18,8 +20,9 @@ export function getAvailableVoices() {
 }
 
 export function speak(text, voice) {
-  const utterThis = new SpeechSynthesisUtterance(text);
+  utterThis.text = text;
   if (voice) utterThis.voice = voice;
+  utterThis.volume = globals.mute ? 0 : 1;
   synth.speak(utterThis);
 
   return new Promise((resolve) => {

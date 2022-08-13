@@ -1,0 +1,21 @@
+@import "../../theme";
+
+.config-tools {
+  display: grid;
+  grid-template-columns: repeat(3, min-content);
+  gap: 0.5rem;
+
+  button {
+    background: none;
+    border: none;
+    padding: 0.5rem;
+  }
+
+  input {
+    background: none;
+    color: white;
+    border: 1px solid $main-color;
+    width: 6ch;
+    text-align: center;
+  }
+}

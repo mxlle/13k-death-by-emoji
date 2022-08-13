@@ -14,17 +14,18 @@ import {
   createSecretSequenceComponent,
   updateSecretSequenceComponent,
 } from "./components/secret-sequence";
+import { createConfigTools } from "./components/config-tools";
 
 let storytellerButton;
 
-function initGameData(level) {
-  globals.emojiSet = shuffleArray(splitEmojis(animals)).slice(0, level ?? 3);
+function initGameData() {
+  globals.emojiSet = shuffleArray(splitEmojis(animals)).slice(0, globals.level);
   globals.shuffledEmojis = shuffleArray([...globals.emojiSet]);
   globals.correctMatches = globals.emojiSet.map(() => false);
 }
 
 function init() {
-  initGameData(10);
+  initGameData();
 
   document.body.appendChild(createSecretSequenceComponent());
 
@@ -38,6 +39,8 @@ function init() {
   document.body.appendChild(
     initEmojiButtonField(globals.emojiSet, afterEmojiButtonClick)
   );
+
+  document.body.appendChild(createConfigTools());
 }
 
 function afterEmojiButtonClick() {

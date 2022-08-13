@@ -12,7 +12,7 @@ import "./storyteller.scss";
 
 let voices, voiceListElement;
 let storytellerButton;
-let languageFilter = ["en", "de", "es", "fr"];
+let languageFilter = ["en", "de"]; // ["en", "de", "es", "fr"];
 
 export function createStorytellerVoiceSelector() {
   return getAvailableVoices().then((_voices) => {
