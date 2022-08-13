@@ -1,0 +1,50 @@
+$main-color: gold;
+$secondary-color: #992244;
+$font-family: sans-serif;
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  background: black;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-family: $font-family;
+}
+
+canvas {
+  position: absolute;
+  z-index: 10;
+  pointer-events: none;
+}
+
+button {
+  font-size: 2rem;
+  font-family: $font-family;
+  cursor: pointer;
+  color: white;
+  border: 1px solid $main-color;
+  background-color: rgba($main-color, 0.1);
+  padding: 1rem 2rem;
+  margin: 1rem;
+
+  &:active, &:hover {
+    background-color: rgba($main-color, 0.2);
+  }
+
+  &.activated {
+    border: 1px solid $secondary-color;
+    background-color: rgba($secondary-color, 0.1);
+    &:active, &:hover {
+      background-color: rgba($secondary-color, 0.2);
+    }
+  }
+}
