@@ -4,7 +4,7 @@ import {
   setLocalStorageItem,
 } from "./utils/local-storage";
 
-export const DEFAULT_LEVEL = 5;
+export const DEFAULT_LEVEL = 4;
 
 export const globals = {
   clickCounter: 0,

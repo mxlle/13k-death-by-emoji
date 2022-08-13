@@ -6,6 +6,7 @@ export const LocalStorageKey = {
   LEVEL: "currentLevel",
   MUTE: "mute",
   BLIND: "blind",
+  HIGH_SCORE: "highScore",
 };
 
 export function setLocalStorageItem(key, value) {

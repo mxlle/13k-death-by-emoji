@@ -2,8 +2,9 @@
 
 .config-tools {
   display: grid;
-  grid-template-columns: repeat(3, min-content);
+  grid-template-columns: repeat(4, min-content);
   gap: 0.5rem;
+  align-items: center;
 
   button {
     background: none;
@@ -16,6 +17,12 @@
     color: white;
     border: 1px solid $main-color;
     width: 6ch;
+    height: 1rem;
     text-align: center;
+  }
+
+  .score-modifiers {
+    white-space: nowrap;
+    font-size: 0.7rem;
   }
 }

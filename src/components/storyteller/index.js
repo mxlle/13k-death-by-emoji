@@ -9,10 +9,12 @@ import {
 import { globals, isEndOfGame } from "../../globals";
 
 import "./storyteller.scss";
+import { getPointsByAction, ScoreAction, updateScore } from "../score";
 
 let voices, voiceListElement;
 let storytellerButton;
 let languageFilter = ["en", "de"]; // ["en", "de", "es", "fr"];
+let readOnce = false;
 
 export function createStorytellerVoiceSelector() {
   return getAvailableVoices().then((_voices) => {
@@ -44,6 +46,10 @@ async function speakEmojis() {
     return;
   }
 
+  if (readOnce) {
+    updateScore(ScoreAction.REPLAY);
+  }
+
   const prevText = storytellerButton.innerHTML;
   storytellerButton.setAttribute("disabled", "disabled");
   storytellerButton.classList.add("activated");
@@ -56,8 +62,10 @@ async function speakEmojis() {
   }
   storytellerButton.classList.remove("activated");
   storytellerButton.removeAttribute("disabled");
+  readOnce = true;
   if (!isEndOfGame()) {
-    storytellerButton.innerHTML = prevText;
+    storytellerButton.innerHTML =
+      prevText + ` ${getPointsByAction(ScoreAction.REPLAY)}`;
   }
 }
 

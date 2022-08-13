@@ -15,6 +15,7 @@ import {
   updateSecretSequenceComponent,
 } from "./components/secret-sequence";
 import { createConfigTools } from "./components/config-tools";
+import { createScoreboard, updateHighScore } from "./components/score";
 
 let storytellerButton;
 
@@ -41,6 +42,7 @@ function init() {
   );
 
   document.body.appendChild(createConfigTools());
+  document.body.appendChild(createScoreboard());
 }
 
 function afterEmojiButtonClick() {
@@ -58,8 +60,8 @@ function endOfGame() {
       correctCount--;
     }
   }
-  storytellerButton.innerHTML =
-    Math.round((correctCount / globals.shuffledEmojis.length) * 100) + "%";
+  storytellerButton.innerHTML = "Play again";
+  updateHighScore();
 }
 
 // INIT

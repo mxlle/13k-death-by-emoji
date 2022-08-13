@@ -1,13 +1,14 @@
 import { createElement } from "../../utils/html-utils";
-import { DEFAULT_LEVEL, globals, setLevel } from "../../globals";
+import { DEFAULT_LEVEL, globals, isEndOfGame, setLevel } from "../../globals";
 
 import "./config-tools.scss";
 import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
+import { getPointsByAction, ScoreAction } from "../score";
 
-let muteButton, blindButton, inputTimeout, levelInput;
+let muteButton, blindButton, inputTimeout, levelInput, scoreModifiers;
 const MIN_LEVEL = 3;
 const MAX_LEVEL = 13;
 
@@ -21,6 +22,7 @@ export function createConfigTools() {
       globals.mute = !globals.mute;
       setLocalStorageItem(LocalStorageKey.MUTE, !!globals.mute);
       updateMuteButtonText();
+      updateScoreModifiers();
     },
   });
   updateMuteButtonText();
@@ -32,6 +34,7 @@ export function createConfigTools() {
       globals.blindMode = !globals.blindMode;
       setLocalStorageItem(LocalStorageKey.BLIND, !!globals.blindMode);
       updateBlindButtonText();
+      updateScoreModifiers();
     },
   });
   updateBlindButtonText();
@@ -42,12 +45,22 @@ export function createConfigTools() {
     onLevelInputChange(Number(event.target.value));
   });
   levelInput.value = globals.level;
-  configTools.appendChild(levelInput);
+
+  scoreModifiers = createElement({ cssClass: "score-modifiers" });
+  updateScoreModifiers();
 
   configTools.appendChild(muteButton);
   configTools.appendChild(blindButton);
+  configTools.appendChild(levelInput);
+  configTools.appendChild(scoreModifiers);
 
   return configTools;
+}
+
+export function updateScoreModifiers() {
+  scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(
+    ScoreAction.CORRECT
+  )}&nbsp; ❌: ${getPointsByAction(ScoreAction.WRONG)}`;
 }
 
 function updateMuteButtonText() {
@@ -69,7 +82,7 @@ function onLevelInputChange(value) {
         : DEFAULT_LEVEL;
     if (validatedLevel !== globals.level) {
       let reloadPage = true;
-      if (globals.clickCounter > 0) {
+      if (globals.clickCounter > 0 && !isEndOfGame()) {
         reloadPage = window.confirm("Want to reload?");
       }
       if (reloadPage) {

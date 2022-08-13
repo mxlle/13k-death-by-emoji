@@ -42,7 +42,7 @@ button {
 
 select {
   position: absolute;
-  top: 1rem;
+  bottom: 1rem;
   right: 1rem;
 }
 
@@ -50,4 +50,10 @@ select {
   position: absolute;
   top: 1rem;
   left: 1rem;
+}
+
+.scoreboard {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
 }
