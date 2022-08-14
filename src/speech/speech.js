@@ -21,7 +21,10 @@ export function getAvailableVoices() {
 
 export function speak(text, voice) {
   utterThis.text = text;
-  if (voice) utterThis.voice = voice;
+  if (voice) {
+    utterThis.voice = voice;
+    utterThis.lang = voice.lang;
+  }
   utterThis.volume = globals.mute ? 0 : 1;
   synth.speak(utterThis);
 
