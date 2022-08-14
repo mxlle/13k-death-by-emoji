@@ -8,6 +8,7 @@ export const DEFAULT_LEVEL = 4;
 
 export const globals = {
   clickCounter: 0,
+  replayCounter: 0,
   streak: 1,
   emojiSet: [],
   shuffledEmojis: [],

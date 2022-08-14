@@ -7,7 +7,6 @@ import {
   setLocalStorageItem,
 } from "../../utils/local-storage";
 import { getPointsByAction, ScoreAction } from "../score";
-import { updateReplayFine } from "../storyteller";
 
 let muteButton, blindButton, inputTimeout, levelInput, scoreModifiers;
 const MIN_LEVEL = 3;
@@ -59,11 +58,11 @@ export function createConfigTools() {
 }
 
 export function updateScoreModifiers() {
+  if (isEndOfGame()) return;
   const combo = globals.streak > 1 ? `&nbsp; Combo: x${globals.streak}` : "";
   scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(
     ScoreAction.CORRECT
   )}&nbsp; ❌: ${getPointsByAction(ScoreAction.WRONG)}${combo}`;
-  updateReplayFine();
 }
 
 function updateMuteButtonText() {

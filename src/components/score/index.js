@@ -54,7 +54,11 @@ export function getPointsByAction(action) {
       modifier = getConfigScoreModifier();
       break;
     case ScoreAction.REPLAY:
-      points = -1 * globals.clickCounter * globals.level;
+      points =
+        -1 *
+        ((globals.shuffledEmojis.length - globals.clickCounter) *
+          globals.replayCounter) *
+        globals.level;
       modifier = getConfigScoreModifier();
       break;
   }

@@ -12,11 +12,11 @@ import { globals, isEndOfGame } from "../../globals";
 import "./storyteller.scss";
 import { getPointsByAction, ScoreAction, updateScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
+import { updateSecretSequenceComponent } from "../secret-sequence";
 
 let voices, voiceListElement;
 let storytellerButton;
 let languageFilter = ["en", "de"]; // ["en", "de", "es", "fr"];
-let readOnce = false;
 
 export function createStorytellerVoiceSelector() {
   return getAvailableVoices().then((_voices) => {
@@ -48,10 +48,11 @@ async function speakEmojis() {
     return;
   }
 
-  if (readOnce) {
+  if (globals.replayCounter > 0) {
     updateScore(ScoreAction.REPLAY);
     globals.streak = 1;
     updateScoreModifiers();
+    updateStorytellerButtonText();
   }
 
   storytellerButton.setAttribute("disabled", "disabled");
@@ -60,21 +61,27 @@ async function speakEmojis() {
     const text = globals.shuffledEmojis[i];
 
     if (!globals.blindMode) {
-      storytellerButton.innerHTML = text;
+      updateSecretSequenceComponent(i);
     }
 
     await speakWithVoice(text);
+
+    updateSecretSequenceComponent();
   }
   storytellerButton.classList.remove("activated");
   storytellerButton.removeAttribute("disabled");
-  readOnce = true;
-  updateReplayFine();
+  globals.replayCounter++;
+  updateStorytellerButtonText();
 }
 
-export function updateReplayFine() {
+export function updateStorytellerButtonText() {
   if (!isEndOfGame() && !isSpeaking()) {
     const replayFine = getPointsByAction(ScoreAction.REPLAY);
-    if (replayFine) storytellerButton.innerHTML = `📢 ${replayFine}`;
+    if (replayFine) {
+      storytellerButton.innerHTML = `📢 ${replayFine}`;
+    }
+  } else if (!isEndOfGame()) {
+    storytellerButton.innerHTML = `📢`;
   }
 }
 

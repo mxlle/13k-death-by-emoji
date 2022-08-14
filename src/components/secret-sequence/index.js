@@ -13,18 +13,20 @@ export function createSecretSequenceComponent() {
   return domElement;
 }
 
-export function updateSecretSequenceComponent() {
-  domElement.innerHTML = getSolutionText();
+export function updateSecretSequenceComponent(showIndex) {
+  domElement.innerHTML = getSolutionText(showIndex);
 }
 
-function getSolutionText() {
+function getSolutionText(showIndex) {
   const textParts = [];
   for (let i = 0; i < globals.shuffledEmojis.length; i++) {
     textParts.push(
-      globals.correctMatches[i]
+      globals.correctMatches[i] || i === showIndex
         ? globals.shuffledEmojis[i]
         : i < globals.clickCounter
         ? "❌"
+        : i === globals.clickCounter
+        ? "❔"
         : "❓"
     );
   }

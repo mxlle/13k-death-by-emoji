@@ -4,6 +4,7 @@ import "./emoji-buttons.scss";
 import { globals, isEndOfGame } from "../../globals";
 import { ScoreAction, updateScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
+import { updateStorytellerButtonText } from "../storyteller";
 
 export const buttonMap = {};
 
@@ -32,6 +33,7 @@ function onEmojiClick(emoji, emojiButton, onClick) {
   globals.clickCounter++;
   globals.streak = correct ? globals.streak + 1 : 1;
   updateScoreModifiers();
+  updateStorytellerButtonText();
 
   onClick();
 }
