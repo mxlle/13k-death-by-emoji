@@ -1,4 +1,4 @@
-import { animals } from "./emojis/sets";
+import { death } from "./emojis/sets";
 import { shuffleArray } from "./utils/random-utils";
 
 import "./index.scss";
@@ -20,7 +20,7 @@ import { createScoreboard, updateHighScore } from "./components/score";
 let storytellerButton;
 
 function initGameData() {
-  globals.emojiSet = shuffleArray(splitEmojis(animals)).slice(0, globals.level);
+  globals.emojiSet = shuffleArray(splitEmojis(death)).slice(0, globals.level);
   globals.shuffledEmojis = shuffleArray([...globals.emojiSet]);
   globals.correctMatches = globals.emojiSet.map(() => false);
 }
