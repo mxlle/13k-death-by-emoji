@@ -8,10 +8,7 @@ import {
 import { createElement } from "../../../utils/html-utils";
 
 import "./voice-config.scss";
-import {
-  getLocalStorageItem,
-  LocalStorageKey,
-} from "../../../utils/local-storage";
+import { globals } from "../../../globals";
 
 let voices = [],
   voiceListElement = undefined,
@@ -35,6 +32,8 @@ export function createVoiceSelector() {
   });
   configScreen.appendChild(label);
 
+  globals.languageFactor = getSelectedLanguages(voiceListElement)?.length || 1;
+
   return configScreen;
 }
 
@@ -44,6 +43,10 @@ export function toggleConfig() {
   }
   isVisible = !isVisible;
   configScreen.style.display = isVisible ? "block" : "none";
+  if (!isVisible) {
+    globals.languageFactor =
+      getSelectedLanguages(voiceListElement)?.length || 1;
+  }
 }
 
 export function getCurrentVoice() {
@@ -51,7 +54,5 @@ export function getCurrentVoice() {
 }
 
 export function getLanguagesText() {
-  if (!voiceListElement) return getLocalStorageItem(LocalStorageKey.LANGUAGES);
-
   return getSelectedLanguages(voiceListElement).join(", ");
 }

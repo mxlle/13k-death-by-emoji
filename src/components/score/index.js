@@ -67,14 +67,18 @@ export function getPointsByAction(action) {
 }
 
 function getConfigScoreModifier(positive) {
-  if (globals.mute && globals.blindMode) {
-    return positive ? 5 : 0.1;
+  let modifier = 1;
+  if (globals.blindMode) {
+    modifier *= 2;
   }
-  if (globals.mute || globals.blindMode) {
-    return 1;
+  if (globals.mute) {
+    modifier *= 1.5;
+  }
+  if (!globals.blindMode && !globals.mute && !positive) {
+    modifier *= 2;
   }
 
-  return positive ? 1 : 1.2;
+  return modifier * globals.languageFactor;
 }
 
 function updateScoreboard() {

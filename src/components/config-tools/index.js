@@ -29,6 +29,9 @@ export function createConfigTools() {
       setLocalStorageItem(LocalStorageKey.MUTE, !!globals.mute);
       updateMuteButtonText();
       updateScoreModifiers();
+      if (globals.mute && globals.blindMode) {
+        blindButton.click();
+      }
     },
   });
   updateMuteButtonText();
@@ -41,24 +44,24 @@ export function createConfigTools() {
       setLocalStorageItem(LocalStorageKey.BLIND, !!globals.blindMode);
       updateBlindButtonText();
       updateScoreModifiers();
+      if (globals.mute && globals.blindMode) {
+        muteButton.click();
+      }
     },
   });
   updateBlindButtonText();
 
-  const selectedLanguages = createElement({
-    cssClass: "selected-languages",
-    text: getLanguagesText(),
-  });
-
   languageButton = createElement({
     tag: "button",
-    cssClass: "blind-button",
+    cssClass: "language-button",
     text: "🌐",
     onClick: () => {
       toggleConfig();
-      selectedLanguages.innerHTML = getLanguagesText();
+      updateLanguageButtonText();
+      updateScoreModifiers();
     },
   });
+  updateLanguageButtonText();
 
   levelInput = createElement({ tag: "input" });
   levelInput.setAttribute("type", "number");
@@ -70,11 +73,10 @@ export function createConfigTools() {
   scoreModifiers = createElement({ cssClass: "score-modifiers" });
   updateScoreModifiers();
 
+  configTools.appendChild(levelInput);
   configTools.appendChild(muteButton);
   configTools.appendChild(blindButton);
   configTools.appendChild(languageButton);
-  configTools.appendChild(selectedLanguages);
-  configTools.appendChild(levelInput);
   configTools.appendChild(scoreModifiers);
 
   return configTools;
@@ -89,11 +91,18 @@ export function updateScoreModifiers() {
 }
 
 function updateMuteButtonText() {
-  muteButton.innerHTML = globals.mute ? "🔇" : "🔊";
+  muteButton.innerHTML = globals.mute ? "🔇&nbsp; x1.5" : "🔊&nbsp; x1";
 }
 
 function updateBlindButtonText() {
-  blindButton.innerHTML = globals.blindMode ? "🙈" : "👁️";
+  blindButton.innerHTML = globals.blindMode ? "🙈&nbsp; x2" : "👁️&nbsp; x1";
+}
+
+function updateLanguageButtonText() {
+  const languages = getLanguagesText() ?? "";
+  const langCount = languages.split(",").length;
+  languageButton.innerHTML = `🌐&nbsp; x${langCount || 1}`;
+  languageButton.setAttribute("title", getLanguagesText());
 }
 
 function onLevelInputChange(value) {

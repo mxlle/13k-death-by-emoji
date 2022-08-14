@@ -2,6 +2,7 @@ import { createElement } from "../utils/html-utils";
 import { randomInt } from "../utils/random-utils";
 import {
   getLocalStorageItem,
+  getSelectedLanguagesFromStorage,
   LocalStorageKey,
   setLocalStorageItem,
 } from "../utils/local-storage";
@@ -61,10 +62,7 @@ export function getVoiceListElement(voices) {
 
     option.setAttribute("data-lang", voices[i].lang);
     option.setAttribute("data-name", voices[i].name);
-    if (
-      savedVoices.includes(voices[i].name) ||
-      (savedVoices.length === 0 && i === 0)
-    ) {
+    if (savedVoices.includes(voices[i].name)) {
       option.setAttribute("selected", "selected");
     }
     voiceSelect.appendChild(option);
@@ -99,6 +97,10 @@ function getSelectedVoices(voiceSelect) {
 }
 
 export function getSelectedLanguages(voiceSelect) {
+  if (!voiceSelect) {
+    return getSelectedLanguagesFromStorage();
+  }
+
   const languages = Array.from(voiceSelect.selectedOptions).map((option) => {
     const lang = option.getAttribute("data-lang");
 

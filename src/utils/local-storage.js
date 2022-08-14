@@ -25,3 +25,12 @@ export function getLocalStorageItem(key) {
 export function removeLocalStorageItem(key) {
   localStorage.removeItem(LOCAL_STORAGE_PREFIX + "." + key);
 }
+
+export function getSelectedLanguagesFromStorage() {
+  const item = getLocalStorageItem(LocalStorageKey.LANGUAGES);
+  if (!item) {
+    return [];
+  }
+
+  return item.split(",");
+}
