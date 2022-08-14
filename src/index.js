@@ -14,6 +14,7 @@ import {
 import { createConfigTools } from "./components/config-tools";
 import { createScoreboard, updateHighScore } from "./components/score";
 import { createVoiceSelector } from "./components/config-tools/voice-config";
+import { createElement } from "./utils/html-utils";
 
 let storytellerButton;
 
@@ -26,19 +27,22 @@ function initGameData() {
 function init() {
   initGameData();
 
+  document.body.appendChild(createVoiceSelector());
+
+  const header = createElement({ tag: "header" });
+
+  header.appendChild(createConfigTools());
+  header.appendChild(createScoreboard());
+  document.body.appendChild(header);
+
   document.body.appendChild(createSecretSequenceComponent());
 
   storytellerButton = createStorytellerButton();
   document.body.appendChild(storytellerButton);
 
-  document.body.appendChild(createVoiceSelector());
-
   document.body.appendChild(
     initEmojiButtonField(globals.emojiSet, afterEmojiButtonClick)
   );
-
-  document.body.appendChild(createConfigTools());
-  document.body.appendChild(createScoreboard());
 }
 
 function afterEmojiButtonClick() {

@@ -26,6 +26,20 @@ body {
   font-family: $font-family;
 }
 
+header {
+  position: absolute;
+  top: 0;
+  width: calc(100% - 2rem);
+  margin: 0.5rem 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+
+  .scoreboard {
+    margin-left: auto;
+  }
+}
+
 button {
   font-family: $font-family;
   cursor: pointer;
@@ -37,16 +51,4 @@ button {
   @include hover {
     background-color: rgba($main-color, 0.2);
   }
-}
-
-.config-tools {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-}
-
-.scoreboard {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
 }
