@@ -27,12 +27,16 @@ export function speak(text, voice) {
 
   return new Promise((resolve) => {
     const id = setInterval(() => {
-      if (synth.speaking === false) {
+      if (!isSpeaking()) {
         clearInterval(id);
         resolve();
       }
     }, 100);
   });
+}
+
+export function isSpeaking() {
+  return synth.speaking;
 }
 
 export function getVoiceListElement(voices, addRandom) {

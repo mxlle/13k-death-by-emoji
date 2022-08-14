@@ -10,6 +10,8 @@ let scoreboard,
   highScore,
   score = 0;
 
+const BASE_SCORE_MULTIPLIER = 10;
+
 export const ScoreAction = {
   CORRECT: "correct",
   WRONG: "wrong",
@@ -25,7 +27,8 @@ export function createScoreboard() {
 }
 
 export function updateScore(action) {
-  score += getPointsByAction(action);
+  const comboMultiplier = action === ScoreAction.REPLAY ? 1 : globals.streak;
+  score += getPointsByAction(action) * comboMultiplier;
 
   updateScoreboard();
 }
@@ -44,33 +47,30 @@ export function getPointsByAction(action) {
   switch (action) {
     case ScoreAction.CORRECT:
       points = globals.level;
-      modifier = getPointModifier(true);
+      modifier = getConfigScoreModifier(true);
       break;
     case ScoreAction.WRONG:
       points = -1 * globals.level;
-      modifier = getPointModifier();
+      modifier = getConfigScoreModifier();
       break;
     case ScoreAction.REPLAY:
-      points = -3 * globals.level;
-      modifier = getPointModifier();
+      points = -1 * globals.clickCounter * globals.level;
+      modifier = getConfigScoreModifier();
       break;
   }
 
-  return Math.round(points * modifier);
+  return Math.round(points * modifier * BASE_SCORE_MULTIPLIER);
 }
 
-function getPointModifier(positive) {
+function getConfigScoreModifier(positive) {
   if (globals.mute && globals.blindMode) {
-    return positive ? 10 : 0.1;
+    return positive ? 5 : 0.1;
   }
-  if (globals.mute) {
-    return positive ? 1.2 : 1;
-  }
-  if (globals.blindMode) {
-    return positive ? 2 : 0.9;
+  if (globals.mute || globals.blindMode) {
+    return 1;
   }
 
-  return 1;
+  return positive ? 1 : 1.2;
 }
 
 function updateScoreboard() {

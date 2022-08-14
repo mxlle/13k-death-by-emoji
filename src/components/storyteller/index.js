@@ -3,6 +3,7 @@ import {
   getAvailableVoices,
   getSelectedVoice,
   getVoiceListElement,
+  isSpeaking,
   speak,
 } from "../../speech/speech";
 
@@ -10,6 +11,7 @@ import { globals, isEndOfGame } from "../../globals";
 
 import "./storyteller.scss";
 import { getPointsByAction, ScoreAction, updateScore } from "../score";
+import { updateScoreModifiers } from "../config-tools";
 
 let voices, voiceListElement;
 let storytellerButton;
@@ -48,12 +50,15 @@ async function speakEmojis() {
 
   if (readOnce) {
     updateScore(ScoreAction.REPLAY);
+    globals.streak = 1;
+    updateScoreModifiers();
   }
 
-  const prevText = storytellerButton.innerHTML;
   storytellerButton.setAttribute("disabled", "disabled");
   storytellerButton.classList.add("activated");
-  for (const text of globals.shuffledEmojis) {
+  for (let i = globals.clickCounter; i < globals.shuffledEmojis.length; i++) {
+    const text = globals.shuffledEmojis[i];
+
     if (!globals.blindMode) {
       storytellerButton.innerHTML = text;
     }
@@ -63,9 +68,13 @@ async function speakEmojis() {
   storytellerButton.classList.remove("activated");
   storytellerButton.removeAttribute("disabled");
   readOnce = true;
-  if (!isEndOfGame()) {
-    storytellerButton.innerHTML =
-      prevText + ` ${getPointsByAction(ScoreAction.REPLAY)}`;
+  updateReplayFine();
+}
+
+export function updateReplayFine() {
+  if (!isEndOfGame() && !isSpeaking()) {
+    const replayFine = getPointsByAction(ScoreAction.REPLAY);
+    if (replayFine) storytellerButton.innerHTML = `📢 ${replayFine}`;
   }
 }
 

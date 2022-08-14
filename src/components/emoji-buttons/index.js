@@ -1,8 +1,9 @@
 import { createElement } from "../../utils/html-utils";
 
 import "./emoji-buttons.scss";
-import { globals } from "../../globals";
+import { globals, isEndOfGame } from "../../globals";
 import { ScoreAction, updateScore } from "../score";
+import { updateScoreModifiers } from "../config-tools";
 
 export const buttonMap = {};
 
@@ -25,10 +26,13 @@ function onEmojiClick(emoji, emojiButton, onClick) {
   emojiButton.classList.add(correct ? "correct" : "wrong");
   updateScore(correct ? ScoreAction.CORRECT : ScoreAction.WRONG);
   setTimeout(() => {
-    emojiButton.classList.remove("wrong");
+    if (!isEndOfGame()) emojiButton.classList.remove("wrong");
   }, 500);
   globals.correctMatches[globals.clickCounter] = correct;
   globals.clickCounter++;
+  globals.streak = correct ? globals.streak + 1 : 1;
+  updateScoreModifiers();
+
   onClick();
 }
 
