@@ -1,3 +1,13 @@
+.backdrop {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.75);
+}
+
 .voice-config {
   position: absolute;
   top: 50%;
@@ -6,15 +16,21 @@
   padding: 1.5rem;
   background: #333;
   max-width: 15rem;
+  display: flex;
+  gap: 1rem;
+  flex-direction: column;
 
-  .label {
+  .info {
     font-size: 0.75rem;
     font-style: italic;
-    margin-bottom: 1rem;
   }
 
   select {
-    max-height: 50vh;
+    max-height: 40vh;
     width: 100%;
+  }
+
+  .ok-button {
+    order: 3;
   }
 }

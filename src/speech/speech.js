@@ -42,7 +42,7 @@ export function isSpeaking() {
   return synth.speaking;
 }
 
-export function getVoiceListElement(voices) {
+export function getVoiceListElement(voices, onChange) {
   const voiceSelect = createElement({ tag: "select" });
   voiceSelect.setAttribute("multiple", true);
 
@@ -74,6 +74,7 @@ export function getVoiceListElement(voices) {
       LocalStorageKey.LANGUAGES,
       getSelectedLanguages(voiceSelect)
     );
+    onChange && onChange();
   });
 
   return voiceSelect;

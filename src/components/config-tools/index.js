@@ -56,9 +56,10 @@ export function createConfigTools() {
     cssClass: "language-button",
     text: "🌐",
     onClick: () => {
-      toggleConfig();
-      updateLanguageButtonText();
-      updateScoreModifiers();
+      toggleConfig(function onChange() {
+        updateLanguageButtonText();
+        updateScoreModifiers();
+      });
     },
   });
   updateLanguageButtonText();
