@@ -9,7 +9,7 @@ import {
 import { globals } from "../globals";
 
 const synth = window.speechSynthesis;
-const utterThis = new SpeechSynthesisUtterance();
+const utterMap = {};
 
 export function getAvailableVoices() {
   return new Promise((resolve) => {
@@ -20,11 +20,9 @@ export function getAvailableVoices() {
 }
 
 export function speak(text, voice) {
+  let utterThis = initVoice(voice);
+
   utterThis.text = text;
-  if (voice) {
-    utterThis.voice = voice;
-    utterThis.lang = voice.lang;
-  }
   utterThis.volume = globals.mute ? 0 : 1;
   synth.speak(utterThis);
 
@@ -36,6 +34,23 @@ export function speak(text, voice) {
       }
     }, 100);
   });
+}
+
+function initVoices(voices) {
+  for (let voice of voices) {
+    initVoice(voice);
+  }
+}
+
+function initVoice(voice) {
+  let utterThis = utterMap[voice?.name];
+  if (!utterThis) {
+    utterThis = new SpeechSynthesisUtterance();
+    utterThis.voice = voice;
+    utterThis.lang = voice?.lang;
+    utterMap[voice?.name] = utterThis;
+  }
+  return utterThis;
 }
 
 export function isSpeaking() {
@@ -74,8 +89,11 @@ export function getVoiceListElement(voices, onChange) {
       LocalStorageKey.LANGUAGES,
       getSelectedLanguages(voiceSelect)
     );
+    initVoices(getAllSelectedVoices(voiceSelect, voices));
     onChange && onChange();
   });
+
+  initVoices(getAllSelectedVoices(voiceSelect, voices));
 
   return voiceSelect;
 }
@@ -89,6 +107,19 @@ export function getSelectedVoice(voiceSelect, voices) {
       return voices[i];
     }
   }
+}
+
+function getAllSelectedVoices(voiceSelect, voices) {
+  const selectedOptions = getSelectedVoices(voiceSelect);
+  const selectedVoices = [];
+
+  for (let i = 0; i < voices.length; i++) {
+    if (selectedOptions.includes(voices[i].name)) {
+      selectedVoices.push(voices[i]);
+    }
+  }
+
+  return selectedVoices;
 }
 
 function getSelectedVoices(voiceSelect) {
