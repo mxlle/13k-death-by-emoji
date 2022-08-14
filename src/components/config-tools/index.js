@@ -7,8 +7,14 @@ import {
   setLocalStorageItem,
 } from "../../utils/local-storage";
 import { getPointsByAction, ScoreAction } from "../score";
+import { getLanguagesText, toggleConfig } from "./voice-config";
 
-let muteButton, blindButton, inputTimeout, levelInput, scoreModifiers;
+let muteButton,
+  blindButton,
+  languageButton,
+  inputTimeout,
+  levelInput,
+  scoreModifiers;
 const MIN_LEVEL = 3;
 const MAX_LEVEL = 13;
 
@@ -39,6 +45,21 @@ export function createConfigTools() {
   });
   updateBlindButtonText();
 
+  const selectedLanguages = createElement({
+    cssClass: "selected-languages",
+    text: getLanguagesText(),
+  });
+
+  languageButton = createElement({
+    tag: "button",
+    cssClass: "blind-button",
+    text: "🌐",
+    onClick: () => {
+      toggleConfig();
+      selectedLanguages.innerHTML = getLanguagesText();
+    },
+  });
+
   levelInput = createElement({ tag: "input" });
   levelInput.setAttribute("type", "number");
   levelInput.addEventListener("change", (event) => {
@@ -51,6 +72,8 @@ export function createConfigTools() {
 
   configTools.appendChild(muteButton);
   configTools.appendChild(blindButton);
+  configTools.appendChild(languageButton);
+  configTools.appendChild(selectedLanguages);
   configTools.appendChild(levelInput);
   configTools.appendChild(scoreModifiers);
 

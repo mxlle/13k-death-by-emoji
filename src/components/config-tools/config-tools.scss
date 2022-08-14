@@ -2,7 +2,7 @@
 
 .config-tools {
   display: grid;
-  grid-template-columns: repeat(4, min-content);
+  grid-template-columns: repeat(6, min-content);
   gap: 0.5rem;
   align-items: center;
 
@@ -24,6 +24,12 @@
     width: 6ch;
     height: 1rem;
     text-align: center;
+  }
+
+  .selected-languages {
+    white-space: nowrap;
+    font-size: 0.6rem;
+    color: #ccc;
   }
 
   .score-modifiers {

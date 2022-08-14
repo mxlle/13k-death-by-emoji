@@ -4,10 +4,7 @@ import { shuffleArray } from "./utils/random-utils";
 import "./index.scss";
 import { splitEmojis } from "./emojis/emoji-util";
 import { buttonMap, initEmojiButtonField } from "./components/emoji-buttons";
-import {
-  createStorytellerButton,
-  createStorytellerVoiceSelector,
-} from "./components/storyteller";
+import { createStorytellerButton } from "./components/storyteller";
 
 import { globals, isEndOfGame } from "./globals";
 import {
@@ -16,6 +13,7 @@ import {
 } from "./components/secret-sequence";
 import { createConfigTools } from "./components/config-tools";
 import { createScoreboard, updateHighScore } from "./components/score";
+import { createVoiceSelector } from "./components/config-tools/voice-config";
 
 let storytellerButton;
 
@@ -33,9 +31,7 @@ function init() {
   storytellerButton = createStorytellerButton();
   document.body.appendChild(storytellerButton);
 
-  createStorytellerVoiceSelector().then((element) => {
-    document.body.appendChild(element);
-  });
+  document.body.appendChild(createVoiceSelector());
 
   document.body.appendChild(
     initEmojiButtonField(globals.emojiSet, afterEmojiButtonClick)

@@ -1,11 +1,5 @@
 import { createElement } from "../../utils/html-utils";
-import {
-  getAvailableVoices,
-  getSelectedVoice,
-  getVoiceListElement,
-  isSpeaking,
-  speak,
-} from "../../speech/speech";
+import { isSpeaking, speak } from "../../speech/speech";
 
 import { globals, isEndOfGame } from "../../globals";
 
@@ -13,23 +7,9 @@ import "./storyteller.scss";
 import { getPointsByAction, ScoreAction, updateScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
 import { updateSecretSequenceComponent } from "../secret-sequence";
+import { getCurrentVoice } from "../config-tools/voice-config";
 
-let voices, voiceListElement;
 let storytellerButton;
-let languageFilter = ["en", "de"]; // ["en", "de", "es", "fr"];
-
-export function createStorytellerVoiceSelector() {
-  return getAvailableVoices().then((_voices) => {
-    voices = _voices;
-    if (languageFilter.length) {
-      voices = voices.filter((voice) =>
-        languageFilter.includes(voice.lang.substring(0, 2))
-      );
-    }
-    voiceListElement = getVoiceListElement(voices, true);
-    return voiceListElement;
-  });
-}
 
 export function createStorytellerButton() {
   storytellerButton = createElement({
@@ -86,6 +66,6 @@ export function updateStorytellerButtonText() {
 }
 
 async function speakWithVoice(text) {
-  const voice = voiceListElement && getSelectedVoice(voiceListElement, voices);
+  const voice = getCurrentVoice();
   await speak(text, voice);
 }
