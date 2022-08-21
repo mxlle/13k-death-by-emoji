@@ -15,9 +15,13 @@ export function createSecretSequenceComponent() {
 }
 
 export function updateSecretSequenceComponent() {
-  domElement.innerHTML = globals.practiceMode
+  domElement.innerHTML = "";
+  const kids = globals.practiceMode
     ? getSolutionText()
     : getSolutionTextInfinite();
+  for (let kid of kids) {
+    domElement.appendChild(kid);
+  }
 }
 
 function getSolutionText() {
@@ -37,7 +41,8 @@ function getSolutionText() {
         : "❓"
     );
   }
-  return textParts.join(" ");
+
+  return textParts.map(mapToElement);
 }
 
 function getSolutionTextInfinite() {
@@ -61,5 +66,13 @@ function getSolutionTextInfinite() {
   }
 
   textParts.push("☠️");
-  return textParts.join(" ");
+
+  return textParts.map(mapToElement);
+}
+
+function mapToElement(text) {
+  return createElement({
+    cssClass: "secret-sequence-element",
+    text,
+  });
 }
