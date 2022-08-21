@@ -32,6 +32,8 @@ function initGameData() {
 function init() {
   if (isSpaceDucksVariant()) {
     document.title = "Space ducks emoji vocabulary";
+  } else {
+    document.title = "Death by emoji";
   }
 
   initGameData();
