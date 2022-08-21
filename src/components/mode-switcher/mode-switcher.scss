@@ -1,3 +1,5 @@
+@import "../../theme";
+
 .mode-switcher {
   position: absolute;
   bottom: 0;
@@ -8,18 +10,20 @@
   padding: 0.5rem 1rem;
 
   button {
-    padding: 0.1rem 0.5rem;
+    $color: #aaa;
+    padding: 0.25rem 0.5rem;
+    color: $color;
+    border-color: $color;
+    background: rgba($color, 0.1);
 
-    &:not(.active) {
-      border-color: white;
-      background: rgba(white, 0.1);
-
-      &:hover {
-        background: rgba(white, 0.2);
-      }
+    &:hover {
+      background: rgba($color, 0.2);
     }
 
     &.active {
+      color: white;
+      border-color: mix(white, $life-color);
+      background: rgba($life-color, 0.5);
       pointer-events: none;
     }
   }
