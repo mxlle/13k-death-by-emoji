@@ -12,7 +12,7 @@ import { removeDuplicates } from "../../../utils/array-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
 
 const MIN_GOAL = 3;
-const MAX_GOAL = 13;
+const MAX_GOAL = 20;
 
 let configScreen, textarea, goalInput;
 

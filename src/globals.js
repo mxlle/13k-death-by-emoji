@@ -5,7 +5,7 @@ import {
 } from "./utils/local-storage";
 import { death, spaceDucks } from "./emojis/sets";
 
-export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 4;
+export const DEFAULT_LEVEL = 12;
 
 export const globals = {
   practiceMode: getLocalStorageItem(LocalStorageKey.PRACTICE_MODE),
