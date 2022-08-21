@@ -82,6 +82,7 @@ async function speakEmojisInfinite() {
   }
   globals.isSpeaking = false;
   globals.endOfGame = true;
+  document.body.classList.add("end-of-game");
   updateHighScore();
   updateSecretSequenceComponent();
   storytellerButton.classList.remove("activated");

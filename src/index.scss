@@ -24,6 +24,10 @@ body {
   justify-content: center;
   flex-direction: column;
   font-family: $font-family;
+
+  &.end-of-game {
+    background: mix($death-color, black, 25%);
+  }
 }
 
 header {
