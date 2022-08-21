@@ -28,9 +28,12 @@ export function createScoreboard() {
 
 export function updateScore(action) {
   const comboMultiplier = action === ScoreAction.REPLAY ? 1 : globals.streak;
-  score += getPointsByAction(action) * comboMultiplier;
+  const scoreForAction = getPointsByAction(action) * comboMultiplier;
+  score += scoreForAction;
 
   updateScoreboard();
+
+  return scoreForAction;
 }
 
 export function updateHighScore() {

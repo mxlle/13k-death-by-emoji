@@ -12,8 +12,8 @@ export function initEmojiButtonField(set, onClick) {
   const field = createElement({ cssClass: "emoji-field" });
   for (const emoji of set) {
     const button = createEmojiButton(emoji);
-    button.addEventListener("click", () =>
-      onEmojiClick(emoji, button, onClick)
+    button.addEventListener("click", (event) =>
+      onEmojiClick(emoji, button, onClick, event)
     );
     field.appendChild(button);
     buttonMap[emoji] = button;
@@ -22,10 +22,13 @@ export function initEmojiButtonField(set, onClick) {
   return field;
 }
 
-function onEmojiClick(emoji, emojiButton, onClick) {
+function onEmojiClick(emoji, emojiButton, onClick, event) {
   const correct = globals.shuffledEmojis[globals.clickCounter] === emoji;
   emojiButton.classList.add(correct ? "correct" : "wrong");
-  updateScore(correct ? ScoreAction.CORRECT : ScoreAction.WRONG);
+  const scoreForAction = updateScore(
+    correct ? ScoreAction.CORRECT : ScoreAction.WRONG
+  );
+  showScoreAtButton(event, scoreForAction);
   setTimeout(() => {
     if (!isEndOfGame()) emojiButton.classList.remove("wrong");
   }, 500);
@@ -44,4 +47,20 @@ function createEmojiButton(emoji) {
     text: emoji,
     cssClass: "emoji-button",
   });
+}
+
+function showScoreAtButton(clickEvent, score) {
+  const isPositive = score > 0;
+  const scoreElement = createElement({
+    text: isPositive ? "+" + score : score,
+    cssClass: "score-fly",
+  });
+  scoreElement.style.setProperty("--init-top", clickEvent.y + "px");
+  scoreElement.style.setProperty("--init-left", clickEvent.x + "px");
+  document.body.appendChild(scoreElement);
+  setTimeout(
+    () => scoreElement.classList.add(isPositive ? "positive" : "negative"),
+    0
+  );
+  setTimeout(() => document.body.removeChild(scoreElement), 5000);
 }

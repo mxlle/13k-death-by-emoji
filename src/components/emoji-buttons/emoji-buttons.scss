@@ -39,3 +39,31 @@
     cursor: not-allowed;
   }
 }
+
+.score-fly {
+  $transitionTime: 1s;
+  $transitionCurve: ease-in;
+  position: absolute;
+  top: var(--init-top, 50vh);
+  left: var(--init-left, 50vw);
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  transition: opacity $transitionTime $transitionCurve,
+    top $transitionTime $transitionCurve, left $transitionTime $transitionCurve;
+
+  &.positive {
+    color: $life-color;
+    @extend %transition-end;
+  }
+
+  &.negative {
+    color: $death-color;
+    @extend %transition-end;
+  }
+}
+
+%transition-end {
+  opacity: 0;
+  top: 0;
+  left: 90%;
+}
