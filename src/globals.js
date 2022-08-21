@@ -3,6 +3,7 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
+import { death } from "./emojis/sets";
 
 export const DEFAULT_LEVEL = 4;
 
@@ -11,6 +12,7 @@ export const globals = {
   replayCounter: 0,
   streak: 1,
   languageFactor: 1,
+  emojiPool: getEmojiPool(),
   emojiSet: [],
   shuffledEmojis: [],
   correctMatches: [],
@@ -31,4 +33,12 @@ export function setLevel(level) {
 function getLevel() {
   const level = getLocalStorageItem(LocalStorageKey.LEVEL);
   return level ? Number(level) : DEFAULT_LEVEL;
+}
+
+export function setEmojiPool(emojis) {
+  setLocalStorageItem(LocalStorageKey.EMOJI_POOL, emojis);
+}
+
+function getEmojiPool() {
+  return getLocalStorageItem(LocalStorageKey.EMOJI_POOL) || death;
 }

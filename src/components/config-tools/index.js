@@ -1,5 +1,5 @@
 import { createElement } from "../../utils/html-utils";
-import { DEFAULT_LEVEL, globals, isEndOfGame, setLevel } from "../../globals";
+import { globals, isEndOfGame } from "../../globals";
 
 import "./config-tools.scss";
 import {
@@ -8,15 +8,9 @@ import {
 } from "../../utils/local-storage";
 import { getPointsByAction, ScoreAction } from "../score";
 import { getLanguagesText, toggleConfig } from "./voice-config";
+import { showConfigScreen } from "./config-screen";
 
-let muteButton,
-  blindButton,
-  languageButton,
-  inputTimeout,
-  levelInput,
-  scoreModifiers;
-const MIN_LEVEL = 3;
-const MAX_LEVEL = 13;
+let muteButton, blindButton, languageButton, scoreModifiers;
 
 export function createConfigTools() {
   const configTools = createElement({ cssClass: "config-tools" });
@@ -64,17 +58,18 @@ export function createConfigTools() {
   });
   updateLanguageButtonText();
 
-  levelInput = createElement({ tag: "input" });
-  levelInput.setAttribute("type", "number");
-  levelInput.addEventListener("change", (event) => {
-    onLevelInputChange(Number(event.target.value));
-  });
-  levelInput.value = globals.level;
-
   scoreModifiers = createElement({ cssClass: "score-modifiers" });
   updateScoreModifiers();
 
-  configTools.appendChild(levelInput);
+  configTools.appendChild(
+    createElement({
+      tag: "button",
+      cssClass: "emoji",
+      text: "⚙️",
+      onClick: () => showConfigScreen(),
+    })
+  );
+
   configTools.appendChild(muteButton);
   configTools.appendChild(blindButton);
   configTools.appendChild(languageButton);
@@ -104,29 +99,4 @@ function updateLanguageButtonText() {
   const langCount = languages.split(",").length;
   languageButton.innerHTML = `🌐&nbsp; x${langCount || 1}`;
   languageButton.setAttribute("title", getLanguagesText());
-}
-
-function onLevelInputChange(value) {
-  if (globals.level === value) return;
-
-  clearTimeout(inputTimeout);
-  inputTimeout = setTimeout(() => {
-    const validatedLevel =
-      typeof value === "number"
-        ? Math.max(MIN_LEVEL, Math.min(MAX_LEVEL, value))
-        : DEFAULT_LEVEL;
-    if (validatedLevel !== globals.level) {
-      let reloadPage = true;
-      if (globals.clickCounter > 0 && !isEndOfGame()) {
-        reloadPage = window.confirm("Want to reload?");
-      }
-      if (reloadPage) {
-        setLevel(validatedLevel);
-        levelInput.value = validatedLevel;
-        window.location.reload();
-      } else {
-        levelInput.value = globals.level;
-      }
-    }
-  }, 1000);
 }

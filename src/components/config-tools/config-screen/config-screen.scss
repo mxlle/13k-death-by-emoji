@@ -1,0 +1,68 @@
+.config {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  font-size: 37px;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.config-desc {
+  text-align: center;
+}
+
+textarea {
+  background: black;
+  color: white;
+  width: max(40vw, 333px);
+  height: 30vh;
+  font-size: 37px;
+  letter-spacing: 10px;
+  padding: 13px;
+  margin: 13px;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 13px;
+  .adventure-btn {
+    cursor: pointer;
+    padding: 13px;
+    margin: 3px 7px;
+    background: #202;
+    border-radius: 13px;
+    font-size: 26px;
+  }
+
+  + .button-container {
+    .emoji-btn {
+      background: #002;
+    }
+  }
+
+  .adventure-btn {
+    background: #022;
+  }
+}
+.goal-input {
+  input {
+    display: inline-block;
+    background: black;
+    color: white;
+    font-size: 37px;
+    padding: 7px;
+    margin-top: 37px;
+    margin-bottom: 37px;
+    margin-left: 13px;
+    text-align: right;
+  }
+}

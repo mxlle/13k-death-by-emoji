@@ -1,4 +1,3 @@
-import { death } from "./emojis/sets";
 import { shuffleArray } from "./utils/random-utils";
 
 import "./index.scss";
@@ -19,7 +18,10 @@ import { createElement } from "./utils/html-utils";
 let storytellerButton;
 
 function initGameData() {
-  globals.emojiSet = shuffleArray(splitEmojis(death)).slice(0, globals.level);
+  globals.emojiSet = shuffleArray(splitEmojis(globals.emojiPool)).slice(
+    0,
+    globals.level
+  );
   globals.shuffledEmojis = shuffleArray([...globals.emojiSet]);
   globals.correctMatches = globals.emojiSet.map(() => false);
 }
