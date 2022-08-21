@@ -78,7 +78,7 @@ function getConfigScoreModifier(positive) {
     modifier *= 2;
   }
 
-  return modifier * globals.languageFactor;
+  return modifier;
 }
 
 function updateScoreboard() {

@@ -97,6 +97,6 @@ function updateBlindButtonText() {
 function updateLanguageButtonText() {
   const languages = getLanguagesText() ?? "";
   const langCount = languages.split(",").length;
-  languageButton.innerHTML = `🌐&nbsp; x${langCount || 1}`;
+  languageButton.innerHTML = `🌐&nbsp; (${langCount || 1})`;
   languageButton.setAttribute("title", getLanguagesText());
 }
