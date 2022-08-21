@@ -1,6 +1,7 @@
 const LOCAL_STORAGE_PREFIX = "☠️👻🔫";
 
 export const LocalStorageKey = {
+  PRACTICE_MODE: "practiceMode",
   LANGUAGES: "selectedLanguages",
   VOICES: "selectedVoices",
   LEVEL: "currentLevel",

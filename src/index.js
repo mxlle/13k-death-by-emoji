@@ -14,6 +14,7 @@ import { createConfigTools } from "./components/config-tools";
 import { createScoreboard, updateHighScore } from "./components/score";
 import { createVoiceSelector } from "./components/config-tools/voice-config";
 import { createElement } from "./utils/html-utils";
+import { createModeSwitcher } from "./components/mode-switcher";
 
 let storytellerButton;
 
@@ -22,8 +23,10 @@ function initGameData() {
     0,
     globals.level
   );
-  globals.shuffledEmojis = shuffleArray([...globals.emojiSet]);
-  globals.correctMatches = globals.emojiSet.map(() => false);
+  if (globals.practiceMode) {
+    globals.shuffledEmojis = shuffleArray([...globals.emojiSet]);
+    globals.correctMatches = globals.emojiSet.map(() => false);
+  }
 }
 
 function init() {
@@ -56,6 +59,8 @@ function init() {
   document.body.appendChild(
     initEmojiButtonField(globals.emojiSet, afterEmojiButtonClick)
   );
+
+  document.body.appendChild(createModeSwitcher());
 }
 
 function afterEmojiButtonClick() {
@@ -66,11 +71,13 @@ function afterEmojiButtonClick() {
 }
 
 function endOfGame() {
-  let correctCount = globals.shuffledEmojis.length;
-  for (let i = 0; i < globals.shuffledEmojis.length; i++) {
-    if (!globals.correctMatches[i]) {
-      buttonMap[globals.shuffledEmojis[i]].classList.add("wrong");
-      correctCount--;
+  if (globals.practiceMode) {
+    let correctCount = globals.shuffledEmojis.length;
+    for (let i = 0; i < globals.shuffledEmojis.length; i++) {
+      if (!globals.correctMatches[i]) {
+        buttonMap[globals.shuffledEmojis[i]].classList.add("wrong");
+        correctCount--;
+      }
     }
   }
   storytellerButton.innerHTML = "Play again";

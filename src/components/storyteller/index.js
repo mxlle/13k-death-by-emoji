@@ -1,13 +1,14 @@
 import { createElement } from "../../utils/html-utils";
-import { isSpeaking, speak } from "../../speech/speech";
+import { speak } from "../../speech/speech";
 
 import { globals, isEndOfGame } from "../../globals";
 
 import "./storyteller.scss";
-import { getPointsByAction, ScoreAction, updateScore } from "../score";
+import { updateHighScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
 import { updateSecretSequenceComponent } from "../secret-sequence";
 import { getCurrentVoice } from "../config-tools/voice-config";
+import { getRandomItem } from "../../utils/array-utils";
 
 let storytellerButton;
 
@@ -16,20 +17,22 @@ export function createStorytellerButton() {
     tag: "button",
     text: "📢 Start",
     cssClass: "storyteller-button",
-    onClick: () => speakEmojis(),
+    onClick: () =>
+      globals.practiceMode ? speakEmojisPractice() : speakEmojisInfinite(),
   });
 
   return storytellerButton;
 }
 
-async function speakEmojis() {
+async function speakEmojisPractice() {
   if (isEndOfGame()) {
     window.location.reload();
     return;
   }
 
+  globals.started = true;
+
   if (globals.replayCounter > 0) {
-    updateScore(ScoreAction.REPLAY);
     globals.streak = 1;
     updateScoreModifiers();
     updateStorytellerButtonText();
@@ -54,14 +57,39 @@ async function speakEmojis() {
   updateStorytellerButtonText();
 }
 
-export function updateStorytellerButtonText() {
-  if (!isEndOfGame() && !isSpeaking()) {
-    const replayFine = getPointsByAction(ScoreAction.REPLAY);
-    if (replayFine) {
-      storytellerButton.innerHTML = `📢 ${replayFine}`;
+async function speakEmojisInfinite() {
+  if (isEndOfGame()) {
+    window.location.reload();
+    return;
+  }
+
+  globals.started = true;
+
+  storytellerButton.setAttribute("disabled", "disabled");
+  storytellerButton.classList.add("activated");
+  while (globals.queue.length < globals.slots) {
+    const text = getRandomItem(globals.emojiSet);
+    globals.queue.push(text);
+
+    if (!globals.blindMode) {
+      updateSecretSequenceComponent();
     }
-  } else if (!isEndOfGame()) {
-    storytellerButton.innerHTML = `📢`;
+
+    await speakWithVoice(text);
+  }
+  globals.endOfGame = true;
+  updateHighScore();
+  updateSecretSequenceComponent();
+  storytellerButton.classList.remove("activated");
+  storytellerButton.removeAttribute("disabled");
+  updateStorytellerButtonText();
+}
+
+export function updateStorytellerButtonText() {
+  if (isEndOfGame()) {
+    storytellerButton.innerHTML = "Play again";
+  } else {
+    storytellerButton.innerHTML = `📢 Replay`;
   }
 }
 

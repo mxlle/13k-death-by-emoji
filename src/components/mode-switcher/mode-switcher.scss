@@ -1,0 +1,26 @@
+.mode-switcher {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 1rem;
+
+  button {
+    padding: 0.1rem 0.5rem;
+
+    &:not(.active) {
+      border-color: white;
+      background: rgba(white, 0.1);
+
+      &:hover {
+        background: rgba(white, 0.2);
+      }
+    }
+
+    &.active {
+      pointer-events: none;
+    }
+  }
+}

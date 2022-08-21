@@ -8,13 +8,16 @@ let domElement;
 export function createSecretSequenceComponent() {
   domElement = createElement({
     cssClass: "secret-sequence",
-    text: getSolutionText(),
   });
+  updateSecretSequenceComponent();
+
   return domElement;
 }
 
 export function updateSecretSequenceComponent(showIndex) {
-  domElement.innerHTML = getSolutionText(showIndex);
+  domElement.innerHTML = globals.practiceMode
+    ? getSolutionText(showIndex)
+    : getSolutionTextInfinite();
 }
 
 function getSolutionText(showIndex) {
@@ -30,5 +33,29 @@ function getSolutionText(showIndex) {
         : "❓"
     );
   }
+  return textParts.join(" ");
+}
+
+function getSolutionTextInfinite() {
+  const textParts = [];
+  for (let i = 0; i < globals.mistakes; i++) {
+    textParts.push("☠️");
+  }
+
+  for (let i = 0; i < globals.queue.length; i++) {
+    if (globals.endOfGame) {
+      textParts.push("☠️");
+    } else if (i === globals.queue.length - 1) {
+      textParts.push(globals.blindMode ? "❔" : globals.queue[i]);
+    } else {
+      textParts.push("❓");
+    }
+  }
+
+  for (let j = globals.queue.length; j < globals.slots; j++) {
+    textParts.push("_");
+  }
+
+  textParts.push("☠️");
   return textParts.join(" ");
 }

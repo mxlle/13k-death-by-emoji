@@ -73,7 +73,10 @@ export function createConfigTools() {
   configTools.appendChild(muteButton);
   configTools.appendChild(blindButton);
   configTools.appendChild(languageButton);
-  configTools.appendChild(scoreModifiers);
+
+  if (!globals.practiceMode) {
+    configTools.appendChild(scoreModifiers);
+  }
 
   return configTools;
 }
@@ -87,11 +90,19 @@ export function updateScoreModifiers() {
 }
 
 function updateMuteButtonText() {
-  muteButton.innerHTML = globals.mute ? "🔇&nbsp; x1.5" : "🔊&nbsp; x1";
+  if (globals.practiceMode) {
+    muteButton.innerHTML = globals.mute ? "🔇" : "🔊";
+  } else {
+    muteButton.innerHTML = globals.mute ? "🔇&nbsp; x1.5" : "🔊&nbsp; x1";
+  }
 }
 
 function updateBlindButtonText() {
-  blindButton.innerHTML = globals.blindMode ? "🙈&nbsp; x2" : "👁️&nbsp; x1";
+  if (globals.practiceMode) {
+    blindButton.innerHTML = globals.blindMode ? "🙈2" : "👁️";
+  } else {
+    blindButton.innerHTML = globals.blindMode ? "🙈&nbsp; x2" : "👁️&nbsp; x1";
+  }
 }
 
 function updateLanguageButtonText() {

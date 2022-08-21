@@ -5,9 +5,16 @@ import {
 } from "./utils/local-storage";
 import { death, spaceDucks } from "./emojis/sets";
 
-export const DEFAULT_LEVEL = 4;
+export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 4;
 
 export const globals = {
+  practiceMode: getLocalStorageItem(LocalStorageKey.PRACTICE_MODE),
+  slots: 3,
+  queue: [],
+  started: false,
+  endOfGame: false,
+  correctCount: 0,
+  mistakes: 0,
   clickCounter: 0,
   replayCounter: 0,
   streak: 1,
@@ -22,7 +29,9 @@ export const globals = {
 };
 
 export function isEndOfGame() {
-  return globals.clickCounter >= globals.emojiSet.length;
+  return globals.practiceMode
+    ? globals.clickCounter >= globals.emojiSet.length
+    : globals.endOfGame;
 }
 
 export function setLevel(level) {

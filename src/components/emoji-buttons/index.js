@@ -5,6 +5,8 @@ import { globals, isEndOfGame } from "../../globals";
 import { ScoreAction, updateScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
 import { updateStorytellerButtonText } from "../storyteller";
+import { speak } from "../../speech/speech";
+import { getCurrentVoice } from "../config-tools/voice-config";
 
 export const buttonMap = {};
 
@@ -23,7 +25,20 @@ export function initEmojiButtonField(set, onClick) {
 }
 
 function onEmojiClick(emoji, emojiButton, onClick, event) {
-  const correct = globals.shuffledEmojis[globals.clickCounter] === emoji;
+  if (!globals.started || globals.endOfGame) {
+    void speak(emoji, getCurrentVoice());
+    return;
+  }
+
+  const correct = getWantedEmoji() === emoji;
+
+  if (correct) {
+    globals.correctCount++;
+  } else {
+    globals.slots--;
+    globals.mistakes++;
+  }
+
   emojiButton.classList.add(correct ? "correct" : "wrong");
   const scoreForAction = updateScore(
     correct ? ScoreAction.CORRECT : ScoreAction.WRONG
@@ -31,14 +46,23 @@ function onEmojiClick(emoji, emojiButton, onClick, event) {
   showScoreAtButton(event, scoreForAction);
   setTimeout(() => {
     if (!isEndOfGame()) emojiButton.classList.remove("wrong");
+    if (!globals.practiceMode) emojiButton.classList.remove("correct", "wrong");
   }, 500);
-  globals.correctMatches[globals.clickCounter] = correct;
-  globals.clickCounter++;
+  if (globals.practiceMode) {
+    globals.correctMatches[globals.clickCounter] = correct;
+    globals.clickCounter++;
+  }
   globals.streak = correct ? globals.streak + 1 : 1;
   updateScoreModifiers();
   updateStorytellerButtonText();
 
   onClick();
+}
+
+function getWantedEmoji() {
+  return globals.practiceMode
+    ? globals.shuffledEmojis[globals.clickCounter]
+    : globals.queue.shift();
 }
 
 function createEmojiButton(emoji) {
@@ -51,6 +75,9 @@ function createEmojiButton(emoji) {
 
 function showScoreAtButton(clickEvent, score) {
   const isPositive = score > 0;
+  if (globals.practiceMode) {
+    score = isPositive ? 1 : "❌";
+  }
   const scoreElement = createElement({
     text: isPositive ? "+" + score : score,
     cssClass: "score-fly",

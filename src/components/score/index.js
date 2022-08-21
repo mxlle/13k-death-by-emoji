@@ -15,7 +15,6 @@ const BASE_SCORE_MULTIPLIER = 10;
 export const ScoreAction = {
   CORRECT: "correct",
   WRONG: "wrong",
-  REPLAY: "replay",
 };
 
 export function createScoreboard() {
@@ -27,7 +26,7 @@ export function createScoreboard() {
 }
 
 export function updateScore(action) {
-  const comboMultiplier = action === ScoreAction.REPLAY ? 1 : globals.streak;
+  const comboMultiplier = globals.streak;
   const scoreForAction = getPointsByAction(action) * comboMultiplier;
   score += scoreForAction;
 
@@ -56,14 +55,6 @@ export function getPointsByAction(action) {
       points = -1 * globals.level;
       modifier = getConfigScoreModifier();
       break;
-    case ScoreAction.REPLAY:
-      points =
-        -1 *
-        ((globals.shuffledEmojis.length - globals.clickCounter) *
-          globals.replayCounter) *
-        globals.level;
-      modifier = getConfigScoreModifier();
-      break;
   }
 
   return Math.round(points * modifier * BASE_SCORE_MULTIPLIER);
@@ -85,9 +76,14 @@ function getConfigScoreModifier(positive) {
 }
 
 function updateScoreboard() {
-  let text = "🏆 " + score;
-  if (highScore) {
-    text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScore})`;
+  let text = "✅ " + globals.correctCount;
+  if (globals.practiceMode) {
+    text += "/" + globals.shuffledEmojis.length;
+  } else {
+    text += "&nbsp;&nbsp;&nbsp;🏆 " + score;
+    if (highScore) {
+      text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScore})`;
+    }
   }
   scoreboard.innerHTML = text;
 }
