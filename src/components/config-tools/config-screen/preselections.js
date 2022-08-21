@@ -6,13 +6,15 @@ import {
   domesticAnimals,
   freshFood,
   processedFood,
+  spaceDucks,
   sport,
   weatherAndEarth,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
+import { isSpaceDucksVariant } from "../../../globals";
 
 const _preselections = [
-  death,
+  isSpaceDucksVariant() ? spaceDucks : death,
   bigAnimals,
   domesticAnimals,
   birdAnimals,

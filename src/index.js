@@ -5,7 +5,7 @@ import { splitEmojis } from "./emojis/emoji-util";
 import { buttonMap, initEmojiButtonField } from "./components/emoji-buttons";
 import { createStorytellerButton } from "./components/storyteller";
 
-import { globals, isEndOfGame } from "./globals";
+import { globals, isEndOfGame, isSpaceDucksVariant } from "./globals";
 import {
   createSecretSequenceComponent,
   updateSecretSequenceComponent,
@@ -27,6 +27,10 @@ function initGameData() {
 }
 
 function init() {
+  if (isSpaceDucksVariant()) {
+    document.title = "Space ducks emoji vocabulary";
+  }
+
   initGameData();
 
   document.body.appendChild(createVoiceSelector());

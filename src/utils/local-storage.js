@@ -8,6 +8,7 @@ export const LocalStorageKey = {
   MUTE: "mute",
   BLIND: "blind",
   HIGH_SCORE: "highScore",
+  SPACE_DUCKS: "spaceDucks",
 };
 
 export function setLocalStorageItem(key, value) {

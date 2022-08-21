@@ -1,6 +1,8 @@
 export const death =
   "☠️ 🔫 💩 👻 ☣️ 😈 ⛓ 💀 ‍💣 🧨 🌋 🪚 🗡️ 🦹‍️ 🌪️ 🦖 🦛 🦈 🥊 🪓 ️🪦 ⚔️  🏴‍☠️";
 
+export const spaceDucks = "🦆 🚀 🛸 🪐 🌈 🐈 🎒 🎓 📱 💻 ⏱️ 🗃️";
+
 // copied from https://getemoji.com/
 export const positiveSmileys1 =
   "😀 😃 😄 😁 😆 😅 🤣 🥲 ☺️ 😊 🙂 🙃 😉 😌 😘 😗 😙 😚 😛 😝 😜 🤪 😏 🤗 🤭 ";

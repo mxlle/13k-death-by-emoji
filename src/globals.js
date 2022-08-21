@@ -3,7 +3,7 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
-import { death } from "./emojis/sets";
+import { death, spaceDucks } from "./emojis/sets";
 
 export const DEFAULT_LEVEL = 4;
 
@@ -40,5 +40,15 @@ export function setEmojiPool(emojis) {
 }
 
 function getEmojiPool() {
-  return getLocalStorageItem(LocalStorageKey.EMOJI_POOL) || death;
+  return getLocalStorageItem(LocalStorageKey.EMOJI_POOL) ||
+    isSpaceDucksVariant()
+    ? spaceDucks
+    : death;
+}
+
+export function isSpaceDucksVariant() {
+  return (
+    getLocalStorageItem(LocalStorageKey.SPACE_DUCKS) ||
+    window.location.host === "spaceducks.okj.ninja"
+  );
 }

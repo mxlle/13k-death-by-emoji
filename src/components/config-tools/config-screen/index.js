@@ -74,6 +74,7 @@ function createAdventureButtons(adventures) {
       text: id,
       onClick: () => {
         setConfigValue(emojis);
+        validateGoal();
       },
     });
     buttonsContainer.appendChild(btn);
@@ -92,6 +93,7 @@ function setConfigValue(value) {
 
 function validateConfig() {
   setConfigValue(getConfigValue());
+  validateGoal();
 }
 
 function validateGoal() {
