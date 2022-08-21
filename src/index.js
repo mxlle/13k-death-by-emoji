@@ -44,14 +44,22 @@ function init() {
   header.appendChild(createScoreboard());
   document.body.appendChild(header);
 
-  document.body.appendChild(
-    createElement({
-      cssClass: "info-text",
-      text:
-        "Listen to the secret emoji sequence and replicate it with the buttons below at the same time." +
-        (globals.practiceMode ? "" : " Keep up before your slots run out!"),
-    })
-  );
+  const info = createElement({
+    cssClass: "info-text",
+    text: "Listen to the secret emoji sequence and replicate it with the buttons below at the same time.",
+  });
+
+  info.appendChild(createElement({ tag: "br" }));
+  info.appendChild(document.createTextNode("Try the blind mode if you dare. "));
+
+  if (!globals.practiceMode) {
+    info.appendChild(createElement({ tag: "br" }));
+    info.appendChild(
+      document.createTextNode("Keep up before your slots run out!")
+    );
+  }
+
+  document.body.appendChild(info);
 
   document.body.appendChild(createSecretSequenceComponent());
 
