@@ -52,7 +52,7 @@ function createConfigScreen() {
   configScreen.appendChild(textarea);
   const goalContainer = createElement({
     cssClass: "goal-input",
-    text: "Goal per round:",
+    text: "Variants per round:",
   });
   goalInput = createElement({ tag: "input" });
   goalInput.type = "number";
