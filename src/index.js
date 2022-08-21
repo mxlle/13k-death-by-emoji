@@ -47,7 +47,9 @@ function init() {
   document.body.appendChild(
     createElement({
       cssClass: "info-text",
-      text: "Listen to the secret emoji sequence and replicate it with the buttons below at the same time.",
+      text:
+        "Listen to the secret emoji sequence and replicate it with the buttons below at the same time." +
+        (globals.practiceMode ? "" : " Keep up before your slots run out!"),
     })
   );
 
