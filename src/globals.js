@@ -21,7 +21,6 @@ export const globals = {
   replayCounter: 0,
   streak: 1,
   languageFactor: 1,
-  emojiPool: getEmojiPool(),
   emojiSet: [],
   shuffledEmojis: [],
   correctMatches: [],
@@ -54,11 +53,11 @@ export function setEmojiPool(emojis) {
   setLocalStorageItem(LocalStorageKey.EMOJI_POOL, emojis);
 }
 
-function getEmojiPool() {
-  return getLocalStorageItem(LocalStorageKey.EMOJI_POOL) ||
-    isSpaceDucksVariant()
-    ? spaceDucks
-    : death;
+export function getEmojiPool() {
+  return (
+    getLocalStorageItem(LocalStorageKey.EMOJI_POOL) ||
+    (isSpaceDucksVariant() ? spaceDucks : death)
+  );
 }
 
 export function isSpaceDucksVariant() {

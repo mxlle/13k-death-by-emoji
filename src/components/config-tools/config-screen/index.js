@@ -2,7 +2,12 @@ import "./config-screen.scss";
 
 import { createElement } from "../../../utils/html-utils";
 import { preselections } from "./preselections";
-import { globals, setEmojiPool, setLevel } from "../../../globals";
+import {
+  getEmojiPool,
+  globals,
+  setEmojiPool,
+  setLevel,
+} from "../../../globals";
 import { removeDuplicates } from "../../../utils/array-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
 
@@ -13,7 +18,7 @@ let configScreen, textarea, goalInput;
 
 export function showConfigScreen() {
   if (!configScreen) createConfigScreen();
-  setConfigValue(globals.emojiPool);
+  setConfigValue(getEmojiPool());
   goalInput.value = globals.level;
   document.body.appendChild(configScreen);
   textarea.focus();

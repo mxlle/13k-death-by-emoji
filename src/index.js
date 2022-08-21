@@ -5,7 +5,12 @@ import { splitEmojis } from "./emojis/emoji-util";
 import { buttonMap, initEmojiButtonField } from "./components/emoji-buttons";
 import { createStorytellerButton } from "./components/storyteller";
 
-import { globals, isEndOfGame, isSpaceDucksVariant } from "./globals";
+import {
+  getEmojiPool,
+  globals,
+  isEndOfGame,
+  isSpaceDucksVariant,
+} from "./globals";
 import {
   createSecretSequenceComponent,
   updateSecretSequenceComponent,
@@ -19,7 +24,7 @@ import { createModeSwitcher } from "./components/mode-switcher";
 let storytellerButton;
 
 function initGameData() {
-  globals.emojiSet = shuffleArray(splitEmojis(globals.emojiPool)).slice(
+  globals.emojiSet = shuffleArray(splitEmojis(getEmojiPool())).slice(
     0,
     globals.level
   );
