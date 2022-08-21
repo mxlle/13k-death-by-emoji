@@ -14,7 +14,7 @@ let storytellerButton;
 export function createStorytellerButton() {
   storytellerButton = createElement({
     tag: "button",
-    text: "📢",
+    text: "📢 Start",
     cssClass: "storyteller-button",
     onClick: () => speakEmojis(),
   });

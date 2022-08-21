@@ -37,6 +37,13 @@ function init() {
   header.appendChild(createScoreboard());
   document.body.appendChild(header);
 
+  document.body.appendChild(
+    createElement({
+      cssClass: "info-text",
+      text: "Listen to the secret emoji sequence and replicate it with the buttons below at the same time.",
+    })
+  );
+
   document.body.appendChild(createSecretSequenceComponent());
 
   storytellerButton = createStorytellerButton();
