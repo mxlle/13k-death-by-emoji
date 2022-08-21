@@ -1,7 +1,7 @@
 import { createElement } from "../../utils/html-utils";
 
 import "./emoji-buttons.scss";
-import { globals, isEndOfGame } from "../../globals";
+import { globals, isEndOfGame, isGameActive } from "../../globals";
 import { ScoreAction, updateScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
 import { updateStorytellerButtonText } from "../storyteller";
@@ -25,7 +25,7 @@ export function initEmojiButtonField(set, onClick) {
 }
 
 function onEmojiClick(emoji, emojiButton, onClick, event) {
-  if (!globals.started || globals.endOfGame) {
+  if (!isGameActive()) {
     void speak(emoji, getCurrentVoice());
     return;
   }

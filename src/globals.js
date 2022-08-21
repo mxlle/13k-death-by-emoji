@@ -13,6 +13,8 @@ export const globals = {
   queue: [],
   started: false,
   endOfGame: false,
+  currentIndex: 0,
+  isSpeaking: false,
   correctCount: 0,
   mistakes: 0,
   clickCounter: 0,
@@ -27,6 +29,10 @@ export const globals = {
   mute: getLocalStorageItem(LocalStorageKey.MUTE),
   level: getLevel(),
 };
+
+export function isGameActive() {
+  return globals.started && !isEndOfGame();
+}
 
 export function isEndOfGame() {
   return globals.practiceMode

@@ -40,17 +40,19 @@ async function speakEmojisPractice() {
 
   storytellerButton.setAttribute("disabled", "disabled");
   storytellerButton.classList.add("activated");
+  globals.isSpeaking = true;
   for (let i = globals.clickCounter; i < globals.shuffledEmojis.length; i++) {
     const text = globals.shuffledEmojis[i];
+    globals.currentIndex = i;
 
     if (!globals.blindMode) {
-      updateSecretSequenceComponent(i);
+      updateSecretSequenceComponent();
     }
 
     await speakWithVoice(text);
-
-    updateSecretSequenceComponent();
   }
+  globals.isSpeaking = false;
+  updateSecretSequenceComponent();
   storytellerButton.classList.remove("activated");
   storytellerButton.removeAttribute("disabled");
   globals.replayCounter++;
@@ -67,6 +69,7 @@ async function speakEmojisInfinite() {
 
   storytellerButton.setAttribute("disabled", "disabled");
   storytellerButton.classList.add("activated");
+  globals.isSpeaking = true;
   while (globals.queue.length < globals.slots) {
     const text = getRandomItem(globals.emojiSet);
     globals.queue.push(text);
@@ -77,6 +80,7 @@ async function speakEmojisInfinite() {
 
     await speakWithVoice(text);
   }
+  globals.isSpeaking = false;
   globals.endOfGame = true;
   updateHighScore();
   updateSecretSequenceComponent();

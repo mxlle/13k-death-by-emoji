@@ -1,4 +1,4 @@
-import { globals } from "../../globals";
+import { globals, isGameActive } from "../../globals";
 import { createElement } from "../../utils/html-utils";
 
 import "./secret-sequence.scss";
@@ -14,17 +14,21 @@ export function createSecretSequenceComponent() {
   return domElement;
 }
 
-export function updateSecretSequenceComponent(showIndex) {
+export function updateSecretSequenceComponent() {
   domElement.innerHTML = globals.practiceMode
-    ? getSolutionText(showIndex)
+    ? getSolutionText()
     : getSolutionTextInfinite();
 }
 
-function getSolutionText(showIndex) {
+function getSolutionText() {
   const textParts = [];
   for (let i = 0; i < globals.shuffledEmojis.length; i++) {
     textParts.push(
-      globals.correctMatches[i] || i === showIndex
+      globals.correctMatches[i] ||
+        (isGameActive() &&
+          globals.isSpeaking &&
+          !globals.blindMode &&
+          i === globals.currentIndex)
         ? globals.shuffledEmojis[i]
         : i < globals.clickCounter
         ? "❌"
