@@ -63,7 +63,7 @@ export function getPointsByAction(action) {
 function getConfigScoreModifier(positive) {
   let modifier = 1;
   if (globals.blindMode) {
-    modifier *= 2;
+    modifier *= 3;
   }
   if (globals.mute) {
     modifier *= 1.5;

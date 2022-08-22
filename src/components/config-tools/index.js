@@ -99,9 +99,9 @@ function updateMuteButtonText() {
 
 function updateBlindButtonText() {
   if (globals.practiceMode) {
-    blindButton.innerHTML = globals.blindMode ? "🙈2" : "👁️";
+    blindButton.innerHTML = globals.blindMode ? "🙈" : "👁️";
   } else {
-    blindButton.innerHTML = globals.blindMode ? "🙈&nbsp; x2" : "👁️&nbsp; x1";
+    blindButton.innerHTML = globals.blindMode ? "🙈&nbsp; x3" : "👁️&nbsp; x1";
   }
 }
 
