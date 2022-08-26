@@ -72,7 +72,7 @@ function getSolutionTextInfinite() {
 
 function mapToElement(text) {
   return createElement({
-    cssClass: "secret-sequence-element",
+    cssClass: "secret-sequence-element emoji",
     text,
   });
 }

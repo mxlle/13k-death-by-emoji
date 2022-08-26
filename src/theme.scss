@@ -3,6 +3,7 @@ $secondary-color: cyan;
 $death-color: #992244;
 $life-color: #227744;
 $font-family: sans-serif;
+$emoji-font: "EmojiFont", sans-serif;
 
 @mixin hover {
   @media (hover: hover) {

@@ -69,7 +69,7 @@ function createEmojiButton(emoji) {
   return createElement({
     tag: "button",
     text: emoji,
-    cssClass: "emoji-button",
+    cssClass: "emoji-button emoji",
   });
 }
 
