@@ -1,9 +1,9 @@
 import {
   bigAnimals,
-  birdAnimals,
   clothing,
   death,
   domesticAnimals,
+  flags,
   freshFood,
   processedFood,
   spaceDucks,
@@ -17,12 +17,12 @@ const _preselections = [
   isSpaceDucksVariant() ? spaceDucks : death,
   bigAnimals,
   domesticAnimals,
-  birdAnimals,
   freshFood,
   processedFood,
   sport,
   clothing,
   weatherAndEarth,
+  flags,
 ];
 
 export const preselections = _preselections.map((set) => ({
