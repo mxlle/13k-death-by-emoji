@@ -9,6 +9,7 @@ export const LocalStorageKey = {
   MUTE: "mute",
   BLIND: "blind",
   HIGH_SCORE: "highScore",
+  HIGH_SCORE_COUNT: "highScoreCount",
   SPACE_DUCKS: "spaceDucks",
 };
 

@@ -64,6 +64,15 @@ button {
   @include hover {
     background-color: rgba($main-color, 0.2);
   }
+
+  &.secondary-button {
+    border: 1px solid white;
+    background-color: rgba(white, 0.1);
+
+    @include hover {
+      background-color: rgba(white, 0.2);
+    }
+  }
 }
 
 .info-text {

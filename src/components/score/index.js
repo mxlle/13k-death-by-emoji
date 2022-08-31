@@ -8,6 +8,7 @@ import {
 
 let scoreboard,
   highScore,
+  highScoreCount,
   score = 0;
 
 const BASE_SCORE_MULTIPLIER = 10;
@@ -21,6 +22,8 @@ export function createScoreboard() {
   scoreboard = createElement({ cssClass: "scoreboard" });
   highScore = getLocalStorageItem(LocalStorageKey.HIGH_SCORE);
   highScore = highScore ? Number(highScore) : undefined;
+  highScoreCount = getLocalStorageItem(LocalStorageKey.HIGH_SCORE_COUNT);
+  highScoreCount = highScoreCount ? Number(highScoreCount) : 0;
   updateScoreboard();
   return scoreboard;
 }
@@ -39,6 +42,12 @@ export function updateHighScore() {
   if (!highScore || highScore < score) {
     setLocalStorageItem(LocalStorageKey.HIGH_SCORE, score);
     highScore = score;
+    updateScoreboard();
+  }
+
+  if (!highScoreCount || highScoreCount < globals.correctCount) {
+    setLocalStorageItem(LocalStorageKey.HIGH_SCORE_COUNT, globals.correctCount);
+    highScoreCount = globals.correctCount;
     updateScoreboard();
   }
 }
@@ -82,7 +91,7 @@ function updateScoreboard() {
   } else {
     text += "&nbsp;&nbsp;&nbsp;🏆 " + score;
     if (highScore) {
-      text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScore})`;
+      text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScoreCount} / ${highScore})`;
     }
   }
   scoreboard.innerHTML = text;
