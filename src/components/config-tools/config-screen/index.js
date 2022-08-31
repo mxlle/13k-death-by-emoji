@@ -10,30 +10,30 @@ import {
 } from "../../../globals";
 import { removeDuplicates } from "../../../utils/array-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
+import { createDialog } from "../../dialog";
 
 const MIN_GOAL = 3;
 const MAX_GOAL = 20;
 
-let configScreen, textarea, goalInput;
+let configScreen, dialog, textarea, goalInput;
 
-export function showConfigScreen() {
+export async function showConfigScreen() {
   if (!configScreen) createConfigScreen();
+  if (!dialog) dialog = createDialog(configScreen, "Start game");
   setConfigValue(getEmojiPool());
   goalInput.value = globals.level;
-  document.body.appendChild(configScreen);
   textarea.focus();
+
+  const submit = await dialog.open();
+  if (submit) onConfigSubmitted();
 }
 
-function closeConfigScreen(loadNewLevel) {
-  if (loadNewLevel) {
-    const config = getConfigValue();
-    const goal = Number(goalInput.value);
-    setEmojiPool(config);
-    setLevel(goal);
-    window.location.reload();
-    return;
-  }
-  document.body.removeChild(configScreen);
+function onConfigSubmitted() {
+  const config = getConfigValue();
+  const goal = Number(goalInput.value);
+  setEmojiPool(config);
+  setLevel(goal);
+  window.location.reload();
 }
 
 function createConfigScreen() {
@@ -61,13 +61,6 @@ function createConfigScreen() {
   goalInput.addEventListener("blur", validateGoal);
   goalContainer.appendChild(goalInput);
   configScreen.appendChild(goalContainer);
-  const closeButton = createElement({
-    tag: "button",
-    cssClass: "btn",
-    text: "Load game",
-    onClick: closeConfigScreen,
-  });
-  configScreen.appendChild(closeButton);
 }
 
 function createAdventureButtons(adventures) {
