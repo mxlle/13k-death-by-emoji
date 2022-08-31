@@ -5,6 +5,7 @@
   font-display: swap;
   // file from https://github.com/mozilla/twemoji-colr/issues/50 for chrome fix
   src: url("assets/Twemoji.ttf") format("truetype");
+  unicode-range: U+231A-3299, U+1F004-1F9C0;
   font-weight: 400;
   font-style: normal;
 }
@@ -81,12 +82,4 @@ button {
   color: #ccc;
   max-width: 16rem;
   text-align: center;
-}
-
-.emoji {
-  font-family: $emoji-font;
-  font-weight: normal;
-  vertical-align: middle;
-  margin-top: 2px;
-  text-shadow: 0 0 0.025em var(--text-shadow-color);
 }
