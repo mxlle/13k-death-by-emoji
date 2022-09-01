@@ -3,7 +3,7 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
-import { death, spaceDucks } from "./emojis/sets";
+import { death1, spaceDucks } from "./emojis/sets";
 
 export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 6;
 
@@ -55,7 +55,7 @@ export function setEmojiPool(emojis) {
 export function getEmojiPool() {
   return (
     getLocalStorageItem(LocalStorageKey.EMOJI_POOL) ||
-    (isSpaceDucksVariant() ? spaceDucks : death)
+    (isSpaceDucksVariant() ? spaceDucks : death1)
   );
 }
 

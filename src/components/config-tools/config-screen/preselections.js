@@ -1,29 +1,28 @@
 import {
-  allObjects,
-  animals,
-  clothingAndAccessories,
-  death,
+  animals1,
+  clothingAndAccessories1,
+  death1,
   flags,
-  foodAndDrink,
-  nature,
+  foodAndDrink1,
+  miscObjects1,
+  nature1,
   spaceDucks,
-  sportActivityAndMusic,
-  travelAndPlaces,
-  vehicles,
-  weatherAndEarth,
+  sportActivityAndMusic1,
+  travelPlacesAndTransport1,
+  weather1,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { isSpaceDucksVariant } from "../../../globals";
 
 const _preselections = [
-  isSpaceDucksVariant() ? spaceDucks : death,
-  animals,
-  foodAndDrink,
-  sportActivityAndMusic,
-  clothingAndAccessories,
-  nature + weatherAndEarth,
-  vehicles + travelAndPlaces,
-  allObjects,
+  isSpaceDucksVariant() ? spaceDucks : death1,
+  animals1,
+  foodAndDrink1,
+  sportActivityAndMusic1,
+  clothingAndAccessories1,
+  nature1 + weather1,
+  travelPlacesAndTransport1,
+  miscObjects1,
   flags,
 ];
 
