@@ -11,13 +11,6 @@ let scoreboard,
   highScoreCount,
   score = 0;
 
-const BASE_SCORE_MULTIPLIER = 10;
-
-export const ScoreAction = {
-  CORRECT: "correct",
-  WRONG: "wrong",
-};
-
 export function createScoreboard() {
   scoreboard = createElement({ cssClass: "scoreboard" });
   highScore = getLocalStorageItem(LocalStorageKey.HIGH_SCORE);
@@ -28,14 +21,9 @@ export function createScoreboard() {
   return scoreboard;
 }
 
-export function updateScore(action) {
-  const comboMultiplier = globals.streak;
-  const scoreForAction = getPointsByAction(action) * comboMultiplier;
+export function updateScore(scoreForAction) {
   score += scoreForAction;
-
   updateScoreboard();
-
-  return scoreForAction;
 }
 
 export function updateHighScore() {
@@ -50,38 +38,6 @@ export function updateHighScore() {
     highScoreCount = globals.correctCount;
     updateScoreboard();
   }
-}
-
-export function getPointsByAction(action) {
-  let points = 0,
-    modifier = 1;
-  switch (action) {
-    case ScoreAction.CORRECT:
-      points = globals.level;
-      modifier = getConfigScoreModifier(true);
-      break;
-    case ScoreAction.WRONG:
-      points = -1 * globals.level;
-      modifier = getConfigScoreModifier();
-      break;
-  }
-
-  return Math.round(points * modifier * BASE_SCORE_MULTIPLIER);
-}
-
-function getConfigScoreModifier(positive) {
-  let modifier = 1;
-  if (globals.blindMode) {
-    modifier *= 3;
-  }
-  if (globals.mute) {
-    modifier *= 1.5;
-  }
-  if (!globals.blindMode && !globals.mute && !positive) {
-    modifier *= 2;
-  }
-
-  return modifier;
 }
 
 function updateScoreboard() {

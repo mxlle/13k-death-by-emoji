@@ -18,7 +18,6 @@ export const globals = {
   correctCount: 0,
   mistakes: 0,
   clickCounter: 0,
-  replayCounter: 0,
   streak: 1,
   languageFactor: 1,
   emojiSet: [],

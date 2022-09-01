@@ -6,9 +6,9 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
-import { getPointsByAction, ScoreAction } from "../score";
 import { getLanguagesText, toggleConfig } from "./voice-config";
 import { showConfigScreen } from "./config-screen";
+import { getPointsByAction, ScoreAction } from "../../game-logic";
 
 let muteButton, blindButton, languageButton, scoreModifiers;
 

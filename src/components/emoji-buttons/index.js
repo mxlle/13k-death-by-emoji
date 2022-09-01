@@ -2,20 +2,22 @@ import { createElement } from "../../utils/html-utils";
 
 import "./emoji-buttons.scss";
 import { globals, isEndOfGame, isGameActive } from "../../globals";
-import { ScoreAction, updateScore } from "../score";
 import { updateScoreModifiers } from "../config-tools";
 import { updateStorytellerButtonText } from "../storyteller";
 import { speak } from "../../speech/speech";
 import { getCurrentVoice } from "../config-tools/voice-config";
+import { evaluatePlay } from "../../game-logic";
+import { updateHighScore, updateScore } from "../score";
+import { updateSecretSequenceComponent } from "../secret-sequence";
 
-export const buttonMap = {};
+const buttonMap = {};
 
-export function initEmojiButtonField(set, onClick) {
+export function initEmojiButtonField(set) {
   const field = createElement({ cssClass: "emoji-field" });
   for (const emoji of set) {
     const button = createEmojiButton(emoji);
     button.addEventListener("click", (event) =>
-      onEmojiClick(emoji, button, onClick, event)
+      onEmojiClick(emoji, button, event)
     );
     field.appendChild(button);
     buttonMap[emoji] = button;
@@ -24,45 +26,30 @@ export function initEmojiButtonField(set, onClick) {
   return field;
 }
 
-function onEmojiClick(emoji, emojiButton, onClick, event) {
+function onEmojiClick(emoji, emojiButton, event) {
   if (!isGameActive()) {
     void speak(emoji, getCurrentVoice());
     return;
   }
 
-  const correct = getWantedEmoji() === emoji;
+  const { correct, scoreForAction } = evaluatePlay(emoji);
 
-  if (correct) {
-    globals.correctCount++;
-  } else {
-    globals.slots--;
-    globals.mistakes++;
-  }
+  updateScore(scoreForAction);
 
   emojiButton.classList.add(correct ? "correct" : "wrong");
-  const scoreForAction = updateScore(
-    correct ? ScoreAction.CORRECT : ScoreAction.WRONG
-  );
   showScoreAtButton(event, scoreForAction);
   setTimeout(() => {
     if (!isEndOfGame()) emojiButton.classList.remove("wrong");
     if (!globals.practiceMode) emojiButton.classList.remove("correct", "wrong");
   }, 500);
-  if (globals.practiceMode) {
-    globals.correctMatches[globals.clickCounter] = correct;
-    globals.clickCounter++;
-  }
-  globals.streak = correct ? globals.streak + 1 : 1;
+
   updateScoreModifiers();
   updateStorytellerButtonText();
+  updateSecretSequenceComponent();
 
-  onClick();
-}
-
-function getWantedEmoji() {
-  return globals.practiceMode
-    ? globals.shuffledEmojis[globals.clickCounter]
-    : globals.queue.shift();
+  if (isEndOfGame()) {
+    onEndOfGame();
+  }
 }
 
 function createEmojiButton(emoji) {
@@ -90,4 +77,16 @@ function showScoreAtButton(clickEvent, score) {
     0
   );
   setTimeout(() => document.body.removeChild(scoreElement), 5000);
+}
+
+function onEndOfGame() {
+  if (globals.practiceMode) {
+    for (let i = 0; i < globals.shuffledEmojis.length; i++) {
+      if (!globals.correctMatches[i]) {
+        buttonMap[globals.shuffledEmojis[i]].classList.add("wrong");
+      }
+    }
+  }
+
+  updateHighScore();
 }

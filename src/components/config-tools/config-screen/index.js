@@ -43,7 +43,7 @@ function createConfigScreen() {
   });
   const desc = createElement({
     cssClass: "config-desc",
-    text: "Choose your next adventure or build your own",
+    text: "Choose a set of emojis or define your own",
   });
   configScreen.appendChild(desc);
   configScreen.appendChild(createAdventureButtons(preselections));
