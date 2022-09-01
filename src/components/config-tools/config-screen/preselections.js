@@ -1,13 +1,15 @@
 import {
-  bigAnimals,
-  clothing,
+  allObjects,
+  animals,
+  clothingAndAccessories,
   death,
-  domesticAnimals,
   flags,
-  freshFood,
-  processedFood,
+  foodAndDrink,
+  nature,
   spaceDucks,
-  sport,
+  sportActivityAndMusic,
+  travelAndPlaces,
+  vehicles,
   weatherAndEarth,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
@@ -15,13 +17,13 @@ import { isSpaceDucksVariant } from "../../../globals";
 
 const _preselections = [
   isSpaceDucksVariant() ? spaceDucks : death,
-  bigAnimals,
-  domesticAnimals,
-  freshFood,
-  processedFood,
-  sport,
-  clothing,
-  weatherAndEarth,
+  animals,
+  foodAndDrink,
+  sportActivityAndMusic,
+  clothingAndAccessories,
+  nature + weatherAndEarth,
+  vehicles + travelAndPlaces,
+  allObjects,
   flags,
 ];
 
