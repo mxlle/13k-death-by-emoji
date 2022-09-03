@@ -51,12 +51,10 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
 
 function setGameOverSection(isGameOver) {
   gameOverSection.classList.toggle("hidden", !isGameOver);
-  gameOverSection.classList.toggle(
-    "negative",
-    globals.practiceMode
-      ? globals.correctCount < globals.shuffledEmojis.length
-      : getScore() <= 0
-  );
+  const isNegative = globals.practiceMode
+    ? globals.correctCount < globals.shuffledEmojis.length
+    : getScore() <= 0;
+  gameOverSection.classList.toggle("negative", isNegative);
   newGameScreen.classList.toggle("has-game-over-section", isGameOver);
   gameOverSection.innerHTML = "";
   if (isGameOver) {
