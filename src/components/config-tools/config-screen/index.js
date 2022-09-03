@@ -5,28 +5,26 @@ import { getEmojiPool, globals, isEndOfGame, setLevel } from "../../../globals";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
 import { getPointsByAction, newGame, ScoreAction } from "../../../game-logic";
-import {
-  createEmojiSelectionButton,
-  showEmojiSelectionScreen,
-} from "../emoji-selection";
+import { createEmojiSelectionButton } from "../emoji-selection";
 import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
 import { getLanguagesText, toggleConfig } from "../voice-config";
 import { createModeSwitcher } from "../../mode-switcher";
+import { createNumberInputComponent } from "../../number-input";
 
 const MIN_GOAL = 3;
 const MAX_GOAL = 20;
 
-let configScreen, dialog, goalInput;
+let configScreen, dialog, goalInputComponent;
 let blindButton, languageButton, scoreModifiers;
 
 export async function showConfigScreen() {
   if (!configScreen) createConfigScreen();
   if (!dialog)
     dialog = createDialog(configScreen, "Load game", "Configuration");
-  goalInput.value = globals.level;
+  goalInputComponent.input.value = globals.level;
 
   updateAll();
 
@@ -82,13 +80,13 @@ function createConfigScreen() {
     cssClass: "goal-input",
     text: "Number of emojis per game:",
   });
-  goalInput = createElement({ tag: "input" });
-  goalInput.type = "number";
-  goalInput.min = MIN_GOAL;
-  goalInput.max = MAX_GOAL;
-  goalInput.addEventListener("blur", validateGoal);
-  goalInput.addEventListener("change", updateScoreModifiers);
-  goalContainer.appendChild(goalInput);
+  goalInputComponent = createNumberInputComponent({
+    min: MIN_GOAL,
+    max: MAX_GOAL,
+    onBlur: validateGoal,
+    onChange: updateScoreModifiers,
+  });
+  goalContainer.appendChild(goalInputComponent.container);
 
   scoreModifiers = createElement({ cssClass: "score-modifiers" });
   updateScoreModifiers();
@@ -104,13 +102,12 @@ function createConfigScreen() {
 }
 
 function validateGoal() {
-  const goal = goalInput.value;
-  const max = Math.min(MAX_GOAL, splitEmojis(getEmojiPool()).length);
-  if (goal < MIN_GOAL) {
-    goalInput.value = MIN_GOAL;
-  } else if (goal > max) {
-    goalInput.value = max;
-  }
+  if (!goalInputComponent) return;
+  goalInputComponent.input.max = Math.min(
+    MAX_GOAL,
+    splitEmojis(getEmojiPool()).length
+  );
+  goalInputComponent.validate();
   updateScoreModifiers();
 }
 
@@ -142,5 +139,7 @@ function updateLanguageButtonText() {
 }
 
 function getGoalInputValue() {
-  return goalInput?.value ? Number(goalInput.value) : globals.level;
+  return goalInputComponent?.input.value
+    ? Number(goalInputComponent.input.value)
+    : globals.level;
 }

@@ -82,6 +82,7 @@ button.icon-button {
   white-space: nowrap;
   font-size: 0.75rem;
   color: #ccc;
+  transform: scale(1);
   transition: transform 0.3s;
 
   @include hover {
