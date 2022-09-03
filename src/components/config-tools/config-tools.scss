@@ -1,34 +1,10 @@
 @import "../../theme";
 
 .config-tools {
-  display: grid;
-  grid-template-columns: repeat(6, minmax(3rem, min-content));
+  display: flex;
   gap: 0.5rem;
+  margin-left: 0.5rem;
   align-items: center;
-  justify-items: start;
-
-  button {
-    background: none;
-    border: none;
-    padding: 0.5rem;
-    white-space: nowrap;
-    font-size: 0.75rem;
-    color: #ccc;
-    transition: transform 0.3s;
-
-    @include hover {
-      transform: scale(1.2);
-    }
-  }
-
-  input {
-    background: none;
-    color: white;
-    border: 1px solid $main-color;
-    width: 6ch;
-    height: 1rem;
-    text-align: center;
-  }
 
   .score-modifiers {
     white-space: nowrap;

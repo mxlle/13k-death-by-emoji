@@ -114,16 +114,19 @@ function getScoreForAction(action) {
   return getPointsByAction(action) * comboMultiplier;
 }
 
-export function getPointsByAction(action) {
+export function getPointsByAction(action, level) {
   let points = 0,
     modifier = 1;
+
+  level = level || globals.level;
+
   switch (action) {
     case ScoreAction.CORRECT:
-      points = globals.level;
+      points = level;
       modifier = getConfigScoreModifier(true);
       break;
     case ScoreAction.WRONG:
-      points = -1 * globals.level;
+      points = -1 * level;
       modifier = getConfigScoreModifier();
       break;
   }

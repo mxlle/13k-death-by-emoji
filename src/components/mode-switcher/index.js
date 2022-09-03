@@ -6,18 +6,21 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
-import { newGame } from "../../game-logic";
 
-export function createModeSwitcher() {
-  const modeSwitcher = createElement({ cssClass: "mode-switcher" });
+export function createModeSwitcher(onModeChangeCallback) {
+  const modeSwitcher = createElement({
+    cssClass: "mode-switcher",
+    text: "Mode: ",
+  });
   const infiniteButton = createElement({
     tag: "button",
     text: "Sudden death",
     onClick: () => {
       setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, false);
+      globals.practiceMode = false;
       infiniteButton.classList.add("active");
       practiceButton.classList.remove("active");
-      newGame();
+      if (onModeChangeCallback) onModeChangeCallback();
     },
   });
   const practiceButton = createElement({
@@ -25,9 +28,10 @@ export function createModeSwitcher() {
     text: "Practice",
     onClick: () => {
       setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, true);
+      globals.practiceMode = true;
       infiniteButton.classList.remove("active");
       practiceButton.classList.add("active");
-      newGame();
+      if (onModeChangeCallback) onModeChangeCallback();
     },
   });
 

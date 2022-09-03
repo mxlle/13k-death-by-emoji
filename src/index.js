@@ -5,7 +5,6 @@ import { createConfigTools } from "./components/config-tools";
 import { createScoreboard } from "./components/score";
 import { createVoiceSelector } from "./components/config-tools/voice-config";
 import { createElement } from "./utils/html-utils";
-import { createModeSwitcher } from "./components/mode-switcher";
 import { initGameData } from "./game-logic";
 import { createGameField } from "./components/game-field";
 
@@ -27,8 +26,6 @@ function init() {
   document.body.appendChild(header);
 
   document.body.appendChild(createGameField());
-
-  document.body.appendChild(createModeSwitcher());
 }
 
 // INIT

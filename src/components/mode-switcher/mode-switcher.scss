@@ -1,15 +1,6 @@
 @import "../../theme";
 
 .mode-switcher {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 1rem;
-
   button {
     $color: #aaa;
     padding: 0.25rem 0.5rem;
@@ -17,6 +8,7 @@
     border-color: $color;
     background: rgba($color, 0.1);
     white-space: nowrap;
+    font-size: 27px;
 
     &:hover {
       background: rgba($color, 0.2);
