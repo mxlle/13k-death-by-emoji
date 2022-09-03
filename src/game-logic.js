@@ -139,10 +139,7 @@ function getConfigScoreModifier(positive) {
   if (globals.blindMode) {
     modifier *= 3;
   }
-  if (globals.mute) {
-    modifier *= 1.5;
-  }
-  if (!globals.blindMode && !globals.mute && !positive) {
+  if (!globals.blindMode && !positive) {
     modifier *= 2;
   }
 

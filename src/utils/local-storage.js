@@ -6,7 +6,6 @@ export const LocalStorageKey = {
   VOICES: "selectedVoices",
   LEVEL: "currentLevel",
   EMOJI_POOL: "currentEmojiPool",
-  MUTE: "mute",
   BLIND: "blind",
   HIGH_SCORE: "highScore",
   HIGH_SCORE_COUNT: "highScoreCount",

@@ -20,7 +20,7 @@ const MIN_GOAL = 3;
 const MAX_GOAL = 20;
 
 let configScreen, dialog, goalInput;
-let muteButton, blindButton, languageButton, scoreModifiers;
+let blindButton, languageButton, scoreModifiers;
 
 export async function showConfigScreen() {
   if (!configScreen) createConfigScreen();
@@ -43,7 +43,6 @@ function onConfigSubmitted() {
 function updateAll() {
   updateScoreModifiers();
   updateBlindButtonText();
-  updateMuteButtonText();
   updateLanguageButtonText();
 }
 
@@ -53,20 +52,6 @@ function createConfigScreen() {
     onClick: (event) => event.stopPropagation(),
   });
   configScreen.appendChild(createEmojiSelectionButton(() => validateGoal()));
-  muteButton = createElement({
-    tag: "button",
-    cssClass: "mute-button icon-button",
-    onClick: () => {
-      globals.mute = !globals.mute;
-      setLocalStorageItem(LocalStorageKey.MUTE, !!globals.mute);
-      updateMuteButtonText();
-      updateScoreModifiers();
-      if (globals.mute && globals.blindMode) {
-        blindButton.click();
-      }
-    },
-  });
-  updateMuteButtonText();
 
   blindButton = createElement({
     tag: "button",
@@ -76,9 +61,6 @@ function createConfigScreen() {
       setLocalStorageItem(LocalStorageKey.BLIND, !!globals.blindMode);
       updateBlindButtonText();
       updateScoreModifiers();
-      if (globals.mute && globals.blindMode) {
-        muteButton.click();
-      }
     },
   });
   updateBlindButtonText();
@@ -112,7 +94,6 @@ function createConfigScreen() {
   updateScoreModifiers();
 
   const iconButtons = createElement({ cssClass: "icon-buttons" });
-  iconButtons.appendChild(muteButton);
   iconButtons.appendChild(blindButton);
   iconButtons.appendChild(languageButton);
 
@@ -142,14 +123,6 @@ function updateScoreModifiers() {
       ScoreAction.CORRECT,
       getGoalInputValue()
     )}&nbsp; ❌: ${getPointsByAction(ScoreAction.WRONG, getGoalInputValue())}`;
-  }
-}
-
-function updateMuteButtonText() {
-  if (globals.practiceMode) {
-    muteButton.innerHTML = globals.mute ? "🔇" : "🔊";
-  } else {
-    muteButton.innerHTML = globals.mute ? "🔇&nbsp; x1.5" : "🔊&nbsp; x1";
   }
 }
 

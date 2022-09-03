@@ -24,7 +24,6 @@ const defaultGlobals = {
   shuffledEmojis: [],
   correctMatches: [],
   blindMode: getLocalStorageItem(LocalStorageKey.BLIND),
-  mute: getLocalStorageItem(LocalStorageKey.MUTE),
   level: getLevel(),
 };
 
@@ -36,7 +35,6 @@ export function resetGlobals() {
   Object.assign(globals, defaultGlobals);
   globals.practiceMode = getLocalStorageItem(LocalStorageKey.PRACTICE_MODE);
   globals.blindMode = getLocalStorageItem(LocalStorageKey.BLIND);
-  globals.mute = getLocalStorageItem(LocalStorageKey.MUTE);
   globals.level = getLevel();
   globals.queue = [];
 }
