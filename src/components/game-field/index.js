@@ -33,9 +33,6 @@ function createInfo() {
     text: "Listen to the secret emoji sequence and replicate it with the buttons below at the same time.",
   });
 
-  info.appendChild(createElement({ tag: "br" }));
-  info.appendChild(document.createTextNode("Try the blind mode if you dare. "));
-
   if (!globals.practiceMode) {
     info.appendChild(createElement({ tag: "br" }));
     info.appendChild(

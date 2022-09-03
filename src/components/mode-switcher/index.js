@@ -8,40 +8,31 @@ import {
 } from "../../utils/local-storage";
 
 export function createModeSwitcher(onModeChangeCallback) {
-  const modeSwitcher = createElement({
-    cssClass: "mode-switcher",
-  });
-  const infiniteButton = createElement({
+  const switchButton = createElement({
     tag: "button",
-    text: "Sudden death",
+    cssClass: "icon-button",
     onClick: () => {
-      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, false);
-      globals.practiceMode = false;
-      infiniteButton.classList.add("active");
-      practiceButton.classList.remove("active");
-      if (onModeChangeCallback) onModeChangeCallback();
-    },
-  });
-  const practiceButton = createElement({
-    tag: "button",
-    text: "Practice",
-    onClick: () => {
-      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, true);
-      globals.practiceMode = true;
-      infiniteButton.classList.remove("active");
-      practiceButton.classList.add("active");
+      globals.practiceMode = !globals.practiceMode;
+      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, globals.practiceMode);
+      adjustText();
       if (onModeChangeCallback) onModeChangeCallback();
     },
   });
 
-  if (globals.practiceMode) {
-    practiceButton.classList.add("active");
-  } else {
-    infiniteButton.classList.add("active");
+  const modeInfo = createElement({
+    cssClass: "mode-info",
+  });
+
+  adjustText();
+
+  function adjustText() {
+    switchButton.innerHTML = globals.practiceMode
+      ? "🐣 Practice"
+      : "☠️ Sudden death";
+    modeInfo.innerHTML = globals.practiceMode
+      ? "Definite sequence that can be repeated any number of times."
+      : `Infinite sequence of emojis, you cannot fall behind more than ${globals.slots} slots or you'll die.`;
   }
 
-  modeSwitcher.appendChild(infiniteButton);
-  modeSwitcher.appendChild(practiceButton);
-
-  return modeSwitcher;
+  return { switchButton, modeInfo };
 }

@@ -100,12 +100,15 @@ function createConfigScreen() {
 
   addConfigEntry("Number of emojis per game:", goalInputComponent.container);
 
-  addConfigEntry("Play mode:", createModeSwitcher(updateAll));
+  const { switchButton, modeInfo } = createModeSwitcher(updateAll);
+
+  addConfigEntry("Play mode:", switchButton);
+  addConfigEntry("", modeInfo, "info");
 
   scoreModifiers = createElement({ cssClass: "score-modifiers" });
   updateScoreModifiers();
 
-  addConfigEntry("Resulting score:", scoreModifiers, "sudden-death-only");
+  addConfigEntry("Resulting score:", scoreModifiers, "sudden-death-only info");
 }
 
 function validateGoal() {
@@ -136,8 +139,7 @@ function updateBlindButtonText() {
 
 function updateLanguageButtonText() {
   const languages = getLanguagesText() ?? "";
-  const languagesText = languages.length > 0 ? `&nbsp; (${languages})` : "";
-  languageButton.innerHTML = `🌐${languagesText}`;
+  languageButton.innerHTML = languages.length > 0 ? `${languages}` : "🌐";
 }
 
 function getGoalInputValue() {

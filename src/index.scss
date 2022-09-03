@@ -84,7 +84,6 @@ button {
 button.icon-button {
   @extend .no-background-button;
   padding: 0.5rem;
-  white-space: nowrap;
   font-size: 0.75rem;
   color: #ccc;
   transform: scale(1);

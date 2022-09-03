@@ -1,24 +1,8 @@
 @import "../../theme";
 
-.mode-switcher {
-  button {
-    $color: #aaa;
-    padding: 0.25rem 0.5rem;
-    color: $color;
-    border-color: $color;
-    background: rgba($color, 0.1);
-    white-space: nowrap;
-    font-size: 27px;
-
-    &:hover {
-      background: rgba($color, 0.2);
-    }
-
-    &.active {
-      color: white;
-      border-color: mix(white, $life-color);
-      background: rgba($life-color, 0.5);
-      pointer-events: none;
-    }
-  }
+.mode-info {
+  font-size: 1rem;
+  font-style: italic;
+  color: #ccc;
+  max-width: 400px;
 }
