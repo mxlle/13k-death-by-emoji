@@ -2,12 +2,19 @@ import { createElement } from "../../utils/html-utils";
 
 import "./number-input.scss";
 
-export function createNumberInputComponent({ min, max, onChange, onBlur }) {
+export function createNumberInputComponent({
+  value,
+  min,
+  max,
+  onChange,
+  onBlur,
+}) {
   const numberInputContainer = createElement({
     cssClass: "number-input-container",
   });
   const numberInput = createElement({ tag: "input" });
   numberInput.type = "number";
+  numberInput.value = value;
   min && (numberInput.min = min);
   max && (numberInput.max = max);
   onChange && numberInput.addEventListener("change", onChange);
@@ -17,21 +24,34 @@ export function createNumberInputComponent({ min, max, onChange, onBlur }) {
     tag: "button",
     cssClass: "icon-button",
     text: "⬇️",
-    onClick: () => {
-      if (!min || numberInput.value > min) {
-        numberInput.value--;
-      }
-    },
   });
   const increaseButton = createElement({
     tag: "button",
     cssClass: "icon-button",
     text: "⬆️",
-    onClick: () => {
-      if (!max || numberInput.value < max) {
-        numberInput.value++;
-      }
-    },
+  });
+
+  function checkDisabledStates() {
+    decreaseButton.disabled = min && numberInput.value <= min;
+    increaseButton.disabled = max && numberInput.value >= max;
+  }
+
+  checkDisabledStates();
+
+  decreaseButton.addEventListener("click", () => {
+    if (!min || numberInput.value > min) {
+      numberInput.value--;
+      onChange && onChange();
+    }
+    checkDisabledStates();
+  });
+
+  increaseButton.addEventListener("click", () => {
+    if (!max || numberInput.value < max) {
+      numberInput.value++;
+      onChange && onChange();
+    }
+    checkDisabledStates();
   });
 
   numberInputContainer.appendChild(decreaseButton);
@@ -41,20 +61,22 @@ export function createNumberInputComponent({ min, max, onChange, onBlur }) {
   return {
     container: numberInputContainer,
     input: numberInput,
-    validate: () => validateInput(numberInput),
+    validate: () => validateInput(numberInput, checkDisabledStates),
   };
 }
 
-function validateInput(numberInput) {
-  const goal = numberInput.value;
-  const min = numberInput.min;
-  const max = numberInput.max;
+function validateInput(numberInput, checkDisabledStates) {
+  const value = Number(numberInput.value);
+  const min = Number(numberInput.min);
+  const max = Number(numberInput.max);
 
-  if (min && goal < min) {
+  if (min && value < min) {
     numberInput.value = min;
   }
 
-  if (max && goal > max) {
+  if (max && value > max) {
     numberInput.value = max;
   }
+
+  checkDisabledStates();
 }

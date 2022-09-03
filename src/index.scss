@@ -65,6 +65,11 @@ button {
       background-color: rgba(white, 0.2);
     }
   }
+
+  &[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 }
 
 .no-background-button {

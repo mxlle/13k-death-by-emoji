@@ -81,6 +81,7 @@ function createConfigScreen() {
     text: "Number of emojis per game:",
   });
   goalInputComponent = createNumberInputComponent({
+    value: globals.level,
     min: MIN_GOAL,
     max: MAX_GOAL,
     onBlur: validateGoal,
