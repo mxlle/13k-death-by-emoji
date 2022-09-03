@@ -59,7 +59,7 @@ button {
   }
 
   &.secondary-button {
-    border: 1px solid white;
+    border: 1px solid #ccc;
     background-color: rgba(white, 0.1);
 
     @include hover {
