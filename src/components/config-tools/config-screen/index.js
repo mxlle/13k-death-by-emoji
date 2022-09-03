@@ -28,6 +28,11 @@ export async function showConfigScreen() {
 
   updateAll();
 
+  configScreen.classList.toggle(
+    "is-overflowing",
+    configScreen.scrollHeight > configScreen.clientHeight
+  );
+
   const submit = await dialog.open();
   if (submit) onConfigSubmitted();
 
@@ -125,7 +130,7 @@ function validateGoal() {
 
 function updateScoreModifiers() {
   if (globals.practiceMode) {
-    scoreModifiers.innerHTML = "";
+    scoreModifiers.innerHTML = "❌";
   } else {
     if (isEndOfGame()) return;
     scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(

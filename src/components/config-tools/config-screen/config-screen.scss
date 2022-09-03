@@ -8,13 +8,18 @@
   grid-auto-rows: min-content;
   align-items: center;
   align-content: center;
-  flex-direction: column;
   gap: 1rem 1.5rem;
   padding: 0 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  &.is-overflowing {
+    align-content: start;
+  }
 
   &.practice-mode {
     .sudden-death-only {
-      display: none;
+      opacity: 0;
     }
   }
 
@@ -53,9 +58,5 @@
     padding: 0.5rem;
     text-align: center;
     width: 2ch;
-  }
-
-  .score-modifiers {
-    margin: 2rem 0;
   }
 }
