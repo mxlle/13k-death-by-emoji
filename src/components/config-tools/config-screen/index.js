@@ -23,7 +23,6 @@ export async function showConfigScreen() {
   if (!dialog) dialog = createDialog(configScreen, "Start game");
   setConfigValue(getEmojiPool());
   goalInput.value = globals.level;
-  textarea.focus();
 
   const submit = await dialog.open();
   if (submit) onConfigSubmitted();

@@ -12,33 +12,32 @@ export function createDialog(innerElement, submitButtonText) {
 
   const buttons = createElement({ cssClass: "buttons" });
 
-  const afterClosed = new Promise((resolve, _reject) => {
-    const cancelButton = createElement({
-      tag: "button",
-      cssClass: "secondary-button",
-      text: "Cancel",
-      onClick: () => {
-        document.body.removeChild(dialog);
-        resolve(false);
-      },
-    });
-    buttons.appendChild(cancelButton);
-    const submitButton = createElement({
-      tag: "button",
-      text: submitButtonText,
-      onClick: () => {
-        document.body.removeChild(dialog);
-        resolve(true);
-      },
-    });
-    buttons.appendChild(submitButton);
-    dialog.appendChild(buttons);
+  const cancelButton = createElement({
+    tag: "button",
+    cssClass: "secondary-button",
+    text: "Cancel",
+    onClick: () => {
+      document.body.removeChild(dialog);
+    },
   });
+  buttons.appendChild(cancelButton);
+  const submitButton = createElement({
+    tag: "button",
+    text: submitButtonText,
+    onClick: () => {
+      document.body.removeChild(dialog);
+    },
+  });
+  buttons.appendChild(submitButton);
+  dialog.appendChild(buttons);
 
   return {
     open: () => {
       document.body.appendChild(dialog);
-      return afterClosed;
+      return new Promise((resolve, _reject) => {
+        cancelButton.addEventListener("click", () => resolve(false));
+        submitButton.addEventListener("click", () => resolve(true));
+      });
     },
   };
 }
