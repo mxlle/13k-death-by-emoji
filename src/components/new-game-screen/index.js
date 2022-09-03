@@ -48,6 +48,7 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
 function setGameOverSection(isGameOver) {
   gameOverSection.classList.toggle("hidden", !isGameOver);
   newGameScreen.classList.toggle("has-game-over-section", isGameOver);
+  gameOverSection.innerHTML = "";
   if (isGameOver) {
     gameOverSection.appendChild(
       createElement({ text: getResultAndRecordText() })
@@ -57,8 +58,6 @@ function setGameOverSection(isGameOver) {
         createElement({ text: getScoreAndHighScoreText() })
       );
     }
-  } else {
-    gameOverSection.innerHTML = "";
   }
 }
 
