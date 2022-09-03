@@ -4,6 +4,9 @@ import { speak } from "./speech/speech";
 import { getRandomItem } from "./utils/array-utils";
 import { shuffleArray } from "./utils/random-utils";
 import { splitEmojis } from "./emojis/emoji-util";
+import { waitForPromiseAndTime } from "./utils/promise-utils";
+
+const WAIT_TIME = 1200;
 
 const BASE_SCORE_MULTIPLIER = 10;
 export const ScoreAction = {
@@ -33,7 +36,7 @@ export async function playPracticeSequence(onNextEmoji) {
 
     if (onNextEmoji) onNextEmoji();
 
-    await speakWithVoice(text);
+    await waitForPromiseAndTime(speakWithVoice(text), WAIT_TIME);
   }
 
   globals.isSpeaking = false;
@@ -49,7 +52,7 @@ export async function playInfiniteSequence(onNextEmoji) {
 
     if (onNextEmoji) onNextEmoji();
 
-    await speakWithVoice(text);
+    await waitForPromiseAndTime(speakWithVoice(text), WAIT_TIME);
   }
 
   globals.isSpeaking = false;
