@@ -9,8 +9,16 @@ import {
 import { getLanguagesText, toggleConfig } from "./voice-config";
 import { showConfigScreen } from "./config-screen";
 import { getPointsByAction, ScoreAction } from "../../game-logic";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 let muteButton, blindButton, languageButton, scoreModifiers;
+
+pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+  updateScoreModifiers();
+  updateBlindButtonText();
+  updateMuteButtonText();
+  updateLanguageButtonText();
+});
 
 export function createConfigTools() {
   const configTools = createElement({ cssClass: "config-tools" });
@@ -82,11 +90,15 @@ export function createConfigTools() {
 }
 
 export function updateScoreModifiers() {
-  if (isEndOfGame()) return;
-  const combo = globals.streak > 1 ? `&nbsp; Combo: x${globals.streak}` : "";
-  scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(
-    ScoreAction.CORRECT
-  )}&nbsp; ❌: ${getPointsByAction(ScoreAction.WRONG)}${combo}`;
+  if (globals.practiceMode) {
+    scoreModifiers.innerHTML = "";
+  } else {
+    if (isEndOfGame()) return;
+    const combo = globals.streak > 1 ? `&nbsp; Combo: x${globals.streak}` : "";
+    scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(
+      ScoreAction.CORRECT
+    )}&nbsp; ❌: ${getPointsByAction(ScoreAction.WRONG)}${combo}`;
+  }
 }
 
 function updateMuteButtonText() {

@@ -5,11 +5,16 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 let scoreboard,
   highScore,
   highScoreCount,
   score = 0;
+
+pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+  updateScoreboard();
+});
 
 export function createScoreboard() {
   scoreboard = createElement({ cssClass: "scoreboard" });

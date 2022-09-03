@@ -5,7 +5,11 @@ import { globals, isEndOfGame } from "../../globals";
 import "./storyteller.scss";
 import { updateHighScore } from "../score";
 import { updateSecretSequenceComponent } from "../secret-sequence";
-import { playInfiniteSequence, playPracticeSequence } from "../../game-logic";
+import {
+  playInfiniteSequence,
+  playPracticeSequence,
+  newGame,
+} from "../../game-logic";
 
 let storytellerButton;
 
@@ -22,7 +26,7 @@ export function createStorytellerButton() {
 
 async function onPlayButtonClick() {
   if (isEndOfGame()) {
-    window.location.reload();
+    newGame();
     return;
   }
 

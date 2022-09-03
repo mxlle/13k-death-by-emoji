@@ -1,10 +1,11 @@
-import { getEmojiPool, globals } from "./globals";
+import { getEmojiPool, globals, resetGlobals } from "./globals";
 import { getCurrentVoice } from "./components/config-tools/voice-config";
 import { speak } from "./speech/speech";
 import { getRandomItem } from "./utils/array-utils";
 import { shuffleArray } from "./utils/random-utils";
 import { splitEmojis } from "./emojis/emoji-util";
 import { waitForPromiseAndTime } from "./utils/promise-utils";
+import { pubSubService, PubSubEvent } from "./utils/pub-sub-service";
 
 const WAIT_TIME = 1200;
 
@@ -13,6 +14,13 @@ export const ScoreAction = {
   CORRECT: "correct",
   WRONG: "wrong",
 };
+
+export function newGame() {
+  document.body.classList.remove("game-over");
+  resetGlobals();
+  initGameData();
+  pubSubService.publish(PubSubEvent.NEW_GAME);
+}
 
 export function initGameData() {
   globals.emojiSet = shuffleArray(splitEmojis(getEmojiPool())).slice(
@@ -57,7 +65,7 @@ export async function playInfiniteSequence(onNextEmoji) {
 
   globals.isSpeaking = false;
   globals.endOfGame = true;
-  document.body.classList.add("end-of-game");
+  document.body.classList.add("game-over");
 }
 
 export function evaluatePlay(emoji) {

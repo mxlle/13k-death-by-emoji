@@ -11,6 +11,7 @@ import {
 import { removeDuplicates } from "../../../utils/array-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
+import { newGame } from "../../../game-logic";
 
 const MIN_GOAL = 3;
 const MAX_GOAL = 20;
@@ -33,7 +34,7 @@ function onConfigSubmitted() {
   const goal = Number(goalInput.value);
   setEmojiPool(config);
   setLevel(goal);
-  window.location.reload();
+  newGame();
 }
 
 function createConfigScreen() {

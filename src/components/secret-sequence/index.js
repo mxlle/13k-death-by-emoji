@@ -2,8 +2,13 @@ import { globals, isGameActive } from "../../globals";
 import { createElement } from "../../utils/html-utils";
 
 import "./secret-sequence.scss";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 let domElement;
+
+pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+  updateSecretSequenceComponent();
+});
 
 export function createSecretSequenceComponent() {
   domElement = createElement({

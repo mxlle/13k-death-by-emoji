@@ -7,7 +7,7 @@ import { death1, spaceDucks } from "./emojis/sets";
 
 export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 6;
 
-export const globals = {
+const defaultGlobals = {
   practiceMode: getLocalStorageItem(LocalStorageKey.PRACTICE_MODE),
   slots: 3,
   queue: [],
@@ -27,6 +27,19 @@ export const globals = {
   mute: getLocalStorageItem(LocalStorageKey.MUTE),
   level: getLevel(),
 };
+
+export const globals = {
+  ...defaultGlobals,
+};
+
+export function resetGlobals() {
+  Object.assign(globals, defaultGlobals);
+  globals.practiceMode = getLocalStorageItem(LocalStorageKey.PRACTICE_MODE);
+  globals.blindMode = getLocalStorageItem(LocalStorageKey.BLIND);
+  globals.mute = getLocalStorageItem(LocalStorageKey.MUTE);
+  globals.level = getLevel();
+  globals.queue = [];
+}
 
 export function isGameActive() {
   return globals.started && !isEndOfGame();
