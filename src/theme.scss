@@ -1,8 +1,9 @@
-$main-color: gold;
+$main-color: #5599ff;
 $secondary-color: cyan;
 $death-color: #992244;
 $life-color: #227744;
 $font-family: sans-serif;
+$border-radius: 0.4rem;
 
 @mixin hover {
   @media (hover: hover) {

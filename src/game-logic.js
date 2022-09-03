@@ -45,9 +45,6 @@ export function initGameData() {
 }
 
 export async function playPracticeSequence(onNextEmoji) {
-  globals.started = true;
-  globals.isSpeaking = true;
-
   for (let i = globals.clickCounter; i < globals.shuffledEmojis.length; i++) {
     const text = globals.shuffledEmojis[i];
     globals.currentIndex = i;
@@ -58,14 +55,9 @@ export async function playPracticeSequence(onNextEmoji) {
   }
 
   increaseRate();
-
-  globals.isSpeaking = false;
 }
 
 export async function playInfiniteSequence(onNextEmoji) {
-  globals.started = true;
-  globals.isSpeaking = true;
-
   while (globals.queue.length < globals.slots) {
     const text = getRandomItem(globals.emojiSet);
     globals.queue.push(text);
@@ -80,7 +72,6 @@ export async function playInfiniteSequence(onNextEmoji) {
     await waitForPromiseAndTime(speakWithVoice(text, rate), waitTime);
   }
 
-  globals.isSpeaking = false;
   globals.endOfGame = true;
   document.body.classList.add("game-over");
 }

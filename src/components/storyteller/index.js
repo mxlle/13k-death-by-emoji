@@ -39,6 +39,11 @@ async function onPlayButtonClick() {
     }
   };
 
+  globals.started = true;
+  globals.isSpeaking = true;
+
+  updateStorytellerButtonText();
+
   if (globals.practiceMode) {
     await playPracticeSequence(onNextEmoji);
   } else {
@@ -46,16 +51,23 @@ async function onPlayButtonClick() {
     updateHighScore();
   }
 
+  globals.isSpeaking = false;
+
   updateSecretSequenceComponent();
+  updateStorytellerButtonText();
   storytellerButton.classList.remove("activated");
   storytellerButton.removeAttribute("disabled");
   updateStorytellerButtonText();
 }
 
 export function updateStorytellerButtonText() {
-  if (isEndOfGame()) {
-    storytellerButton.innerHTML = "Play again";
+  if (globals.isSpeaking) {
+    storytellerButton.innerHTML = `🗣️ Transmitting...`;
   } else {
-    storytellerButton.innerHTML = `🗣️ Replay`;
+    if (isEndOfGame()) {
+      storytellerButton.innerHTML = "Play again";
+    } else {
+      storytellerButton.innerHTML = `🗣️ Replay`;
+    }
   }
 }

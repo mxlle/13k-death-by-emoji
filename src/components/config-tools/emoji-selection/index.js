@@ -88,7 +88,7 @@ function createAdventureButtons(adventures) {
   adventures.forEach(({ id, name, emojis }) => {
     const btn = createElement({
       tag: "button",
-      cssClass: "adventure-btn",
+      cssClass: "adventure-btn secondary-button",
       text: id,
       onClick: () => {
         setConfigValue(emojis);

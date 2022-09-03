@@ -52,6 +52,7 @@ button {
   border: 1px solid $main-color;
   background-color: rgba($main-color, 0.1);
   padding: 1rem 2rem;
+  border-radius: $border-radius;
 
   @include hover {
     background-color: rgba($main-color, 0.2);
