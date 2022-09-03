@@ -7,7 +7,15 @@ import { splitEmojis } from "./emojis/emoji-util";
 import { waitForPromiseAndTime } from "./utils/promise-utils";
 import { pubSubService, PubSubEvent } from "./utils/pub-sub-service";
 
-const WAIT_TIME = 1200;
+const CHANGE_RATE_INTERVAL = 10;
+
+const DEFAULT_WAIT_TIME = 1200;
+const MAX_RATE = 2; // higher seems not supported in Chrome (todo double-check other browsers?)
+const CHANGE_RATE_STEP = 0.1;
+const CHANGE_WAIT_TIME_STEP = 100;
+
+let waitTime = DEFAULT_WAIT_TIME;
+let rate = 1;
 
 const BASE_SCORE_MULTIPLIER = 10;
 export const ScoreAction = {
@@ -19,6 +27,8 @@ export function newGame() {
   document.body.classList.remove("game-over");
   resetGlobals();
   initGameData();
+  waitTime = DEFAULT_WAIT_TIME;
+  rate = 1;
   pubSubService.publish(PubSubEvent.NEW_GAME);
 }
 
@@ -44,8 +54,10 @@ export async function playPracticeSequence(onNextEmoji) {
 
     if (onNextEmoji) onNextEmoji();
 
-    await waitForPromiseAndTime(speakWithVoice(text), WAIT_TIME);
+    await waitForPromiseAndTime(speakWithVoice(text, rate), waitTime);
   }
+
+  increaseRate();
 
   globals.isSpeaking = false;
 }
@@ -57,10 +69,15 @@ export async function playInfiniteSequence(onNextEmoji) {
   while (globals.queue.length < globals.slots) {
     const text = getRandomItem(globals.emojiSet);
     globals.queue.push(text);
+    globals.currentIndex++;
+
+    if (globals.currentIndex % CHANGE_RATE_INTERVAL === 0) {
+      increaseRate();
+    }
 
     if (onNextEmoji) onNextEmoji();
 
-    await waitForPromiseAndTime(speakWithVoice(text), WAIT_TIME);
+    await waitForPromiseAndTime(speakWithVoice(text, rate), waitTime);
   }
 
   globals.isSpeaking = false;
@@ -135,7 +152,14 @@ function getWantedEmoji() {
     : globals.queue.shift();
 }
 
-async function speakWithVoice(text) {
+async function speakWithVoice(text, rate) {
   const voice = getCurrentVoice();
-  await speak(text, voice);
+  await speak(text, voice, rate);
+}
+
+function increaseRate() {
+  rate += CHANGE_RATE_STEP;
+  rate = Math.min(rate, MAX_RATE);
+  waitTime -= CHANGE_WAIT_TIME_STEP;
+  waitTime = Math.max(waitTime, DEFAULT_WAIT_TIME / MAX_RATE);
 }
