@@ -17,7 +17,7 @@ export function initEmojiButtonField(set) {
   const field = createElement({ cssClass: "emoji-field" });
   for (const emoji of set) {
     const button = createEmojiButton(emoji);
-    button.addEventListener("click", (event) =>
+    button.addEventListener("mousedown", (event) =>
       onEmojiClick(emoji, button, event)
     );
     field.appendChild(button);
