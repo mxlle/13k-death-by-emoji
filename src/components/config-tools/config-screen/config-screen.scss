@@ -1,34 +1,43 @@
 .config {
   font-size: 21px;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-auto-rows: min-content;
   align-items: center;
-  justify-content: space-around;
   flex-direction: column;
   gap: 0.5rem;
 
-  .icon-buttons {
-    display: flex;
-    gap: 1rem;
-
-    .icon-button {
-      font-size: 37px;
+  &.practice-mode {
+    .sudden-death-only {
+      display: none;
     }
   }
 
-  .goal-input {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+  .label {
+    text-align: right;
+    font-weight: bold;
 
-    input {
-      display: inline-block;
-      background: black;
-      color: white;
-      font-size: 37px;
-      padding: 7px;
-      text-align: right;
+    & + * {
+      text-align: left;
     }
+  }
+
+  .icon-button:not(.emoji-selection-btn) {
+    font-size: 37px;
+  }
+
+  .emoji-selection-btn {
+    justify-self: start;
+  }
+
+  input {
+    display: inline-block;
+    background: black;
+    color: white;
+    font-size: 37px;
+    padding: 7px;
+    text-align: right;
+    width: 2ch;
   }
 
   .score-modifiers {

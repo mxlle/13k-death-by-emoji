@@ -32,7 +32,7 @@ function updateEmojiSelectionButtonText() {
       emojiContainer.appendChild(createElement({ text: emoji }))
     );
   emojiSelectionButton.appendChild(emojiContainer);
-  emojiSelectionButton.appendChild(createElement({ text: "Change emoji set" }));
+  emojiSelectionButton.appendChild(createElement({ text: "Click to change" }));
 }
 
 async function showEmojiSelectionScreen() {

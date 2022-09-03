@@ -42,6 +42,12 @@ function updateAll() {
   updateScoreModifiers();
   updateBlindButtonText();
   updateLanguageButtonText();
+
+  if (globals.practiceMode) {
+    configScreen.classList.add("practice-mode");
+  } else {
+    configScreen.classList.remove("practice-mode");
+  }
 }
 
 function createConfigScreen() {
@@ -49,7 +55,11 @@ function createConfigScreen() {
     cssClass: "config",
     onClick: (event) => event.stopPropagation(),
   });
-  configScreen.appendChild(createEmojiSelectionButton(() => validateGoal()));
+
+  addConfigEntry(
+    "Emoji set:",
+    createEmojiSelectionButton(() => validateGoal())
+  );
 
   blindButton = createElement({
     tag: "button",
@@ -62,6 +72,8 @@ function createConfigScreen() {
     },
   });
   updateBlindButtonText();
+
+  addConfigEntry("Method of transmission:", blindButton);
 
   languageButton = createElement({
     tag: "button",
@@ -76,10 +88,8 @@ function createConfigScreen() {
   });
   updateLanguageButtonText();
 
-  const goalContainer = createElement({
-    cssClass: "goal-input",
-    text: "Number of emojis per game:",
-  });
+  addConfigEntry("Languages:", languageButton);
+
   goalInputComponent = createNumberInputComponent({
     value: globals.level,
     min: MIN_GOAL,
@@ -87,19 +97,15 @@ function createConfigScreen() {
     onBlur: validateGoal,
     onChange: updateScoreModifiers,
   });
-  goalContainer.appendChild(goalInputComponent.container);
+
+  addConfigEntry("Number of emojis per game:", goalInputComponent.container);
+
+  addConfigEntry("Play mode:", createModeSwitcher(updateAll));
 
   scoreModifiers = createElement({ cssClass: "score-modifiers" });
   updateScoreModifiers();
 
-  const iconButtons = createElement({ cssClass: "icon-buttons" });
-  iconButtons.appendChild(blindButton);
-  iconButtons.appendChild(languageButton);
-
-  configScreen.appendChild(iconButtons);
-  configScreen.appendChild(goalContainer);
-  configScreen.appendChild(createModeSwitcher(updateAll));
-  configScreen.appendChild(scoreModifiers);
+  addConfigEntry("Resulting score:", scoreModifiers, "sudden-death-only");
 }
 
 function validateGoal() {
@@ -125,22 +131,31 @@ function updateScoreModifiers() {
 }
 
 function updateBlindButtonText() {
-  if (globals.practiceMode) {
-    blindButton.innerHTML = globals.blindMode ? "🙈" : "👁️";
-  } else {
-    blindButton.innerHTML = globals.blindMode ? "🙈&nbsp; x3" : "👁️&nbsp; x1";
-  }
+  blindButton.innerHTML = globals.blindMode ? "🗣️" : "🗣️ + 👁️";
 }
 
 function updateLanguageButtonText() {
   const languages = getLanguagesText() ?? "";
-  const langCount = languages.split(",").length;
-  languageButton.innerHTML = `🌐&nbsp; (${langCount || 1})`;
-  languageButton.setAttribute("title", getLanguagesText());
+  const languagesText = languages.length > 0 ? `&nbsp; (${languages})` : "";
+  languageButton.innerHTML = `🌐${languagesText}`;
 }
 
 function getGoalInputValue() {
   return goalInputComponent?.input.value
     ? Number(goalInputComponent.input.value)
     : globals.level;
+}
+
+function addConfigEntry(label, element, cssClass) {
+  configScreen.appendChild(
+    createElement({
+      text: label,
+      cssClass: `label${cssClass ? " " + cssClass : ""}`,
+    })
+  );
+  const valueContainer = createElement({
+    cssClass: `value${cssClass ? " " + cssClass : ""}`,
+  });
+  valueContainer.appendChild(element);
+  configScreen.appendChild(valueContainer);
 }

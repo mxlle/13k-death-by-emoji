@@ -10,7 +10,6 @@ import {
 export function createModeSwitcher(onModeChangeCallback) {
   const modeSwitcher = createElement({
     cssClass: "mode-switcher",
-    text: "Mode: ",
   });
   const infiniteButton = createElement({
     tag: "button",

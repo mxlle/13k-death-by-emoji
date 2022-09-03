@@ -1,7 +1,15 @@
 .number-input-container {
-  display: flex;
-
   button {
     font-size: 1.2rem;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
