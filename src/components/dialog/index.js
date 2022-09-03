@@ -22,21 +22,22 @@ export function createDialog(innerElement, submitButtonText, headerText) {
 
   const buttons = createElement({ cssClass: "buttons" });
 
+  function closeDialog() {
+    dialog.classList.remove("open");
+    setTimeout(() => document.body.removeChild(dialog), 700);
+  }
+
   const cancelButton = createElement({
     tag: "button",
     cssClass: "secondary-button",
     text: "Cancel",
-    onClick: () => {
-      document.body.removeChild(dialog);
-    },
+    onClick: closeDialog,
   });
   buttons.appendChild(cancelButton);
   const submitButton = createElement({
     tag: "button",
     text: submitButtonText,
-    onClick: () => {
-      document.body.removeChild(dialog);
-    },
+    onClick: closeDialog,
   });
   buttons.appendChild(submitButton);
   dialog.appendChild(buttons);
@@ -44,6 +45,7 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   return {
     open: () => {
       document.body.appendChild(dialog);
+      setTimeout(() => dialog.classList.add("open"), 0);
       return new Promise((resolve, _reject) => {
         cancelButton.addEventListener("click", () => resolve(false));
         submitButton.addEventListener("click", () => resolve(true));

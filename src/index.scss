@@ -20,6 +20,8 @@ body {
   background: black;
   color: white;
   font-family: $font-family;
+  user-select: none;
+  overflow: hidden;
 
   &.game-over {
     background: mix($death-color, black, 25%);
