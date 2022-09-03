@@ -10,7 +10,11 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
-import { getResultAndRecordText, getScoreAndHighScoreText } from "../score";
+import {
+  getResultAndRecordText,
+  getScore,
+  getScoreAndHighScoreText,
+} from "../score";
 
 let newGameScreen, dialog, replayButton, playOtherModeButton, gameOverSection;
 
@@ -47,6 +51,12 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
 
 function setGameOverSection(isGameOver) {
   gameOverSection.classList.toggle("hidden", !isGameOver);
+  gameOverSection.classList.toggle(
+    "negative",
+    globals.practiceMode
+      ? globals.correctCount < globals.shuffledEmojis.length
+      : getScore() <= 0
+  );
   newGameScreen.classList.toggle("has-game-over-section", isGameOver);
   gameOverSection.innerHTML = "";
   if (isGameOver) {

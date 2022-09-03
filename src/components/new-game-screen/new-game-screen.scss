@@ -20,6 +20,10 @@
     border: 2px dashed rgba($life-color, 0.5);
     margin-bottom: 2rem;
 
+    &.negative {
+      border-color: rgba($death-color, 0.5);
+    }
+
     &.hidden {
       display: none;
     }

@@ -69,6 +69,10 @@ function getSimpleCount() {
   return countText;
 }
 
+export function getScore() {
+  return score;
+}
+
 export function getScoreAndHighScoreText() {
   return `Your score: ${getSimpleScore()}  🥇 High score: ${highScore}`;
 }
