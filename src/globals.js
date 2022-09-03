@@ -3,7 +3,7 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
-import { death1, spaceDucks } from "./emojis/sets";
+import { preselections } from "./components/config-tools/emoji-selection/preselections";
 
 export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 6;
 
@@ -64,10 +64,13 @@ export function setEmojiPool(emojis) {
 }
 
 export function getEmojiPool() {
-  return (
-    getLocalStorageItem(LocalStorageKey.EMOJI_POOL) ||
-    (isSpaceDucksVariant() ? spaceDucks : death1)
-  );
+  let emojiPool = getLocalStorageItem(LocalStorageKey.EMOJI_POOL);
+  if (!emojiPool) {
+    emojiPool = preselections[0].emojis;
+    setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, preselections[0].name);
+  }
+
+  return emojiPool;
 }
 
 export function isSpaceDucksVariant() {

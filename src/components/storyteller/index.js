@@ -16,7 +16,7 @@ let storytellerButton;
 export function createStorytellerButton() {
   storytellerButton = createElement({
     tag: "button",
-    text: "📢 Start",
+    text: "🗣️ Start",
     cssClass: "storyteller-button",
     onClick: onPlayButtonClick,
   });
@@ -56,6 +56,6 @@ export function updateStorytellerButtonText() {
   if (isEndOfGame()) {
     storytellerButton.innerHTML = "Play again";
   } else {
-    storytellerButton.innerHTML = `📢 Replay`;
+    storytellerButton.innerHTML = `🗣️ Replay`;
   }
 }

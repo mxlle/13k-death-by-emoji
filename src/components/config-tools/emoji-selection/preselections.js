@@ -26,7 +26,20 @@ const _preselections = [
   flags,
 ];
 
-export const preselections = _preselections.map((set) => ({
+const _preselectionsNames = [
+  isSpaceDucksVariant() ? "Space Ducks" : "Death",
+  "Animals",
+  "Food & Drink",
+  "Sport, Activity & Music",
+  "Clothing & Accessories",
+  "Nature & Weather",
+  "Travel, Places & Transport",
+  "Misc. Objects",
+  "Flags",
+];
+
+export const preselections = _preselections.map((set, index) => ({
   id: splitEmojis(set)[0],
+  name: _preselectionsNames[index],
   emojis: set,
 }));

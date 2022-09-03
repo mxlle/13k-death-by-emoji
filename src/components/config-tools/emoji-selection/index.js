@@ -6,6 +6,14 @@ import { getEmojiPool, setEmojiPool } from "../../../globals";
 import { removeDuplicates } from "../../../utils/array-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
+import {
+  getLocalStorageItem,
+  LocalStorageKey,
+  setLocalStorageItem,
+} from "../../../utils/local-storage";
+import { shuffleArray } from "../../../utils/random-utils";
+
+const EMOJI_POOL_CUSTOM_NAME = "Custom";
 
 let emojiSelectionButton, emojiSelectionScreen, dialog, textarea;
 
@@ -26,13 +34,22 @@ export function createEmojiSelectionButton(afterSelectionCallback) {
 function updateEmojiSelectionButtonText() {
   emojiSelectionButton.innerText = "";
   const emojiContainer = createElement({ cssClass: "emoji-container" });
-  splitEmojis(getEmojiPool())
-    .slice(0, 3)
-    .forEach((emoji) =>
-      emojiContainer.appendChild(createElement({ text: emoji }))
-    );
+  const emojis = splitEmojis(getEmojiPool());
+  const emojisForButton = [
+    emojis[0],
+    shuffleArray(emojis.slice(1)).slice(0, 4),
+  ];
+  emojisForButton.forEach((emoji) =>
+    emojiContainer.appendChild(createElement({ text: emoji }))
+  );
   emojiSelectionButton.appendChild(emojiContainer);
-  emojiSelectionButton.appendChild(createElement({ text: "Click to change" }));
+  emojiSelectionButton.appendChild(
+    createElement({
+      text:
+        getLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME) ||
+        EMOJI_POOL_CUSTOM_NAME,
+    })
+  );
 }
 
 async function showEmojiSelectionScreen() {
@@ -68,15 +85,17 @@ function createEmojiSelectionScreen() {
 
 function createAdventureButtons(adventures) {
   const buttonsContainer = createElement({ cssClass: "button-container" });
-  adventures.forEach(({ id, emojis }) => {
+  adventures.forEach(({ id, name, emojis }) => {
     const btn = createElement({
       tag: "button",
       cssClass: "adventure-btn",
       text: id,
       onClick: () => {
         setConfigValue(emojis);
+        setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, name);
       },
     });
+    btn.title = name;
     buttonsContainer.appendChild(btn);
   });
   return buttonsContainer;
@@ -92,4 +111,5 @@ function setConfigValue(value) {
 
 function validateConfig() {
   setConfigValue(getConfigValue());
+  setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, EMOJI_POOL_CUSTOM_NAME);
 }
