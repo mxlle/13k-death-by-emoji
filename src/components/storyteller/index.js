@@ -10,8 +10,13 @@ import {
   playPracticeSequence,
   newGame,
 } from "../../game-logic";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 let storytellerButton;
+
+pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+  updateStorytellerButton();
+});
 
 export function createStorytellerButton() {
   storytellerButton = createElement({
@@ -30,7 +35,7 @@ async function onPlayButtonClick() {
     return;
   }
 
-  storytellerButton.setAttribute("disabled", "disabled");
+  storytellerButton.disabled = true;
   storytellerButton.classList.add("activated");
 
   const onNextEmoji = () => {
@@ -42,7 +47,7 @@ async function onPlayButtonClick() {
   globals.started = true;
   globals.isSpeaking = true;
 
-  updateStorytellerButtonText();
+  updateStorytellerButton();
 
   if (globals.practiceMode) {
     await playPracticeSequence(onNextEmoji);
@@ -54,20 +59,21 @@ async function onPlayButtonClick() {
   globals.isSpeaking = false;
 
   updateSecretSequenceComponent();
-  updateStorytellerButtonText();
+  updateStorytellerButton();
   storytellerButton.classList.remove("activated");
-  storytellerButton.removeAttribute("disabled");
-  updateStorytellerButtonText();
+  updateStorytellerButton();
 }
 
-export function updateStorytellerButtonText() {
+export function updateStorytellerButton() {
   if (globals.isSpeaking) {
     storytellerButton.innerHTML = `🗣️ Transmitting...`;
   } else {
     if (isEndOfGame()) {
-      storytellerButton.innerHTML = "Play again";
+      storytellerButton.innerHTML = "Game over";
+      storytellerButton.disabled = true;
     } else {
-      storytellerButton.innerHTML = `🗣️ Replay`;
+      storytellerButton.innerHTML = globals.started ? `🗣️ Replay` : "🗣️ Start";
+      storytellerButton.disabled = false;
     }
   }
 }

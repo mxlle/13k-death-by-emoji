@@ -74,6 +74,7 @@ export async function playInfiniteSequence(onNextEmoji) {
 
   globals.endOfGame = true;
   document.body.classList.add("game-over");
+  pubSubService.publish(PubSubEvent.GAME_OVER);
 }
 
 export function evaluatePlay(emoji) {

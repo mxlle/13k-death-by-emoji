@@ -6,7 +6,8 @@ import { createScoreboard } from "./components/score";
 import { createVoiceSelector } from "./components/config-tools/voice-config";
 import { createElement } from "./utils/html-utils";
 import { initGameData } from "./game-logic";
-import { createGameField } from "./components/game-field";
+import { openNewGameScreen } from "./components/new-game-screen";
+import { createGameField, gameField } from "./components/game-field";
 
 function init() {
   if (isSpaceDucksVariant()) {
@@ -26,6 +27,8 @@ function init() {
   document.body.appendChild(header);
 
   document.body.appendChild(createGameField());
+
+  openNewGameScreen(true);
 }
 
 // INIT

@@ -37,7 +37,7 @@ function updateEmojiSelectionButtonText() {
   const emojis = splitEmojis(getEmojiPool());
   const emojisForButton = [
     emojis[0],
-    shuffleArray(emojis.slice(1)).slice(0, 4),
+    ...shuffleArray(emojis.slice(1)).slice(0, 4),
   ];
   emojisForButton.forEach((emoji) =>
     emojiContainer.appendChild(createElement({ text: emoji }))

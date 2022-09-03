@@ -1,0 +1,35 @@
+@import "../../theme";
+
+.new-game-screen {
+  width: calc(100% - 4rem);
+  height: calc(100% - 2rem);
+  max-width: 800px;
+  display: grid;
+  gap: 2rem;
+  justify-self: center;
+  grid-template-rows: minmax(0, 1fr) repeat(2, min-content);
+
+  &.has-game-over-section {
+    grid-template-rows: min-content minmax(0, 1fr) repeat(2, min-content);
+  }
+
+  .game-over-section {
+    padding: 1rem;
+    border-radius: $border-radius;
+    background: rgba(white, 0.1);
+    border: 2px dashed rgba($life-color, 0.5);
+    margin-bottom: 2rem;
+
+    &.hidden {
+      display: none;
+    }
+  }
+
+  button {
+    font-size: 2.5rem;
+
+    &.secondary-button {
+      font-size: 2rem;
+    }
+  }
+}

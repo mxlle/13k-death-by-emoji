@@ -46,14 +46,37 @@ export function updateHighScore() {
 }
 
 function updateScoreboard() {
-  let text = "✅ " + globals.correctCount;
-  if (globals.practiceMode) {
-    text += "/" + globals.shuffledEmojis.length;
-  } else {
-    text += "&nbsp;&nbsp;&nbsp;🏆 " + score;
+  let text = getSimpleCount();
+  if (!globals.practiceMode) {
+    text += "&nbsp;&nbsp;&nbsp;" + getSimpleScore();
     if (highScore) {
       text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScoreCount} / ${highScore})`;
     }
   }
   scoreboard.innerHTML = text;
+}
+
+function getSimpleScore() {
+  return "🏆 " + score;
+}
+
+function getSimpleCount() {
+  let countText = "✅ " + globals.correctCount;
+  if (globals.practiceMode) {
+    countText += "/" + globals.shuffledEmojis.length;
+  }
+
+  return countText;
+}
+
+export function getScoreAndHighScoreText() {
+  return `Your score: ${getSimpleScore()}  🥇 High score: ${highScore}`;
+}
+
+export function getResultAndRecordText() {
+  let resultText = `Your result: ${getSimpleCount()}`;
+  if (!globals.practiceMode) {
+    resultText += `  🥇 Record: ${highScoreCount}`;
+  }
+  return resultText;
 }

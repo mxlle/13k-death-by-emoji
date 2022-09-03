@@ -30,6 +30,8 @@ export async function showConfigScreen() {
 
   const submit = await dialog.open();
   if (submit) onConfigSubmitted();
+
+  return submit;
 }
 
 function onConfigSubmitted() {

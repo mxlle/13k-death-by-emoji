@@ -1,5 +1,6 @@
 export const PubSubEvent = {
   NEW_GAME: "new-game",
+  GAME_OVER: "game-over",
 };
 
 /**

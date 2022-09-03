@@ -4,6 +4,7 @@ import { globals, isEndOfGame } from "../../globals";
 import "./config-tools.scss";
 import { getPointsByAction, ScoreAction } from "../../game-logic";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
+import { openNewGameScreen } from "../new-game-screen";
 import { showConfigScreen } from "./config-screen";
 
 let scoreModifiers;
@@ -14,6 +15,15 @@ pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
 
 export function createConfigTools() {
   const configTools = createElement({ cssClass: "config-tools" });
+
+  configTools.appendChild(
+    createElement({
+      tag: "button",
+      cssClass: "emoji icon-button",
+      text: "🏠",
+      onClick: () => openNewGameScreen(),
+    })
+  );
 
   configTools.appendChild(
     createElement({

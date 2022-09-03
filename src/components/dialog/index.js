@@ -8,8 +8,9 @@ export function createDialog(innerElement, submitButtonText, headerText) {
     onClick: (event) => event.stopPropagation(), // TODO - why?
   });
 
+  let header;
   if (headerText) {
-    const header = createElement({
+    header = createElement({
       tag: "h2",
       cssClass: "dialog-header",
       text: headerText,
@@ -20,36 +21,49 @@ export function createDialog(innerElement, submitButtonText, headerText) {
 
   dialog.appendChild(innerElement);
 
-  const buttons = createElement({ cssClass: "buttons" });
-
   function closeDialog() {
     dialog.classList.remove("open");
-    setTimeout(() => document.body.removeChild(dialog), 700);
+    //setTimeout(() => document.body.removeChild(dialog), 700);
   }
 
-  const cancelButton = createElement({
-    tag: "button",
-    cssClass: "secondary-button",
-    text: "Cancel",
-    onClick: closeDialog,
-  });
-  buttons.appendChild(cancelButton);
-  const submitButton = createElement({
-    tag: "button",
-    text: submitButtonText,
-    onClick: closeDialog,
-  });
-  buttons.appendChild(submitButton);
-  dialog.appendChild(buttons);
+  let buttons, cancelButton, submitButton;
+  if (submitButtonText !== undefined) {
+    buttons = createElement({ cssClass: "buttons" });
+
+    cancelButton = createElement({
+      tag: "button",
+      cssClass: "secondary-button",
+      text: "Cancel",
+      onClick: closeDialog,
+    });
+    buttons.appendChild(cancelButton);
+    submitButton = createElement({
+      tag: "button",
+      text: submitButtonText,
+      onClick: closeDialog,
+    });
+    buttons.appendChild(submitButton);
+    dialog.appendChild(buttons);
+  }
+
+  document.body.appendChild(dialog);
 
   return {
-    open: () => {
-      document.body.appendChild(dialog);
-      setTimeout(() => dialog.classList.add("open"), 0);
+    open: (openImmediately) => {
+      //document.body.appendChild(dialog);
+      if (openImmediately) {
+        dialog.classList.add("open");
+      } else {
+        setTimeout(() => dialog.classList.add("open"), 0);
+      }
       return new Promise((resolve, _reject) => {
-        cancelButton.addEventListener("click", () => resolve(false));
-        submitButton.addEventListener("click", () => resolve(true));
+        cancelButton?.addEventListener("click", () => resolve(false));
+        submitButton?.addEventListener("click", () => resolve(true));
       });
+    },
+    close: () => closeDialog(),
+    changeHeader: (newHeaderText) => {
+      if (header) header.innerText = newHeaderText;
     },
   };
 }

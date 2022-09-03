@@ -3,12 +3,13 @@ import { createElement } from "../../utils/html-utils";
 import "./emoji-buttons.scss";
 import { globals, isEndOfGame, isGameActive } from "../../globals";
 import { updateScoreModifiers } from "../config-tools";
-import { updateStorytellerButtonText } from "../storyteller";
+import { updateStorytellerButton } from "../storyteller";
 import { speak } from "../../speech/speech";
 import { getCurrentVoice } from "../config-tools/voice-config";
 import { evaluatePlay } from "../../game-logic";
 import { updateHighScore, updateScore } from "../score";
 import { updateSecretSequenceComponent } from "../secret-sequence";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 const buttonMap = {};
 
@@ -44,7 +45,7 @@ function onEmojiClick(emoji, emojiButton, event) {
   }, 500);
 
   updateScoreModifiers();
-  updateStorytellerButtonText();
+  updateStorytellerButton();
   updateSecretSequenceComponent();
 
   if (isEndOfGame()) {
@@ -89,4 +90,5 @@ function onEndOfGame() {
   }
 
   updateHighScore();
+  pubSubService.publish(PubSubEvent.GAME_OVER);
 }
