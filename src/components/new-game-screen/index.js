@@ -101,18 +101,18 @@ function setGameOverSection(isGameOver) {
         createElement({ text: getScoreAndHighScoreText() })
       );
     }
-  }
 
-  if (!isNegative) {
-    completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
-    const lastGame = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
-    if (!completedGames.includes(lastGame)) {
-      completedGames.push(lastGame);
-      setLocalStorageItem(LocalStorageKey.COMPLETED_GAMES, completedGames);
-      pubSubService.publish(
-        PubSubEvent.COMPLETED_GAMES_CHANGED,
-        completedGames
-      );
+    if (!isNegative) {
+      completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
+      const lastGame = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
+      if (!completedGames.includes(lastGame)) {
+        completedGames.push(lastGame);
+        setLocalStorageItem(LocalStorageKey.COMPLETED_GAMES, completedGames);
+        pubSubService.publish(
+          PubSubEvent.COMPLETED_GAMES_CHANGED,
+          completedGames
+        );
+      }
     }
   }
 }
