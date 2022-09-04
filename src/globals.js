@@ -1,5 +1,6 @@
 import {
   getLocalStorageItem,
+  isSpaceDucksVariant,
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
@@ -71,11 +72,4 @@ export function getEmojiPool() {
   }
 
   return emojiPool;
-}
-
-export function isSpaceDucksVariant() {
-  return (
-    getLocalStorageItem(LocalStorageKey.SPACE_DUCKS) ||
-    window.location.host === "spaceducks.okj.ninja"
-  );
 }

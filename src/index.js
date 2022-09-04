@@ -1,13 +1,13 @@
 import "./index.scss";
 
-import { isSpaceDucksVariant } from "./globals";
 import { createConfigTools } from "./components/config-tools";
 import { createScoreboard } from "./components/score";
 import { createVoiceSelector } from "./components/config-tools/voice-config";
 import { createElement } from "./utils/html-utils";
 import { initGameData } from "./game-logic";
 import { openNewGameScreen } from "./components/new-game-screen";
-import { createGameField, gameField } from "./components/game-field";
+import { createGameField } from "./components/game-field";
+import { isSpaceDucksVariant } from "./utils/local-storage";
 
 function init() {
   if (isSpaceDucksVariant()) {

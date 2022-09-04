@@ -12,7 +12,7 @@ import {
   weather1,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
-import { isSpaceDucksVariant } from "../../../globals";
+import { isSpaceDucksVariant } from "../../../utils/local-storage";
 
 const _preselections = [
   isSpaceDucksVariant() ? spaceDucks : death1,

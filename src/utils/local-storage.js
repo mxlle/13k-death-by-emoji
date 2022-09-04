@@ -38,3 +38,10 @@ export function getSelectedLanguagesFromStorage() {
 
   return item.split(",");
 }
+
+export function isSpaceDucksVariant() {
+  return (
+    getLocalStorageItem(LocalStorageKey.SPACE_DUCKS) ||
+    window.location.host === "spaceducks.okj.ninja"
+  );
+}
