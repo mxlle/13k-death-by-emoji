@@ -65,6 +65,8 @@ export function createDialog(innerElement, submitButtonText, headerText) {
         dialogContent.scrollHeight > dialogContent.clientHeight
       );
 
+      dialogContent.scrollTop = 0;
+
       return new Promise((resolve, _reject) => {
         cancelButton?.addEventListener("click", () => resolve(false));
         submitButton?.addEventListener("click", () => resolve(true));
