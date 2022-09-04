@@ -53,16 +53,18 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   return {
     open: (openImmediately) => {
       //document.body.appendChild(dialog);
-      dialogContent.classList.toggle(
-        "is-overflowing",
-        dialogContent.scrollHeight > dialogContent.clientHeight
-      );
 
       if (openImmediately) {
         dialog.classList.add("open");
       } else {
         setTimeout(() => dialog.classList.add("open"), 0);
       }
+
+      dialogContent.classList.toggle(
+        "is-overflowing",
+        dialogContent.scrollHeight > dialogContent.clientHeight
+      );
+
       return new Promise((resolve, _reject) => {
         cancelButton?.addEventListener("click", () => resolve(false));
         submitButton?.addEventListener("click", () => resolve(true));
