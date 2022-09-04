@@ -11,6 +11,7 @@ import {
   globals,
 } from "../../globals";
 import {
+  getArrayFromStorage,
   getLocalStorageItem,
   LocalStorageKey,
   setLocalStorageItem,
@@ -23,6 +24,8 @@ import {
 import { createGamePreconfigs } from "./game-preconfigs";
 
 let newGameScreen, dialog, replayButton, playOtherModeButton, gameOverSection;
+
+let completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
 
 pubSubService.subscribe(PubSubEvent.GAME_OVER, () =>
   setTimeout(() => openNewGameScreen(false, true), 500)
@@ -96,6 +99,19 @@ function setGameOverSection(isGameOver) {
     if (!globals.practiceMode) {
       gameOverSection.appendChild(
         createElement({ text: getScoreAndHighScoreText() })
+      );
+    }
+  }
+
+  if (!isNegative) {
+    completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
+    const lastGame = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
+    if (!completedGames.includes(lastGame)) {
+      completedGames.push(lastGame);
+      setLocalStorageItem(LocalStorageKey.COMPLETED_GAMES, completedGames);
+      pubSubService.publish(
+        PubSubEvent.COMPLETED_GAMES_CHANGED,
+        completedGames
       );
     }
   }

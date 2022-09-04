@@ -19,9 +19,13 @@ import {
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { preselections } from "../../config-tools/emoji-selection/preselections";
 import {
+  getArrayFromStorage,
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
+import { PubSubEvent, pubSubService } from "../../../utils/pub-sub-service";
+
+let completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
 
 export function createGamePreconfigs(onSelect) {
   const gamePreconfigsContainer = createElement({
@@ -77,6 +81,19 @@ function createGamePreconfigButton(preconfig, onSelect) {
 
   gamePreconfigButton.appendChild(icon);
   gamePreconfigButton.appendChild(text);
+
+  if (completedGames.includes(preconfig.id)) {
+    gamePreconfigButton.classList.add("completed");
+  }
+
+  pubSubService.subscribe(
+    PubSubEvent.COMPLETED_GAMES_CHANGED,
+    (completedGames) => {
+      if (completedGames.includes(preconfig.id)) {
+        gamePreconfigButton.classList.add("completed");
+      }
+    }
+  );
 
   return gamePreconfigButton;
 }

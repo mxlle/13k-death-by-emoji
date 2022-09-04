@@ -2,7 +2,7 @@ import { cuteAnimals1, flags, niceFlags } from "../../../emojis/sets";
 
 export const gamePreconfigs = [
   {
-    id: 1,
+    id: "1",
     icon: "🐣👁️",
     name: "Start here",
     config: {
@@ -12,7 +12,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 2,
+    id: "2",
     icon: "🐣🗣️",
     name: "Trust your ears",
     config: {
@@ -22,7 +22,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 3,
+    id: "3",
     icon: "☠️👁️",
     name: "Meet death",
     config: {
@@ -32,7 +32,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 4,
+    id: "4",
     icon: "☠️🗣️",
     name: "Deathly blind",
     config: {
@@ -42,7 +42,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 5,
+    id: "5",
     icon: "🌐",
     //: "Go international",
     name: "[Coming soon]",
@@ -54,7 +54,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 6,
+    id: "6",
     icon: niceFlags,
     name: "Fun with flags",
     emojiPool: flags,
@@ -66,7 +66,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 7,
+    id: "7",
     icon: "🐶🐰🐥",
     name: "Cuteness overload",
     emojiPool: cuteAnimals1,
@@ -77,7 +77,7 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: 8,
+    id: "8",
     icon: "🎁",
     name: "Surprise me",
     surpriseMe: true,
