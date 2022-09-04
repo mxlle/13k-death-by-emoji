@@ -33,3 +33,4 @@ function init() {
 
 // INIT
 init();
+export { EMOJI_POOL_CUSTOM_NAME } from "./globals";

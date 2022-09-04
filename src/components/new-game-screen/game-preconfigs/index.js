@@ -2,6 +2,7 @@ import "./game-preconfigs.scss";
 
 import { createElement } from "../../../utils/html-utils";
 import {
+  EMOJI_POOL_CUSTOM_NAME,
   MAX_GOAL,
   MIN_GOAL,
   setEmojiPool,
@@ -16,7 +17,11 @@ import {
   shuffleArray,
 } from "../../../utils/random-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
-import { getDefaultSet } from "../../config-tools/emoji-selection/preselections";
+import { preselections } from "../../config-tools/emoji-selection/preselections";
+import {
+  LocalStorageKey,
+  setLocalStorageItem,
+} from "../../../utils/local-storage";
 
 export function createGamePreconfigs(onSelect) {
   const gamePreconfigsContainer = createElement({
@@ -46,10 +51,20 @@ function createGamePreconfigButton(preconfig, onSelect) {
         setEmojiPool(
           shuffleArray(splitEmojis(allOldEmojis)).slice(0, MAX_GOAL)
         );
-        newGame(allOldEmojis);
+        setLocalStorageItem(
+          LocalStorageKey.EMOJI_POOL_NAME,
+          EMOJI_POOL_CUSTOM_NAME
+        );
+        newGame();
       } else {
         setGameConfig(preconfig.config);
-        setEmojiPool(preconfig.emojiPool ?? getDefaultSet());
+        setEmojiPool(preconfig.emojiPool ?? preselections[0].emojis);
+        const emojiPoolName =
+          preconfig.emojiPoolName ??
+          (preconfig.emojiPool
+            ? EMOJI_POOL_CUSTOM_NAME
+            : preselections[0].name);
+        setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, emojiPoolName);
         newGame();
       }
 

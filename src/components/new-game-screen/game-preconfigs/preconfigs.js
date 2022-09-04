@@ -1,4 +1,4 @@
-import { cuteAnimals1, flags } from "../../../emojis/sets";
+import { cuteAnimals1, flags, niceFlags } from "../../../emojis/sets";
 
 export const gamePreconfigs = [
   {
@@ -55,9 +55,10 @@ export const gamePreconfigs = [
   },
   {
     id: 6,
-    icon: "🇪🇺🇸🇨🇧🇧",
+    icon: niceFlags,
     name: "Fun with flags",
     emojiPool: flags,
+    emojiPoolName: "Flags",
     config: {
       practiceMode: true,
       blindMode: false,

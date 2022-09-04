@@ -12,7 +12,10 @@ import {
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
 import { getPointsByAction, newGame, ScoreAction } from "../../../game-logic";
-import { createEmojiSelectionButton } from "../emoji-selection";
+import {
+  createEmojiSelectionButton,
+  updateEmojiSelectionButtonText,
+} from "../emoji-selection";
 import {
   LocalStorageKey,
   setLocalStorageItem,
@@ -48,6 +51,7 @@ function updateAll() {
   updateScoreModifiers();
   updateBlindButtonText();
   updateLanguageButtonText();
+  updateEmojiSelectionButtonText();
   adjustGameModeTexts?.();
 
   if (globals.practiceMode) {

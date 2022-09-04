@@ -3,6 +3,7 @@ import "./emoji-selection.scss";
 import { createElement } from "../../../utils/html-utils";
 import { preselections } from "./preselections";
 import {
+  EMOJI_POOL_CUSTOM_NAME,
   getEmojiPool,
   getRandomEmojisFromPool,
   setEmojiPool,
@@ -15,8 +16,6 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
-
-const EMOJI_POOL_CUSTOM_NAME = "Custom";
 
 let emojiSelectionButton, emojiSelectionScreen, dialog, textarea;
 
@@ -34,7 +33,7 @@ export function createEmojiSelectionButton(afterSelectionCallback) {
   return emojiSelectionButton;
 }
 
-function updateEmojiSelectionButtonText() {
+export function updateEmojiSelectionButtonText() {
   emojiSelectionButton.innerText = "";
   const emojiContainer = createElement({ cssClass: "emoji-container" });
   getRandomEmojisFromPool().forEach((emoji) =>
