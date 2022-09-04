@@ -22,6 +22,18 @@
   &.has-header {
     grid-template-rows: min-content 1fr min-content;
   }
+
+  .dialog-content {
+    display: grid;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    &.is-overflowing {
+      align-content: start;
+    }
+  }
 }
 
 .buttons {

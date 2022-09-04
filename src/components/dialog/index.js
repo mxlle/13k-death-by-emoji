@@ -19,7 +19,9 @@ export function createDialog(innerElement, submitButtonText, headerText) {
     dialog.classList.add("has-header");
   }
 
-  dialog.appendChild(innerElement);
+  const dialogContent = createElement({ cssClass: "dialog-content" });
+  dialogContent.appendChild(innerElement);
+  dialog.appendChild(dialogContent);
 
   function closeDialog() {
     dialog.classList.remove("open");
@@ -51,6 +53,11 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   return {
     open: (openImmediately) => {
       //document.body.appendChild(dialog);
+      dialogContent.classList.toggle(
+        "is-overflowing",
+        dialogContent.scrollHeight > dialogContent.clientHeight
+      );
+
       if (openImmediately) {
         dialog.classList.add("open");
       } else {

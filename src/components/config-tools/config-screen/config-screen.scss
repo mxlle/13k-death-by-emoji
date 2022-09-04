@@ -10,12 +10,6 @@
   align-content: center;
   gap: 1rem 1.5rem;
   padding: 0 1rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-
-  &.is-overflowing {
-    align-content: start;
-  }
 
   &.practice-mode {
     .sudden-death-only {

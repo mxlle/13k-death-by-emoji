@@ -32,11 +32,6 @@ export async function showConfigScreen() {
 
   updateAll();
 
-  configScreen.classList.toggle(
-    "is-overflowing",
-    configScreen.scrollHeight > configScreen.clientHeight
-  );
-
   const submit = await dialog.open();
   if (submit) onConfigSubmitted();
 
