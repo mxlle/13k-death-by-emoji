@@ -1,6 +1,6 @@
 .dialog {
   position: absolute;
-  top: 100%;
+  top: 0;
   left: 0;
   height: 100%;
   width: 100%;
@@ -10,12 +10,13 @@
   display: grid;
   grid-template-rows: 1fr min-content;
   text-align: center;
-  opacity: 0;
-  transition: top 0.5s, opacity 0.5s;
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.5s, opacity 0.5s;
 
-  &.open {
-    top: 0;
-    opacity: 1;
+  &:not(.open) {
+    transform: translateY(100%);
+    opacity: 0;
   }
 
   &.has-header {
