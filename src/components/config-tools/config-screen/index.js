@@ -18,7 +18,7 @@ const MIN_GOAL = 3;
 const MAX_GOAL = 20;
 
 let configScreen, dialog, goalInputComponent;
-let blindButton, languageButton, scoreModifiers;
+let blindButton, languageButton, scoreModifiers, adjustGameModeTexts;
 
 export async function showConfigScreen() {
   if (!configScreen) createConfigScreen();
@@ -49,6 +49,7 @@ function updateAll() {
   updateScoreModifiers();
   updateBlindButtonText();
   updateLanguageButtonText();
+  adjustGameModeTexts?.();
 
   if (globals.practiceMode) {
     configScreen.classList.add("practice-mode");
@@ -96,7 +97,8 @@ function createConfigScreen() {
     onChange: updateScoreModifiers,
   });
 
-  const { switchButton, modeInfo } = createModeSwitcher(updateAll);
+  const { switchButton, modeInfo, adjustText } = createModeSwitcher(updateAll);
+  adjustGameModeTexts = adjustText;
 
   scoreModifiers = createElement({ cssClass: "score-modifiers" });
   updateScoreModifiers();

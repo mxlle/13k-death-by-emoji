@@ -34,5 +34,5 @@ export function createModeSwitcher(onModeChangeCallback) {
       : `In Sudden Death mode you have to keep up with an infinite sequence. If you fall ${globals.slots} slots behind you'll die. Each mistake costs you a slot.`;
   }
 
-  return { switchButton, modeInfo };
+  return { switchButton, modeInfo, adjustText };
 }
