@@ -4,7 +4,7 @@ export const death2 = "🧨🦹🦖🦛🪓🪦🏴‍☠️";
 export const spaceDucks = "🦆 🚀 ✏️ ⭐ 🌈 🐈 🎒 🎓 📱 💻 ⏱️ 🗃️";
 
 // copied from https://getemoji.com/
-
+export const cuteAnimals1 = "🐶🐈🐯🐭🐹🐰🐿️🐥🐧🐸🐢🐝";
 export const animals1 =
   "🐵🐒🐶🐕🐩🐺🐱🐈🦁🐯🐅🐆🐴🐎🦄🐮🐂🐃🐄🐷🐖🐗🐽🐏🐑🐐🐪🐫🐘🐭🐁🐀🐹🐰🐇🐿️🐻🐨🐼🐾🦃🐔🐓🐣🐤🐥🐦🐧🕊️🦆🐸🐊🐢🐍🐲🐉🐳🐋🐬🦈🐟🐠🐡🦀🐙🐚🐌🐛🐜🐝🐞🕷️🕸️🦂";
 export const animals2 =

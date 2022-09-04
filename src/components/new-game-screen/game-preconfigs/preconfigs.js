@@ -1,4 +1,4 @@
-import { animals1, flags } from "../../../emojis/sets";
+import { cuteAnimals1, flags } from "../../../emojis/sets";
 
 export const gamePreconfigs = [
   {
@@ -68,7 +68,12 @@ export const gamePreconfigs = [
     id: 7,
     icon: "🐶🐰🐥",
     name: "Cuteness overload",
-    emojiPool: animals1, // TODO - only cute?
+    emojiPool: cuteAnimals1,
+    config: {
+      practiceMode: false,
+      blindMode: false,
+      level: 12,
+    },
   },
   {
     id: 8,
