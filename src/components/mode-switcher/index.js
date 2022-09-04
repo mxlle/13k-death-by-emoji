@@ -30,8 +30,8 @@ export function createModeSwitcher(onModeChangeCallback) {
       ? "🐣 Practice"
       : "☠️ Sudden death";
     modeInfo.innerHTML = globals.practiceMode
-      ? "Definite sequence that can be repeated any number of times."
-      : `Infinite sequence of emojis, you cannot fall behind more than ${globals.slots} slots or you'll die.`;
+      ? "In the Practice mode you have to replicate a limited non-repeating sequence. You can listen to it as many times as you want."
+      : `In Sudden Death mode you have to keep up with an infinite sequence. If you fall ${globals.slots} slots behind you'll die. Each mistake costs you a slot.`;
   }
 
   return { switchButton, modeInfo };

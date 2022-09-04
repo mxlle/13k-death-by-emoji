@@ -63,11 +63,6 @@ function createConfigScreen() {
     onClick: (event) => event.stopPropagation(),
   });
 
-  addConfigEntry(
-    "Emoji set:",
-    createEmojiSelectionButton(() => validateGoal())
-  );
-
   blindButton = createElement({
     tag: "button",
     cssClass: "blind-button icon-button",
@@ -79,8 +74,6 @@ function createConfigScreen() {
     },
   });
   updateBlindButtonText();
-
-  addConfigEntry("Method of transmission:", blindButton);
 
   languageButton = createElement({
     tag: "button",
@@ -95,8 +88,6 @@ function createConfigScreen() {
   });
   updateLanguageButtonText();
 
-  addConfigEntry("Languages:", languageButton);
-
   goalInputComponent = createNumberInputComponent({
     value: globals.level,
     min: MIN_GOAL,
@@ -105,15 +96,26 @@ function createConfigScreen() {
     onChange: updateScoreModifiers,
   });
 
-  addConfigEntry("Number of emojis per game:", goalInputComponent.container);
-
   const { switchButton, modeInfo } = createModeSwitcher(updateAll);
+
+  scoreModifiers = createElement({ cssClass: "score-modifiers" });
+  updateScoreModifiers();
+
+  // Append entries
 
   addConfigEntry("Play mode:", switchButton);
   addConfigEntry("", modeInfo, "info");
 
-  scoreModifiers = createElement({ cssClass: "score-modifiers" });
-  updateScoreModifiers();
+  addConfigEntry("Presentation mode:", blindButton);
+
+  addConfigEntry("Language:", languageButton);
+
+  addConfigEntry("Number of emojis:", goalInputComponent.container);
+
+  addConfigEntry(
+    "Emoji set:",
+    createEmojiSelectionButton(() => validateGoal())
+  );
 
   addConfigEntry("Resulting score:", scoreModifiers, "sudden-death-only info");
 }
