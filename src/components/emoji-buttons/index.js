@@ -1,4 +1,8 @@
-import { createElement } from "../../utils/html-utils";
+import {
+  convertLongPressToClick,
+  createElement,
+  getPositionFromEvent,
+} from "../../utils/html-utils";
 
 import "./emoji-buttons.scss";
 import { globals, isEndOfGame, isGameActive } from "../../globals";
@@ -17,9 +21,12 @@ export function initEmojiButtonField(set) {
   const field = createElement({ cssClass: "emoji-field" });
   for (const emoji of set) {
     const button = createEmojiButton(emoji);
-    button.addEventListener("mousedown", (event) =>
-      onEmojiClick(emoji, button, event)
-    );
+    button.addEventListener("mousedown", (event) => {
+      onEmojiClick(emoji, button, event);
+    });
+    convertLongPressToClick(button, (event) => {
+      onEmojiClick(emoji, button, event);
+    });
     field.appendChild(button);
     buttonMap[emoji] = button;
   }
@@ -70,8 +77,9 @@ function showScoreAtButton(clickEvent, score) {
     text: isPositive ? "+" + score : score,
     cssClass: "score-fly",
   });
-  scoreElement.style.setProperty("--init-top", clickEvent.y + "px");
-  scoreElement.style.setProperty("--init-left", clickEvent.x + "px");
+  const { x, y } = getPositionFromEvent(clickEvent);
+  scoreElement.style.setProperty("--init-top", y + "px");
+  scoreElement.style.setProperty("--init-left", x + "px");
   document.body.appendChild(scoreElement);
   setTimeout(
     () => scoreElement.classList.add(isPositive ? "positive" : "negative"),

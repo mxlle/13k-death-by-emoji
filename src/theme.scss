@@ -12,7 +12,8 @@ $border-radius: 0.4rem;
     }
   }
 
-  &:active {
+  &:active,
+  &.touching {
     @content;
   }
 }
