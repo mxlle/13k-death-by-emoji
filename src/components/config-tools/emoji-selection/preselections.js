@@ -14,8 +14,12 @@ import {
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { isSpaceDucksVariant } from "../../../utils/local-storage";
 
+export function getDefaultSet() {
+  return isSpaceDucksVariant() ? spaceDucks : death1;
+}
+
 const _preselections = [
-  isSpaceDucksVariant() ? spaceDucks : death1,
+  getDefaultSet(),
   animals1,
   foodAndDrink1,
   sportActivityAndMusic1,

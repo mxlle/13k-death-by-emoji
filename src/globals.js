@@ -1,6 +1,5 @@
 import {
   getLocalStorageItem,
-  isSpaceDucksVariant,
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
@@ -8,7 +7,7 @@ import { preselections } from "./components/config-tools/emoji-selection/presele
 import { splitEmojis } from "./emojis/emoji-util";
 import { shuffleArray } from "./utils/random-utils";
 
-export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 6;
+export const DEFAULT_LEVEL = 6;
 export const MIN_GOAL = 3;
 export const MAX_GOAL = 20;
 

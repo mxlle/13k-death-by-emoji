@@ -1,12 +1,22 @@
 import "./game-preconfigs.scss";
 
 import { createElement } from "../../../utils/html-utils";
-import { MAX_GOAL, MIN_GOAL, setGameConfig } from "../../../globals";
+import {
+  MAX_GOAL,
+  MIN_GOAL,
+  setEmojiPool,
+  setGameConfig,
+} from "../../../globals";
 import { newGame } from "../../../game-logic";
 import { gamePreconfigs } from "./preconfigs";
 import { getRandomItem } from "../../../utils/array-utils";
 import { allOldEmojis } from "../../../emojis/sets";
-import { randomIntFromInterval } from "../../../utils/random-utils";
+import {
+  randomIntFromInterval,
+  shuffleArray,
+} from "../../../utils/random-utils";
+import { splitEmojis } from "../../../emojis/emoji-util";
+import { getDefaultSet } from "../../config-tools/emoji-selection/preselections";
 
 export function createGamePreconfigs(onSelect) {
   const gamePreconfigsContainer = createElement({
@@ -33,10 +43,14 @@ function createGamePreconfigButton(preconfig, onSelect) {
           blindMode: getRandomItem([true, false]),
           level: randomIntFromInterval(MIN_GOAL, MAX_GOAL),
         });
+        setEmojiPool(
+          shuffleArray(splitEmojis(allOldEmojis)).slice(0, MAX_GOAL)
+        );
         newGame(allOldEmojis);
       } else {
         setGameConfig(preconfig.config);
-        newGame(preconfig.emojiPool);
+        setEmojiPool(preconfig.emojiPool ?? getDefaultSet());
+        newGame();
       }
 
       onSelect?.();
