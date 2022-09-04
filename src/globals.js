@@ -5,8 +5,12 @@ import {
   setLocalStorageItem,
 } from "./utils/local-storage";
 import { preselections } from "./components/config-tools/emoji-selection/preselections";
+import { splitEmojis } from "./emojis/emoji-util";
+import { shuffleArray } from "./utils/random-utils";
 
 export const DEFAULT_LEVEL = isSpaceDucksVariant() ? 12 : 6;
+export const MIN_GOAL = 3;
+export const MAX_GOAL = 20;
 
 const defaultGlobals = {
   practiceMode: getLocalStorageItem(LocalStorageKey.PRACTICE_MODE),
@@ -60,6 +64,24 @@ function getLevel() {
   return level ? Number(level) : DEFAULT_LEVEL;
 }
 
+export function setGameConfig(config) {
+  if (!config) return;
+
+  if (config.level > 0) {
+    setLevel(config.level);
+  }
+
+  if (config.blindMode !== undefined) {
+    globals.blindMode = config.blindMode;
+    setLocalStorageItem(LocalStorageKey.BLIND, config.blindMode);
+  }
+
+  if (config.practiceMode !== undefined) {
+    globals.practiceMode = config.practiceMode;
+    setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, config.practiceMode);
+  }
+}
+
 export function setEmojiPool(emojis) {
   setLocalStorageItem(LocalStorageKey.EMOJI_POOL, emojis);
 }
@@ -72,4 +94,9 @@ export function getEmojiPool() {
   }
 
   return emojiPool;
+}
+
+export function getRandomEmojisFromPool(length = 5) {
+  const emojis = splitEmojis(getEmojiPool());
+  return [emojis[0], ...shuffleArray(emojis.slice(1)).slice(0, length - 1)];
 }

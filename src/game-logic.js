@@ -23,17 +23,18 @@ export const ScoreAction = {
   WRONG: "wrong",
 };
 
-export function newGame() {
+export function newGame(optionalEmojiPool) {
   document.body.classList.remove("game-over");
   resetGlobals();
-  initGameData();
+  initGameData(optionalEmojiPool);
   waitTime = DEFAULT_WAIT_TIME;
   rate = 1;
   pubSubService.publish(PubSubEvent.NEW_GAME);
 }
 
-export function initGameData() {
-  globals.emojiSet = shuffleArray(splitEmojis(getEmojiPool())).slice(
+export function initGameData(optionalEmojiPool) {
+  const emojiPool = optionalEmojiPool || getEmojiPool();
+  globals.emojiSet = shuffleArray(splitEmojis(emojiPool)).slice(
     0,
     globals.level
   );

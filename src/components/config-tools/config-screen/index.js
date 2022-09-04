@@ -1,7 +1,14 @@
 import "./config-screen.scss";
 
 import { createElement } from "../../../utils/html-utils";
-import { getEmojiPool, globals, isEndOfGame, setLevel } from "../../../globals";
+import {
+  getEmojiPool,
+  globals,
+  isEndOfGame,
+  MAX_GOAL,
+  MIN_GOAL,
+  setLevel,
+} from "../../../globals";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
 import { getPointsByAction, newGame, ScoreAction } from "../../../game-logic";
@@ -13,9 +20,6 @@ import {
 import { getLanguagesText, toggleConfig } from "../voice-config";
 import { createModeSwitcher } from "../../mode-switcher";
 import { createNumberInputComponent } from "../../number-input";
-
-const MIN_GOAL = 3;
-const MAX_GOAL = 20;
 
 let configScreen, dialog, goalInputComponent;
 let blindButton, languageButton, scoreModifiers, adjustGameModeTexts;

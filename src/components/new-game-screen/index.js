@@ -5,7 +5,7 @@ import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 import "./new-game-screen.scss";
-import { globals } from "../../globals";
+import { getRandomEmojisFromPool, globals } from "../../globals";
 import {
   LocalStorageKey,
   setLocalStorageItem,
@@ -15,6 +15,7 @@ import {
   getScore,
   getScoreAndHighScoreText,
 } from "../score";
+import { createGamePreconfigs } from "./game-preconfigs";
 
 let newGameScreen, dialog, replayButton, playOtherModeButton, gameOverSection;
 
@@ -32,13 +33,30 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
       ? "🐥 Practice game complete 🐥"
       : "☠️☠️️☠️ Game over ️☠️️☠️️☠️";
     dialog.changeHeader(headerText);
-    playButtonText = " Play again";
+    playButtonText = "Play again";
   } else {
     dialog.changeHeader("Select game");
-    playButtonText = " Start game";
+    playButtonText = "Start game";
   }
-  replayButton.innerHTML =
-    (globals.practiceMode ? "🐣" : "☠️") + playButtonText;
+  replayButton.innerHTML = "";
+  const playModeText =
+    (globals.practiceMode ? "🐣" : "☠️") + (globals.blindMode ? "🗣️" : "👁️");
+  const emojiSetText = getRandomEmojisFromPool().join("");
+  const emojiCountText = `(${globals.level})`;
+  replayButton.appendChild(createElement({ text: isGameOver ? "🔄" : "▶️" }));
+  replayButton.appendChild(createElement({ text: playButtonText }));
+  const configInfo = createElement({ cssClass: "config-info" });
+
+  configInfo.appendChild(
+    createElement({ text: playModeText, cssClass: "play-mode" })
+  );
+  configInfo.appendChild(
+    createElement({ text: emojiSetText, cssClass: "emoji-set" })
+  );
+  configInfo.appendChild(
+    createElement({ text: emojiCountText, cssClass: "emoji-count" })
+  );
+  replayButton.appendChild(configInfo);
 
   playOtherModeButton.innerHTML = globals.practiceMode
     ? "☠️ Switch to Sudden Death"
@@ -74,6 +92,7 @@ function createNewGameScreen() {
   gameOverSection = createElement({ cssClass: "game-over-section hidden" });
   replayButton = createElement({
     tag: "button",
+    cssClass: "replay-button secondary-button",
     text: "Start game",
     onClick: () => {
       dialog.close();
@@ -94,14 +113,21 @@ function createNewGameScreen() {
   const configButton = createElement({
     tag: "button",
     cssClass: "secondary-button",
-    text: "⚙️ Configuration",
     onClick: async () => {
       const submit = await showConfigScreen();
       if (submit) dialog.close();
     },
   });
+  const icon = createElement({ text: "⚙️", cssClass: "icon" });
+  const text = createElement({ text: "Custom game", cssClass: "text" });
+  configButton.appendChild(icon);
+  configButton.appendChild(text);
+
+  const gamePreconfigs = createGamePreconfigs(() => dialog.close());
+
   newGameScreen.appendChild(gameOverSection);
   newGameScreen.appendChild(replayButton);
-  newGameScreen.appendChild(playOtherModeButton);
+  newGameScreen.appendChild(gamePreconfigs);
+  //newGameScreen.appendChild(playOtherModeButton);
   newGameScreen.appendChild(configButton);
 }

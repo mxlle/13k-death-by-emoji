@@ -2,7 +2,11 @@ import "./emoji-selection.scss";
 
 import { createElement } from "../../../utils/html-utils";
 import { preselections } from "./preselections";
-import { getEmojiPool, setEmojiPool } from "../../../globals";
+import {
+  getEmojiPool,
+  getRandomEmojisFromPool,
+  setEmojiPool,
+} from "../../../globals";
 import { removeDuplicates } from "../../../utils/array-utils";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
@@ -11,7 +15,6 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
-import { shuffleArray } from "../../../utils/random-utils";
 
 const EMOJI_POOL_CUSTOM_NAME = "Custom";
 
@@ -34,12 +37,7 @@ export function createEmojiSelectionButton(afterSelectionCallback) {
 function updateEmojiSelectionButtonText() {
   emojiSelectionButton.innerText = "";
   const emojiContainer = createElement({ cssClass: "emoji-container" });
-  const emojis = splitEmojis(getEmojiPool());
-  const emojisForButton = [
-    emojis[0],
-    ...shuffleArray(emojis.slice(1)).slice(0, 4),
-  ];
-  emojisForButton.forEach((emoji) =>
+  getRandomEmojisFromPool().forEach((emoji) =>
     emojiContainer.appendChild(createElement({ text: emoji }))
   );
   emojiSelectionButton.appendChild(emojiContainer);
