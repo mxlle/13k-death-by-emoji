@@ -7,33 +7,32 @@ import {
   setLocalStorageItem,
 } from "../../utils/local-storage";
 
-export function createModeSwitcher() {
-  const modeSwitcher = createElement({ cssClass: "mode-switcher" });
-  const infiniteButton = createElement({
+export function createModeSwitcher(onModeChangeCallback) {
+  const switchButton = createElement({
     tag: "button",
-    text: "Sudden death",
+    cssClass: "icon-button",
     onClick: () => {
-      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, false);
-      window.location.reload();
-    },
-  });
-  const practiceButton = createElement({
-    tag: "button",
-    text: "Practice",
-    onClick: () => {
-      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, true);
-      window.location.reload();
+      globals.practiceMode = !globals.practiceMode;
+      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, globals.practiceMode);
+      adjustText();
+      if (onModeChangeCallback) onModeChangeCallback();
     },
   });
 
-  if (globals.practiceMode) {
-    practiceButton.classList.add("active");
-  } else {
-    infiniteButton.classList.add("active");
+  const modeInfo = createElement({
+    cssClass: "mode-info",
+  });
+
+  adjustText();
+
+  function adjustText() {
+    switchButton.innerHTML = globals.practiceMode
+      ? "🐣 Practice"
+      : "☠️ Sudden death";
+    modeInfo.innerHTML = globals.practiceMode
+      ? "Definite sequence that can be repeated any number of times."
+      : `Infinite sequence of emojis, you cannot fall behind more than ${globals.slots} slots or you'll die.`;
   }
 
-  modeSwitcher.appendChild(infiniteButton);
-  modeSwitcher.appendChild(practiceButton);
-
-  return modeSwitcher;
+  return { switchButton, modeInfo };
 }

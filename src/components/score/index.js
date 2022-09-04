@@ -5,18 +5,16 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 let scoreboard,
   highScore,
   highScoreCount,
   score = 0;
 
-const BASE_SCORE_MULTIPLIER = 10;
-
-export const ScoreAction = {
-  CORRECT: "correct",
-  WRONG: "wrong",
-};
+pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+  updateScoreboard();
+});
 
 export function createScoreboard() {
   scoreboard = createElement({ cssClass: "scoreboard" });
@@ -28,14 +26,9 @@ export function createScoreboard() {
   return scoreboard;
 }
 
-export function updateScore(action) {
-  const comboMultiplier = globals.streak;
-  const scoreForAction = getPointsByAction(action) * comboMultiplier;
+export function updateScore(scoreForAction) {
   score += scoreForAction;
-
   updateScoreboard();
-
-  return scoreForAction;
 }
 
 export function updateHighScore() {
@@ -52,47 +45,42 @@ export function updateHighScore() {
   }
 }
 
-export function getPointsByAction(action) {
-  let points = 0,
-    modifier = 1;
-  switch (action) {
-    case ScoreAction.CORRECT:
-      points = globals.level;
-      modifier = getConfigScoreModifier(true);
-      break;
-    case ScoreAction.WRONG:
-      points = -1 * globals.level;
-      modifier = getConfigScoreModifier();
-      break;
-  }
-
-  return Math.round(points * modifier * BASE_SCORE_MULTIPLIER);
-}
-
-function getConfigScoreModifier(positive) {
-  let modifier = 1;
-  if (globals.blindMode) {
-    modifier *= 3;
-  }
-  if (globals.mute) {
-    modifier *= 1.5;
-  }
-  if (!globals.blindMode && !globals.mute && !positive) {
-    modifier *= 2;
-  }
-
-  return modifier;
-}
-
 function updateScoreboard() {
-  let text = "✅ " + globals.correctCount;
-  if (globals.practiceMode) {
-    text += "/" + globals.shuffledEmojis.length;
-  } else {
-    text += "&nbsp;&nbsp;&nbsp;🏆 " + score;
+  let text = getSimpleCount();
+  if (!globals.practiceMode) {
+    text += "&nbsp;&nbsp;&nbsp;" + getSimpleScore();
     if (highScore) {
       text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScoreCount} / ${highScore})`;
     }
   }
   scoreboard.innerHTML = text;
+}
+
+function getSimpleScore() {
+  return "🏆 " + score;
+}
+
+function getSimpleCount() {
+  let countText = "✅ " + globals.correctCount;
+  if (globals.practiceMode) {
+    countText += "/" + globals.shuffledEmojis.length;
+  }
+
+  return countText;
+}
+
+export function getScore() {
+  return score;
+}
+
+export function getScoreAndHighScoreText() {
+  return `Your score: ${getSimpleScore()}  🥇 High score: ${highScore}`;
+}
+
+export function getResultAndRecordText() {
+  let resultText = `Your result: ${getSimpleCount()}`;
+  if (!globals.practiceMode) {
+    resultText += `  🥇 Record: ${highScoreCount}`;
+  }
+  return resultText;
 }

@@ -1,104 +1,79 @@
 import { createElement } from "../../utils/html-utils";
-import { speak } from "../../speech/speech";
 
 import { globals, isEndOfGame } from "../../globals";
 
 import "./storyteller.scss";
 import { updateHighScore } from "../score";
-import { updateScoreModifiers } from "../config-tools";
 import { updateSecretSequenceComponent } from "../secret-sequence";
-import { getCurrentVoice } from "../config-tools/voice-config";
-import { getRandomItem } from "../../utils/array-utils";
+import {
+  playInfiniteSequence,
+  playPracticeSequence,
+  newGame,
+} from "../../game-logic";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 let storytellerButton;
+
+pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+  updateStorytellerButton();
+});
 
 export function createStorytellerButton() {
   storytellerButton = createElement({
     tag: "button",
-    text: "📢 Start",
+    text: "🗣️ Start",
     cssClass: "storyteller-button",
-    onClick: () =>
-      globals.practiceMode ? speakEmojisPractice() : speakEmojisInfinite(),
+    onClick: onPlayButtonClick,
   });
 
   return storytellerButton;
 }
 
-async function speakEmojisPractice() {
+async function onPlayButtonClick() {
   if (isEndOfGame()) {
-    window.location.reload();
+    newGame();
     return;
   }
 
-  globals.started = true;
-
-  if (globals.replayCounter > 0) {
-    globals.streak = 1;
-    updateScoreModifiers();
-    updateStorytellerButtonText();
-  }
-
-  storytellerButton.setAttribute("disabled", "disabled");
+  storytellerButton.disabled = true;
   storytellerButton.classList.add("activated");
-  globals.isSpeaking = true;
-  for (let i = globals.clickCounter; i < globals.shuffledEmojis.length; i++) {
-    const text = globals.shuffledEmojis[i];
-    globals.currentIndex = i;
 
+  const onNextEmoji = () => {
     if (!globals.blindMode) {
       updateSecretSequenceComponent();
     }
-
-    await speakWithVoice(text);
-  }
-  globals.isSpeaking = false;
-  updateSecretSequenceComponent();
-  storytellerButton.classList.remove("activated");
-  storytellerButton.removeAttribute("disabled");
-  globals.replayCounter++;
-  updateStorytellerButtonText();
-}
-
-async function speakEmojisInfinite() {
-  if (isEndOfGame()) {
-    window.location.reload();
-    return;
-  }
+  };
 
   globals.started = true;
-
-  storytellerButton.setAttribute("disabled", "disabled");
-  storytellerButton.classList.add("activated");
   globals.isSpeaking = true;
-  while (globals.queue.length < globals.slots) {
-    const text = getRandomItem(globals.emojiSet);
-    globals.queue.push(text);
 
-    if (!globals.blindMode) {
-      updateSecretSequenceComponent();
-    }
+  updateStorytellerButton();
 
-    await speakWithVoice(text);
-  }
-  globals.isSpeaking = false;
-  globals.endOfGame = true;
-  document.body.classList.add("end-of-game");
-  updateHighScore();
-  updateSecretSequenceComponent();
-  storytellerButton.classList.remove("activated");
-  storytellerButton.removeAttribute("disabled");
-  updateStorytellerButtonText();
-}
-
-export function updateStorytellerButtonText() {
-  if (isEndOfGame()) {
-    storytellerButton.innerHTML = "Play again";
+  if (globals.practiceMode) {
+    await playPracticeSequence(onNextEmoji);
   } else {
-    storytellerButton.innerHTML = `📢 Replay`;
+    await playInfiniteSequence(onNextEmoji);
+    updateHighScore();
   }
+
+  globals.isSpeaking = false;
+
+  updateSecretSequenceComponent();
+  updateStorytellerButton();
+  storytellerButton.classList.remove("activated");
+  updateStorytellerButton();
 }
 
-async function speakWithVoice(text) {
-  const voice = getCurrentVoice();
-  await speak(text, voice);
+export function updateStorytellerButton() {
+  if (globals.isSpeaking) {
+    storytellerButton.innerHTML = `🗣️ Transmitting...`;
+  } else {
+    if (isEndOfGame()) {
+      storytellerButton.innerHTML = "Game over";
+      storytellerButton.disabled = true;
+    } else {
+      storytellerButton.innerHTML = globals.started ? `🗣️ Replay` : "🗣️ Start";
+      storytellerButton.disabled = false;
+    }
+  }
 }

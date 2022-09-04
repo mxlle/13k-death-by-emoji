@@ -7,11 +7,9 @@
   transition: transform 0.5s;
 
   &.activated {
-    border: 1px solid $secondary-color;
-    background-color: rgba($secondary-color, 0.1);
-    @include hover {
-      background-color: rgba($secondary-color, 0.2);
-    }
+    border: 1px solid white;
+    background-color: rgba(white, 0.2);
+    opacity: 0.6;
   }
 
   @include hover {

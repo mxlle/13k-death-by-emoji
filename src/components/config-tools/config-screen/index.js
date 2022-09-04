@@ -1,39 +1,60 @@
 import "./config-screen.scss";
 
 import { createElement } from "../../../utils/html-utils";
-import { preselections } from "./preselections";
-import {
-  getEmojiPool,
-  globals,
-  setEmojiPool,
-  setLevel,
-} from "../../../globals";
-import { removeDuplicates } from "../../../utils/array-utils";
+import { getEmojiPool, globals, isEndOfGame, setLevel } from "../../../globals";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
+import { getPointsByAction, newGame, ScoreAction } from "../../../game-logic";
+import { createEmojiSelectionButton } from "../emoji-selection";
+import {
+  LocalStorageKey,
+  setLocalStorageItem,
+} from "../../../utils/local-storage";
+import { getLanguagesText, toggleConfig } from "../voice-config";
+import { createModeSwitcher } from "../../mode-switcher";
+import { createNumberInputComponent } from "../../number-input";
 
 const MIN_GOAL = 3;
 const MAX_GOAL = 20;
 
-let configScreen, dialog, textarea, goalInput;
+let configScreen, dialog, goalInputComponent;
+let blindButton, languageButton, scoreModifiers;
 
 export async function showConfigScreen() {
   if (!configScreen) createConfigScreen();
-  if (!dialog) dialog = createDialog(configScreen, "Start game");
-  setConfigValue(getEmojiPool());
-  goalInput.value = globals.level;
-  textarea.focus();
+  if (!dialog)
+    dialog = createDialog(configScreen, "Load game", "Configuration");
+  goalInputComponent.input.value = globals.level;
+
+  updateAll();
+
+  configScreen.classList.toggle(
+    "is-overflowing",
+    configScreen.scrollHeight > configScreen.clientHeight
+  );
 
   const submit = await dialog.open();
   if (submit) onConfigSubmitted();
+
+  return submit;
 }
 
 function onConfigSubmitted() {
-  const config = getConfigValue();
-  const goal = Number(goalInput.value);
-  setEmojiPool(config);
+  const goal = getGoalInputValue();
   setLevel(goal);
-  window.location.reload();
+  newGame();
+}
+
+function updateAll() {
+  updateScoreModifiers();
+  updateBlindButtonText();
+  updateLanguageButtonText();
+
+  if (globals.practiceMode) {
+    configScreen.classList.add("practice-mode");
+  } else {
+    configScreen.classList.remove("practice-mode");
+  }
 }
 
 function createConfigScreen() {
@@ -41,65 +62,109 @@ function createConfigScreen() {
     cssClass: "config",
     onClick: (event) => event.stopPropagation(),
   });
-  const desc = createElement({
-    cssClass: "config-desc",
-    text: "Choose your next adventure or build your own",
+
+  addConfigEntry(
+    "Emoji set:",
+    createEmojiSelectionButton(() => validateGoal())
+  );
+
+  blindButton = createElement({
+    tag: "button",
+    cssClass: "blind-button icon-button",
+    onClick: () => {
+      globals.blindMode = !globals.blindMode;
+      setLocalStorageItem(LocalStorageKey.BLIND, !!globals.blindMode);
+      updateBlindButtonText();
+      updateScoreModifiers();
+    },
   });
-  configScreen.appendChild(desc);
-  configScreen.appendChild(createAdventureButtons(preselections));
-  textarea = createElement({ tag: "textarea" });
-  textarea.addEventListener("input", validateConfig);
-  configScreen.appendChild(textarea);
-  const goalContainer = createElement({
-    cssClass: "goal-input",
-    text: "Variants per round:",
+  updateBlindButtonText();
+
+  addConfigEntry("Method of transmission:", blindButton);
+
+  languageButton = createElement({
+    tag: "button",
+    cssClass: "language-button icon-button",
+    text: "🌐",
+    onClick: () => {
+      toggleConfig(function onChange() {
+        updateLanguageButtonText();
+        updateScoreModifiers();
+      });
+    },
   });
-  goalInput = createElement({ tag: "input" });
-  goalInput.type = "number";
-  goalInput.min = MIN_GOAL;
-  goalInput.max = MAX_GOAL;
-  goalInput.addEventListener("blur", validateGoal);
-  goalContainer.appendChild(goalInput);
-  configScreen.appendChild(goalContainer);
-}
+  updateLanguageButtonText();
 
-function createAdventureButtons(adventures) {
-  const buttonsContainer = createElement({ cssClass: "button-container" });
-  adventures.forEach(({ id, emojis }) => {
-    const btn = createElement({
-      tag: "button",
-      cssClass: "adventure-btn",
-      text: id,
-      onClick: () => {
-        setConfigValue(emojis);
-        validateGoal();
-      },
-    });
-    buttonsContainer.appendChild(btn);
+  addConfigEntry("Languages:", languageButton);
+
+  goalInputComponent = createNumberInputComponent({
+    value: globals.level,
+    min: MIN_GOAL,
+    max: MAX_GOAL,
+    onBlur: validateGoal,
+    onChange: updateScoreModifiers,
   });
-  return buttonsContainer;
-}
 
-function getConfigValue() {
-  return textarea.value;
-}
+  addConfigEntry("Number of emojis per game:", goalInputComponent.container);
 
-function setConfigValue(value) {
-  textarea.value = removeDuplicates(splitEmojis(value)).join("");
-  textarea.focus();
-}
+  const { switchButton, modeInfo } = createModeSwitcher(updateAll);
 
-function validateConfig() {
-  setConfigValue(getConfigValue());
-  validateGoal();
+  addConfigEntry("Play mode:", switchButton);
+  addConfigEntry("", modeInfo, "info");
+
+  scoreModifiers = createElement({ cssClass: "score-modifiers" });
+  updateScoreModifiers();
+
+  addConfigEntry("Resulting score:", scoreModifiers, "sudden-death-only info");
 }
 
 function validateGoal() {
-  const goal = goalInput.value;
-  const max = Math.min(MAX_GOAL, splitEmojis(getConfigValue()).length);
-  if (goal < MIN_GOAL) {
-    goalInput.value = MIN_GOAL;
-  } else if (goal > max) {
-    goalInput.value = max;
+  if (!goalInputComponent) return;
+  goalInputComponent.input.max = Math.min(
+    MAX_GOAL,
+    splitEmojis(getEmojiPool()).length
+  );
+  goalInputComponent.validate();
+  updateScoreModifiers();
+}
+
+function updateScoreModifiers() {
+  if (globals.practiceMode) {
+    scoreModifiers.innerHTML = "❌";
+  } else {
+    if (isEndOfGame()) return;
+    scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(
+      ScoreAction.CORRECT,
+      getGoalInputValue()
+    )}&nbsp; ❌: ${getPointsByAction(ScoreAction.WRONG, getGoalInputValue())}`;
   }
+}
+
+function updateBlindButtonText() {
+  blindButton.innerHTML = globals.blindMode ? "🗣️" : "🗣️ + 👁️";
+}
+
+function updateLanguageButtonText() {
+  const languages = getLanguagesText() ?? "";
+  languageButton.innerHTML = languages.length > 0 ? `${languages}` : "🌐";
+}
+
+function getGoalInputValue() {
+  return goalInputComponent?.input.value
+    ? Number(goalInputComponent.input.value)
+    : globals.level;
+}
+
+function addConfigEntry(label, element, cssClass) {
+  configScreen.appendChild(
+    createElement({
+      text: label,
+      cssClass: `label${cssClass ? " " + cssClass : ""}`,
+    })
+  );
+  const valueContainer = createElement({
+    cssClass: `value${cssClass ? " " + cssClass : ""}`,
+  });
+  valueContainer.appendChild(element);
+  configScreen.appendChild(valueContainer);
 }

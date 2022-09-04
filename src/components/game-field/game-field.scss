@@ -1,0 +1,14 @@
+.game-field {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.info-text {
+  font-size: 0.7rem;
+  font-style: italic;
+  color: #ccc;
+  max-width: 16rem;
+  text-align: center;
+}

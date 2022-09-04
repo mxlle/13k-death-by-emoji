@@ -1,38 +1,13 @@
-import { shuffleArray } from "./utils/random-utils";
-
 import "./index.scss";
-import { splitEmojis } from "./emojis/emoji-util";
-import { buttonMap, initEmojiButtonField } from "./components/emoji-buttons";
-import { createStorytellerButton } from "./components/storyteller";
 
-import {
-  getEmojiPool,
-  globals,
-  isEndOfGame,
-  isSpaceDucksVariant,
-} from "./globals";
-import {
-  createSecretSequenceComponent,
-  updateSecretSequenceComponent,
-} from "./components/secret-sequence";
+import { isSpaceDucksVariant } from "./globals";
 import { createConfigTools } from "./components/config-tools";
-import { createScoreboard, updateHighScore } from "./components/score";
+import { createScoreboard } from "./components/score";
 import { createVoiceSelector } from "./components/config-tools/voice-config";
 import { createElement } from "./utils/html-utils";
-import { createModeSwitcher } from "./components/mode-switcher";
-
-let storytellerButton;
-
-function initGameData() {
-  globals.emojiSet = shuffleArray(splitEmojis(getEmojiPool())).slice(
-    0,
-    globals.level
-  );
-  if (globals.practiceMode) {
-    globals.shuffledEmojis = shuffleArray([...globals.emojiSet]);
-    globals.correctMatches = globals.emojiSet.map(() => false);
-  }
-}
+import { initGameData } from "./game-logic";
+import { openNewGameScreen } from "./components/new-game-screen";
+import { createGameField, gameField } from "./components/game-field";
 
 function init() {
   if (isSpaceDucksVariant()) {
@@ -51,54 +26,9 @@ function init() {
   header.appendChild(createScoreboard());
   document.body.appendChild(header);
 
-  const info = createElement({
-    cssClass: "info-text",
-    text: "Listen to the secret emoji sequence and replicate it with the buttons below at the same time.",
-  });
+  document.body.appendChild(createGameField());
 
-  info.appendChild(createElement({ tag: "br" }));
-  info.appendChild(document.createTextNode("Try the blind mode if you dare. "));
-
-  if (!globals.practiceMode) {
-    info.appendChild(createElement({ tag: "br" }));
-    info.appendChild(
-      document.createTextNode("Keep up before your slots run out!")
-    );
-  }
-
-  document.body.appendChild(info);
-
-  document.body.appendChild(createSecretSequenceComponent());
-
-  storytellerButton = createStorytellerButton();
-  document.body.appendChild(storytellerButton);
-
-  document.body.appendChild(
-    initEmojiButtonField(globals.emojiSet, afterEmojiButtonClick)
-  );
-
-  document.body.appendChild(createModeSwitcher());
-}
-
-function afterEmojiButtonClick() {
-  updateSecretSequenceComponent();
-  if (isEndOfGame()) {
-    endOfGame();
-  }
-}
-
-function endOfGame() {
-  if (globals.practiceMode) {
-    let correctCount = globals.shuffledEmojis.length;
-    for (let i = 0; i < globals.shuffledEmojis.length; i++) {
-      if (!globals.correctMatches[i]) {
-        buttonMap[globals.shuffledEmojis[i]].classList.add("wrong");
-        correctCount--;
-      }
-    }
-  }
-  storytellerButton.innerHTML = "Play again";
-  updateHighScore();
+  openNewGameScreen(true);
 }
 
 // INIT

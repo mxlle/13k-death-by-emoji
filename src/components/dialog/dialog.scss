@@ -1,24 +1,39 @@
 .dialog {
   position: absolute;
-  top: 0;
-  bottom: 0;
+  top: 100%;
   left: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.9);
+  height: 100%;
+  width: 100%;
+  background: black;
   color: white;
   z-index: 1;
   display: grid;
   grid-template-rows: 1fr min-content;
+  text-align: center;
+  opacity: 0;
+  transition: top 0.5s, opacity 0.5s;
+
+  &.open {
+    top: 0;
+    opacity: 1;
+  }
+
+  &.has-header {
+    grid-template-rows: min-content 1fr min-content;
+  }
 }
 
 .buttons {
   background: black;
   display: grid;
-  gap: 13px;
-  margin: 13px;
-  grid-template-columns: repeat(2, min-content);
+  gap: 1rem;
+  margin: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
   justify-content: center;
+  max-width: 800px;
+  width: calc(100% - 2rem);
+  justify-self: center;
 
   button {
     white-space: nowrap;

@@ -29,15 +29,18 @@ html {
 body {
   background: black;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
   font-family: $font-family;
+  user-select: none;
+  overflow: hidden;
 
-  &.end-of-game {
+  &.game-over {
     background: mix($death-color, black, 25%);
   }
+}
+
+.game-field {
+  width: 100%;
+  height: 100%;
 }
 
 header {
@@ -61,25 +64,45 @@ button {
   border: 1px solid $main-color;
   background-color: rgba($main-color, 0.1);
   padding: 1rem 2rem;
+  border-radius: $border-radius;
 
   @include hover {
     background-color: rgba($main-color, 0.2);
   }
 
   &.secondary-button {
-    border: 1px solid white;
+    border: 1px solid #ccc;
     background-color: rgba(white, 0.1);
 
     @include hover {
       background-color: rgba(white, 0.2);
     }
   }
+
+  &[disabled] {
+    opacity: 0.3;
+    pointer-events: none;
+  }
 }
 
-.info-text {
-  font-size: 0.7rem;
-  font-style: italic;
+.no-background-button {
+  background: none;
+  border: none;
+
+  @include hover {
+    background: none;
+  }
+}
+
+button.icon-button {
+  @extend .no-background-button;
+  padding: 0.5rem;
+  font-size: 0.75rem;
   color: #ccc;
-  max-width: 16rem;
-  text-align: center;
+  transform: scale(1);
+  transition: transform 0.3s;
+
+  @include hover {
+    transform: scale(1.2);
+  }
 }

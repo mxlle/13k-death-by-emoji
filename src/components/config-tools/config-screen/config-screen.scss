@@ -1,63 +1,63 @@
 @import "../../../theme";
 
 .config {
-  font-size: 37px;
-  display: flex;
+  font-size: 1rem;
+  display: grid;
+  justify-self: center;
+  grid-template-columns: min-content minmax(0, 1fr);
+  grid-auto-rows: min-content;
   align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
+  align-content: center;
+  gap: 1rem 1.5rem;
+  padding: 0 1rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 
-.config-desc {
-  text-align: center;
-}
-
-textarea {
-  background: black;
-  color: white;
-  width: max(40vw, 333px);
-  height: 30vh;
-  font-size: 37px;
-  letter-spacing: 10px;
-  padding: 13px;
-  margin: 13px;
-  font-family: $font-family;
-}
-
-.button-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  margin-top: 13px;
-  .adventure-btn {
-    cursor: pointer;
-    padding: 13px;
-    margin: 3px 7px;
-    background: #202;
-    border-radius: 13px;
-    font-size: 26px;
+  &.is-overflowing {
+    align-content: start;
   }
 
-  + .button-container {
-    .emoji-btn {
-      background: #002;
+  &.practice-mode {
+    .sudden-death-only {
+      opacity: 0;
     }
   }
 
-  .adventure-btn {
-    background: #022;
-  }
+  .label {
+    text-align: right;
+    font-weight: bold;
+    min-width: 20vw;
+  font-family: $font-family;
 }
-.goal-input {
+
+  .value {
+    max-width: 400px;
+    border-radius: $border-radius;
+
+    > * {
+      width: 100%;
+    }
+
+    &:not(.info) {
+      background: rgba(white, 0.1);
+    }
+    &.info {
+      text-align: left;
+    }
+  }
+
+  .icon-button:not(.emoji-selection-btn) {
+    font-size: 1.7rem;
+  }
+
   input {
     display: inline-block;
-    background: black;
+    background: transparent;
     color: white;
-    font-size: 37px;
-    padding: 7px;
-    margin-top: 37px;
-    margin-bottom: 37px;
-    margin-left: 13px;
-    text-align: right;
+    border: none;
+    font-size: 1.7rem;
+    padding: 0.5rem;
+    text-align: center;
+    width: 2ch;
   }
 }

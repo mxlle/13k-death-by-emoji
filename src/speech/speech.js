@@ -6,7 +6,6 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../utils/local-storage";
-import { globals } from "../globals";
 
 const synth = window.speechSynthesis;
 const utterMap = {};
@@ -19,11 +18,12 @@ export function getAvailableVoices() {
   });
 }
 
-export function speak(text, voice) {
+export function speak(text, voice, rate) {
   let utterThis = initVoice(voice);
 
   utterThis.text = text;
-  utterThis.volume = globals.mute ? 0 : 1;
+  utterThis.rate = rate ?? 1;
+  utterThis.pitch = Math.sqrt(utterThis.rate);
   synth.speak(utterThis);
 
   return new Promise((resolve) => {

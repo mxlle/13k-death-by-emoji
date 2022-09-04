@@ -1,0 +1,54 @@
+.emoji-selection-btn {
+  font-size: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-style: italic;
+
+  .emoji-container {
+    display: flex;
+    font-size: 1.7rem;
+    font-style: normal;
+    letter-spacing: -0.4rem;
+
+    :first-child {
+      z-index: 1;
+    }
+  }
+}
+
+.emoji-selection {
+  font-size: 37px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.config-desc {
+  text-align: center;
+}
+
+textarea {
+  background: black;
+  color: white;
+  width: max(40vw, 333px);
+  height: 30vh;
+  font-size: 37px;
+  letter-spacing: 10px;
+  padding: 13px;
+  margin: 13px;
+}
+
+.button-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 13px;
+
+  .adventure-btn {
+    padding: 0.5rem;
+    margin: 0.2rem 0.3rem;
+    font-size: 1.3rem;
+  }
+}
