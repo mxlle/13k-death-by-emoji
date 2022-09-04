@@ -1,8 +1,10 @@
 @import "../../theme";
 
 .new-game-screen {
-  width: calc(100% - 4rem);
+  width: calc(100% - 2rem);
   height: calc(100% - 2rem);
+  min-width: 0;
+  max-width: 1200px;
   display: grid;
   gap: 1rem;
   justify-self: center;
