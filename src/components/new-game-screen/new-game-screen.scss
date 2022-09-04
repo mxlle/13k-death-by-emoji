@@ -14,6 +14,9 @@
   &.has-game-over-section {
     grid-template-rows: min-content min-content repeat(auto-fit, minmax(0, 1fr));
   }
+  &.no-big-play-button {
+    grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+  }
 
   .game-over-section {
     padding: 1rem;
@@ -40,6 +43,10 @@
     gap: 1rem;
     flex-wrap: wrap;
     font-size: 2rem;
+
+    &.hidden {
+      display: none;
+    }
 
     .config-info {
       opacity: 0.6;

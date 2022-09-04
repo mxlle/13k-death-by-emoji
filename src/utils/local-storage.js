@@ -10,6 +10,8 @@ export const LocalStorageKey = {
   BLIND: "blind",
   HIGH_SCORE: "highScore",
   HIGH_SCORE_COUNT: "highScoreCount",
+  CURRENT_GAME: "currentGame",
+  COMPLETED_GAMES: "completedGames",
   SPACE_DUCKS: "spaceDucks",
 };
 
@@ -31,7 +33,11 @@ export function removeLocalStorageItem(key) {
 }
 
 export function getSelectedLanguagesFromStorage() {
-  const item = getLocalStorageItem(LocalStorageKey.LANGUAGES);
+  return getArrayFromStorage(LocalStorageKey.LANGUAGES);
+}
+
+export function getArrayFromStorage(key) {
+  const item = getLocalStorageItem(key);
   if (!item) {
     return [];
   }

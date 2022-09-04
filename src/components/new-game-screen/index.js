@@ -5,8 +5,13 @@ import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
 import "./new-game-screen.scss";
-import { getRandomEmojisFromPool, globals } from "../../globals";
 import {
+  CUSTOM_GAME_ID,
+  getRandomEmojisFromPool,
+  globals,
+} from "../../globals";
+import {
+  getLocalStorageItem,
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
@@ -27,6 +32,10 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
   if (!newGameScreen) createNewGameScreen();
   if (!dialog) dialog = createDialog(newGameScreen, undefined, "Select game");
 
+  const showBigPlayButton =
+    isGameOver ||
+    getLocalStorageItem(LocalStorageKey.CURRENT_GAME) === CUSTOM_GAME_ID;
+
   let playButtonText;
   if (isGameOver) {
     const headerText = globals.practiceMode
@@ -38,29 +47,34 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
     dialog.changeHeader("Select game");
     playButtonText = "Start game";
   }
-  replayButton.innerHTML = "";
-  const playModeText =
-    (globals.practiceMode ? "🐣" : "☠️") + (globals.blindMode ? "🗣️" : "👁️");
-  const emojiSetText = getRandomEmojisFromPool().join("");
-  const emojiCountText = `(${globals.level})`;
-  replayButton.appendChild(createElement({ text: isGameOver ? "🔄" : "▶️" }));
-  replayButton.appendChild(createElement({ text: playButtonText }));
-  const configInfo = createElement({ cssClass: "config-info" });
 
-  configInfo.appendChild(
-    createElement({ text: playModeText, cssClass: "play-mode" })
-  );
-  configInfo.appendChild(
-    createElement({ text: emojiSetText, cssClass: "emoji-set" })
-  );
-  configInfo.appendChild(
-    createElement({ text: emojiCountText, cssClass: "emoji-count" })
-  );
-  replayButton.appendChild(configInfo);
+  replayButton.classList.toggle("hidden", !showBigPlayButton);
+  replayButton.classList.toggle("no-big-play-button", !showBigPlayButton);
+  if (showBigPlayButton) {
+    replayButton.innerHTML = "";
+    const playModeText =
+      (globals.practiceMode ? "🐣" : "☠️") + (globals.blindMode ? "🗣️" : "👁️");
+    const emojiSetText = getRandomEmojisFromPool().join("");
+    const emojiCountText = `(${globals.level})`;
+    replayButton.appendChild(createElement({ text: isGameOver ? "🔄" : "▶️" }));
+    replayButton.appendChild(createElement({ text: playButtonText }));
+    const configInfo = createElement({ cssClass: "config-info" });
 
-  playOtherModeButton.innerHTML = globals.practiceMode
-    ? "☠️ Switch to Sudden Death"
-    : "🐣 Switch to Practice";
+    configInfo.appendChild(
+      createElement({ text: playModeText, cssClass: "play-mode" })
+    );
+    configInfo.appendChild(
+      createElement({ text: emojiSetText, cssClass: "emoji-set" })
+    );
+    configInfo.appendChild(
+      createElement({ text: emojiCountText, cssClass: "emoji-count" })
+    );
+    replayButton.appendChild(configInfo);
+
+    playOtherModeButton.innerHTML = globals.practiceMode
+      ? "☠️ Switch to Sudden Death"
+      : "🐣 Switch to Practice";
+  }
 
   setGameOverSection(isGameOver);
 
@@ -115,7 +129,10 @@ function createNewGameScreen() {
     cssClass: "secondary-button",
     onClick: async () => {
       const submit = await showConfigScreen();
-      if (submit) dialog.close();
+      if (submit) {
+        setLocalStorageItem(LocalStorageKey.CURRENT_GAME, CUSTOM_GAME_ID);
+        dialog.close();
+      }
     },
   });
   const icon = createElement({ text: "⚙️", cssClass: "icon" });

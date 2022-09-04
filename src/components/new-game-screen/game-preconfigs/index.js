@@ -67,6 +67,7 @@ function createGamePreconfigButton(preconfig, onSelect) {
         setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, emojiPoolName);
         newGame();
       }
+      setLocalStorageItem(LocalStorageKey.CURRENT_GAME, preconfig.id);
 
       onSelect?.();
     },
