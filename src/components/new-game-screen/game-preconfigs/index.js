@@ -6,7 +6,7 @@ import { newGame } from "../../../game-logic";
 import { gamePreconfigs } from "./preconfigs";
 import { getRandomItem } from "../../../utils/array-utils";
 import { allOldEmojis } from "../../../emojis/sets";
-import { randomInt } from "../../../utils/random-utils";
+import { randomIntFromInterval } from "../../../utils/random-utils";
 
 export function createGamePreconfigs(onSelect) {
   const gamePreconfigsContainer = createElement({
@@ -31,7 +31,7 @@ function createGamePreconfigButton(preconfig, onSelect) {
         setGameConfig({
           practiceMode: getRandomItem([true, false]),
           blindMode: getRandomItem([true, false]),
-          level: randomInt(MIN_GOAL, MAX_GOAL),
+          level: randomIntFromInterval(MIN_GOAL, MAX_GOAL),
         });
         newGame(allOldEmojis);
       } else {
