@@ -23,7 +23,7 @@ import {
 } from "../score";
 import { createGamePreconfigs } from "./game-preconfigs";
 
-let newGameScreen, dialog, replayButton, playOtherModeButton, gameOverSection;
+let newGameScreen, dialog, replayButton, gameOverSection;
 
 let completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
 
@@ -73,10 +73,6 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
       createElement({ text: emojiCountText, cssClass: "emoji-count" })
     );
     replayButton.appendChild(configInfo);
-
-    playOtherModeButton.innerHTML = globals.practiceMode
-      ? "☠️ Switch to Sudden Death"
-      : "🐣 Switch to Practice";
   }
 
   setGameOverSection(isGameOver);
@@ -129,17 +125,7 @@ function createNewGameScreen() {
       void newGame();
     },
   });
-  playOtherModeButton = createElement({
-    tag: "button",
-    cssClass: "secondary-button",
-    text: "Toggle game mode",
-    onClick: () => {
-      globals.practiceMode = !globals.practiceMode;
-      setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, globals.practiceMode);
-      dialog.close();
-      void newGame();
-    },
-  });
+
   const configButton = createElement({
     tag: "button",
     cssClass: "secondary-button",
@@ -161,6 +147,5 @@ function createNewGameScreen() {
   newGameScreen.appendChild(gameOverSection);
   newGameScreen.appendChild(replayButton);
   newGameScreen.appendChild(gamePreconfigs);
-  //newGameScreen.appendChild(playOtherModeButton);
   newGameScreen.appendChild(configButton);
 }
