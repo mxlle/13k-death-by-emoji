@@ -4,7 +4,6 @@ import { createElement } from "../../../utils/html-utils";
 import {
   getEmojiPool,
   globals,
-  isEndOfGame,
   MAX_GOAL,
   MIN_GOAL,
   setLevel,
@@ -139,7 +138,6 @@ function updateScoreModifiers() {
   if (globals.practiceMode) {
     scoreModifiers.innerHTML = "❌";
   } else {
-    if (isEndOfGame()) return;
     scoreModifiers.innerHTML = `&nbsp;✅: +${getPointsByAction(
       ScoreAction.CORRECT,
       getGoalInputValue()
