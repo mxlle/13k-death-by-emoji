@@ -82,6 +82,10 @@ function createGamePreconfigButton(preconfig, onSelect) {
   gamePreconfigButton.appendChild(icon);
   gamePreconfigButton.appendChild(text);
 
+  if (preconfig.disabled) {
+    gamePreconfigButton.disabled = true;
+  }
+
   if (completedGames.includes(preconfig.id)) {
     gamePreconfigButton.classList.add("completed");
   }

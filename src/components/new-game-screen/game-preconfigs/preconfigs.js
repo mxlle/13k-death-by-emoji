@@ -46,6 +46,7 @@ export const gamePreconfigs = [
     icon: "🌐",
     //: "Go international",
     name: "[Coming soon]",
+    disabled: true,
     randomLanguage: true, // TODO - implement
     config: {
       practiceMode: false,
