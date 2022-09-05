@@ -78,13 +78,12 @@ function showScoreAtButton(clickEvent, score) {
     cssClass: "score-fly",
   });
   const { x, y } = getPositionFromEvent(clickEvent);
-  scoreElement.style.setProperty("--init-top", y + "px");
-  scoreElement.style.setProperty("--init-left", x + "px");
+  scoreElement.style.setProperty("--init-top", Math.round(y) + "px");
+  scoreElement.style.setProperty("--init-left", Math.round(x) + "px");
+  scoreElement.classList.add(isPositive ? "positive" : "negative");
   document.body.appendChild(scoreElement);
-  setTimeout(
-    () => scoreElement.classList.add(isPositive ? "positive" : "negative"),
-    0
-  );
+
+  setTimeout(() => scoreElement.classList.add("transition-end"), 150);
   setTimeout(() => document.body.removeChild(scoreElement), 5000);
 }
 

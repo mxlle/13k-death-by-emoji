@@ -53,17 +53,15 @@ button.emoji-button {
 
   &.positive {
     color: $life-color;
-    @extend %transition-end;
   }
 
   &.negative {
     color: $death-color;
-    @extend %transition-end;
   }
-}
 
-%transition-end {
-  opacity: 0;
-  top: 0;
-  left: 90%;
+  &.transition-end {
+    opacity: 0;
+    top: 0;
+    left: 90%;
+  }
 }
