@@ -2,6 +2,7 @@ import "./config-screen.scss";
 
 import { createElement } from "../../../utils/html-utils";
 import {
+  CUSTOM_GAME_ID,
   getEmojiPool,
   globals,
   MAX_GOAL,
@@ -43,6 +44,7 @@ export async function showConfigScreen() {
 function onConfigSubmitted() {
   const goal = getGoalInputValue();
   setLevel(goal);
+  setLocalStorageItem(LocalStorageKey.CURRENT_GAME, CUSTOM_GAME_ID);
   newGame();
 }
 

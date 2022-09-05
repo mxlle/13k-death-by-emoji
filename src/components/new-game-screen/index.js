@@ -24,7 +24,7 @@ import {
 import { createGamePreconfigs } from "./game-preconfigs";
 import { speak } from "../../speech/speech";
 
-let newGameScreen, dialog, replayButton, gameOverSection;
+let newGameScreen, dialog, replayButton, gameOverSection, configButton;
 
 let completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
 
@@ -36,9 +36,9 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
   if (!newGameScreen) createNewGameScreen();
   if (!dialog) dialog = createDialog(newGameScreen, undefined, "Select game");
 
-  const showBigPlayButton =
-    isGameOver ||
+  const lastGameWasCustom =
     getLocalStorageItem(LocalStorageKey.CURRENT_GAME) === CUSTOM_GAME_ID;
+  const showBigPlayButton = isGameOver || lastGameWasCustom;
 
   let playButtonText;
   if (isGameOver) {
@@ -53,7 +53,9 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
   }
 
   replayButton.classList.toggle("hidden", !showBigPlayButton);
-  replayButton.classList.toggle("no-big-play-button", !showBigPlayButton);
+  newGameScreen.classList.toggle("no-big-play-button", !showBigPlayButton);
+  newGameScreen.classList.toggle("prefer-custom", lastGameWasCustom);
+
   if (showBigPlayButton) {
     replayButton.innerHTML = "";
     const playModeText =
@@ -132,9 +134,9 @@ function createNewGameScreen() {
     },
   });
 
-  const configButton = createElement({
+  configButton = createElement({
     tag: "button",
-    cssClass: "secondary-button",
+    cssClass: "secondary-button config-button",
     onClick: async () => {
       const submit = await showConfigScreen();
       if (submit) {

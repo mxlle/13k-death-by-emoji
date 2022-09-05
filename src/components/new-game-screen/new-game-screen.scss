@@ -15,11 +15,22 @@
     grid-template-rows: min-content min-content repeat(auto-fit, minmax(0, 1fr));
 
     .replay-button {
-      margin-bottom: 2rem;
+      margin-bottom: 1.5rem;
     }
   }
   &.no-big-play-button {
     grid-template-rows: repeat(auto-fit, minmax(0, 1fr));
+  }
+
+  &.prefer-custom {
+    .config-button {
+      grid-row: 2;
+    }
+    &.has-game-over-section {
+      .config-button {
+        grid-row: 3;
+      }
+    }
   }
 
   .game-over-section {
