@@ -22,7 +22,7 @@ export function createVoiceSelector() {
   getAvailableVoices().then((_voices) => {
     voices = _voices;
     voiceListElement = getVoiceListElement(voices, onChange);
-    voiceListElement.setAttribute("size", voices.length + 1);
+    voiceListElement.setAttribute("size", voices.length);
     configScreen.appendChild(voiceListElement);
   });
 

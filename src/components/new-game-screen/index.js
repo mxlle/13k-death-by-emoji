@@ -22,6 +22,7 @@ import {
   getScoreAndHighScoreText,
 } from "../score";
 import { createGamePreconfigs } from "./game-preconfigs";
+import { speak } from "../../speech/speech";
 
 let newGameScreen, dialog, replayButton, gameOverSection;
 
@@ -80,6 +81,11 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
   void dialog.open(openImmediately);
 }
 
+function closeDialog() {
+  speak(""); // to init speech
+  dialog.close();
+}
+
 function setGameOverSection(isGameOver) {
   gameOverSection.classList.toggle("hidden", !isGameOver);
   const isNegative = globals.practiceMode
@@ -121,7 +127,7 @@ function createNewGameScreen() {
     cssClass: "replay-button secondary-button",
     text: "Start game",
     onClick: () => {
-      dialog.close();
+      closeDialog();
       void newGame();
     },
   });
@@ -133,7 +139,7 @@ function createNewGameScreen() {
       const submit = await showConfigScreen();
       if (submit) {
         setLocalStorageItem(LocalStorageKey.CURRENT_GAME, CUSTOM_GAME_ID);
-        dialog.close();
+        closeDialog();
       }
     },
   });
@@ -142,7 +148,7 @@ function createNewGameScreen() {
   configButton.appendChild(icon);
   configButton.appendChild(text);
 
-  const gamePreconfigs = createGamePreconfigs(() => dialog.close());
+  const gamePreconfigs = createGamePreconfigs(closeDialog);
 
   newGameScreen.appendChild(gameOverSection);
   newGameScreen.appendChild(replayButton);
