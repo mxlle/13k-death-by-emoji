@@ -50,9 +50,15 @@ export function updateHighScore() {
     updateScoreboard();
   }
 
+  const countToSave =
+    globals.practiceMode &&
+    globals.playCounter <= 1 &&
+    globals.correctCount >= globals.shuffledEmojis.length
+      ? globals.correctCount + 1
+      : globals.correctCount;
   setGameHighCount(
     getLocalStorageItem(LocalStorageKey.CURRENT_GAME),
-    globals.correctCount
+    countToSave
   );
 }
 

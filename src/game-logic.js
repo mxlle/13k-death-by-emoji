@@ -46,6 +46,7 @@ export function initGameData(optionalEmojiPool) {
 }
 
 export async function playPracticeSequence(onNextEmoji) {
+  globals.playCounter++;
   for (let i = globals.clickCounter; i < globals.shuffledEmojis.length; i++) {
     const text = globals.shuffledEmojis[i];
     globals.currentIndex = i;
