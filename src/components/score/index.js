@@ -13,16 +13,21 @@ let scoreboard,
   score = 0;
 
 pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
-  updateScoreboard();
+  init();
 });
 
-export function createScoreboard() {
-  scoreboard = createElement({ cssClass: "scoreboard" });
+function init() {
+  score = 0;
   highScore = getLocalStorageItem(LocalStorageKey.HIGH_SCORE);
   highScore = highScore ? Number(highScore) : undefined;
   highScoreCount = getLocalStorageItem(LocalStorageKey.HIGH_SCORE_COUNT);
   highScoreCount = highScoreCount ? Number(highScoreCount) : 0;
   updateScoreboard();
+}
+
+export function createScoreboard() {
+  scoreboard = createElement({ cssClass: "scoreboard" });
+  init();
   return scoreboard;
 }
 
