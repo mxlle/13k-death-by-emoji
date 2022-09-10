@@ -1,13 +1,10 @@
 .preconfig-btn {
-  &.completed {
-    position: relative;
+  position: relative;
 
-    &:after {
-      content: "✔️";
-      position: absolute;
-      top: 0.5rem;
-      right: 0.5rem;
-    }
+  .stars {
+    position: absolute;
+    top: 0.25rem;
+    right: 0.5rem;
   }
 
   &[disabled] {

@@ -53,6 +53,7 @@ async function onPlayButtonClick() {
   } else {
     await playInfiniteSequence(onNextEmoji);
     updateHighScore();
+    pubSubService.publish(PubSubEvent.GAME_OVER);
   }
 
   globals.isSpeaking = false;

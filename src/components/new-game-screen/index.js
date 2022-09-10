@@ -4,7 +4,7 @@ import {
   createButton,
   createElement,
 } from "../../utils/html-utils";
-import { newGame } from "../../game-logic";
+import { getGameCountToSave, newGame } from "../../game-logic";
 import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
@@ -15,22 +15,16 @@ import {
   globals,
 } from "../../globals";
 import {
-  getArrayFromStorage,
   getLocalStorageItem,
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../utils/local-storage";
-import {
-  getResultAndRecordText,
-  getScore,
-  getScoreAndHighScoreText,
-} from "../score";
+import { getResultAndRecordText, getScoreAndHighScoreText } from "../score";
 import { createGamePreconfigs } from "./game-preconfigs";
 import { speak } from "../../speech/speech";
+import { createStarComponent, getAchievedStars } from "../stars";
 
 let newGameScreen, dialog, replayButton, gameOverSection, configButton;
-
-let completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
 
 pubSubService.subscribe(PubSubEvent.GAME_OVER, () =>
   setTimeout(() => openNewGameScreen(false, true), 500)
@@ -94,13 +88,19 @@ function closeDialog() {
 
 function setGameOverSection(isGameOver) {
   gameOverSection.classList.toggle("hidden", !isGameOver);
-  const isNegative = globals.practiceMode
-    ? globals.correctCount < globals.shuffledEmojis.length
-    : getScore() <= 0;
-  gameOverSection.classList.toggle("negative", isNegative);
+  const achievedStars = getAchievedStars(
+    undefined,
+    globals.practiceMode,
+    globals.shuffledEmojis?.length,
+    getGameCountToSave()
+  );
+
+  gameOverSection.classList.toggle("negative", achievedStars === 0);
+  gameOverSection.classList.toggle("good", achievedStars === 3);
   newGameScreen.classList.toggle("has-game-over-section", isGameOver);
   gameOverSection.innerHTML = "";
   if (isGameOver) {
+    gameOverSection.appendChild(createStarComponent(achievedStars));
     gameOverSection.appendChild(
       createElement({ text: getResultAndRecordText() })
     );
@@ -108,19 +108,6 @@ function setGameOverSection(isGameOver) {
       gameOverSection.appendChild(
         createElement({ text: getScoreAndHighScoreText() })
       );
-    }
-
-    if (!isNegative) {
-      completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
-      const lastGame = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
-      if (!completedGames.includes(lastGame)) {
-        completedGames.push(lastGame);
-        setLocalStorageItem(LocalStorageKey.COMPLETED_GAMES, completedGames);
-        pubSubService.publish(
-          PubSubEvent.COMPLETED_GAMES_CHANGED,
-          completedGames
-        );
-      }
     }
   }
 }

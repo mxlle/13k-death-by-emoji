@@ -19,13 +19,16 @@ import {
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { preselections } from "../../config-tools/emoji-selection/preselections";
 import {
-  getArrayFromStorage,
+  getLocalStorageItem,
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
 import { PubSubEvent, pubSubService } from "../../../utils/pub-sub-service";
-
-let completedGames = getArrayFromStorage(LocalStorageKey.COMPLETED_GAMES);
+import {
+  createStarComponent,
+  getAchievedStars,
+  updateStars,
+} from "../../stars";
 
 export function createGamePreconfigs(onSelect) {
   const gamePreconfigsContainer = createElement({
@@ -96,18 +99,21 @@ function createGamePreconfigButton(preconfig, onSelect) {
     gamePreconfigButton.disabled = true;
   }
 
-  if (completedGames.includes(preconfig.id)) {
-    gamePreconfigButton.classList.add("completed");
-  }
+  const starParams = [
+    preconfig.id,
+    preconfig.config?.practiceMode,
+    preconfig.config?.level,
+  ];
 
-  pubSubService.subscribe(
-    PubSubEvent.COMPLETED_GAMES_CHANGED,
-    (completedGames) => {
-      if (completedGames.includes(preconfig.id)) {
-        gamePreconfigButton.classList.add("completed");
-      }
+  const stars = createStarComponent(getAchievedStars(...starParams));
+  gamePreconfigButton.appendChild(stars);
+
+  pubSubService.subscribe(PubSubEvent.GAME_OVER, () => {
+    const currentGameId = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
+    if (currentGameId === preconfig.id) {
+      updateStars(stars, getAchievedStars(...starParams));
     }
-  );
+  });
 
   return gamePreconfigButton;
 }

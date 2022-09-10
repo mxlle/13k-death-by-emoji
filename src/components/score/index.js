@@ -7,6 +7,7 @@ import {
   setLocalStorageItem,
 } from "../../utils/local-storage";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
+import { getGameCountToSave } from "../../game-logic";
 
 let scoreboard,
   highScore,
@@ -50,15 +51,9 @@ export function updateHighScore() {
     updateScoreboard();
   }
 
-  const countToSave =
-    globals.practiceMode &&
-    globals.playCounter <= 1 &&
-    globals.correctCount >= globals.shuffledEmojis.length
-      ? globals.correctCount + 1
-      : globals.correctCount;
   setGameHighCount(
     getLocalStorageItem(LocalStorageKey.CURRENT_GAME),
-    countToSave
+    getGameCountToSave()
   );
 }
 

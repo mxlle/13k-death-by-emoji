@@ -76,7 +76,6 @@ export async function playInfiniteSequence(onNextEmoji) {
 
   globals.endOfGame = true;
   document.body.classList.add("game-over");
-  pubSubService.publish(PubSubEvent.GAME_OVER);
 }
 
 export function evaluatePlay(emoji) {
@@ -163,4 +162,12 @@ function increaseRate() {
   rate = Math.min(rate, MAX_RATE);
   waitTime -= CHANGE_WAIT_TIME_STEP;
   waitTime = Math.max(waitTime, DEFAULT_WAIT_TIME / MAX_RATE);
+}
+
+export function getGameCountToSave() {
+  return globals.practiceMode &&
+    globals.playCounter <= 1 &&
+    globals.correctCount >= globals.shuffledEmojis.length
+    ? globals.correctCount + 1
+    : globals.correctCount;
 }

@@ -11,7 +11,6 @@ export const LocalStorageKey = {
   HIGH_SCORE: "highScore",
   HIGH_SCORE_COUNT: "highScoreCount",
   CURRENT_GAME: "gameId",
-  COMPLETED_GAMES: "completed",
   SPACE_DUCKS: "sd",
   RAINBOW_MODE: "rainbow",
   GAME_HIGH_COUNT: "hc",

@@ -1,0 +1,9 @@
+.stars {
+  display: flex;
+  justify-content: center;
+  font-size: 0.75rem;
+
+  &.zero {
+    opacity: 0.2;
+  }
+}
