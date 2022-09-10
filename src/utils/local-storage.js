@@ -1,19 +1,19 @@
 const LOCAL_STORAGE_PREFIX = "☠️👻🔫";
 
 export const LocalStorageKey = {
-  PRACTICE_MODE: "practiceMode",
-  LANGUAGES: "selectedLanguages",
-  VOICES: "selectedVoices",
-  LEVEL: "currentLevel",
-  EMOJI_POOL: "currentEmojiPool",
-  EMOJI_POOL_NAME: "currentEmojiPoolName",
+  PRACTICE_MODE: "practice",
+  LANGUAGES: "langs",
+  VOICES: "voices",
+  LEVEL: "level",
+  EMOJI_POOL: "emojis",
+  EMOJI_POOL_NAME: "emojiName",
   BLIND: "blind",
   HIGH_SCORE: "highScore",
   HIGH_SCORE_COUNT: "highScoreCount",
-  CURRENT_GAME: "currentGame",
-  COMPLETED_GAMES: "completedGames",
-  SPACE_DUCKS: "spaceDucks",
-  RAINBOW_MODE: "rainbowMode",
+  CURRENT_GAME: "gameId",
+  COMPLETED_GAMES: "completed",
+  SPACE_DUCKS: "sd",
+  RAINBOW_MODE: "rainbow",
 };
 
 export function setLocalStorageItem(key, value) {
