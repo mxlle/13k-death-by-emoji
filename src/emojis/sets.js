@@ -5,6 +5,8 @@ export const spaceDucks = "🦆 🚀 ✏️ ⭐ 🌈 🐈 🎒 🎓 📱 💻 �
 
 export const party = "🚀🎉🎊😎💪🙌🙌🎈";
 
+export const red = "🍅🍎🍓🍒♥️♦️🌹🚨🚒🦀🐞🍷🏓🔴";
+
 // copied from https://getemoji.com/
 export const cuteAnimals1 = "🐶🐈🐯🐭🐹🐰🐿️🐥🐧🐸🐢🐝";
 export const animals1 =

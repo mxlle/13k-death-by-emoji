@@ -1,5 +1,5 @@
 import { createDialog } from "../dialog";
-import { appendEmoji, createElement } from "../../utils/html-utils";
+import { createElement } from "../../utils/html-utils";
 import { newGame } from "../../game-logic";
 import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
@@ -152,8 +152,8 @@ function createNewGameScreen() {
   });
   const icon = createElement({ cssClass: "icon" });
   const text = createElement({ cssClass: "text" });
-  appendEmoji(icon, "⚙️");
-  appendEmoji(text, "Custom game");
+  icon.appendChild(createElement({ text: "⚙️" }));
+  text.appendChild(createElement({ text: "Custom game" }));
   configButton.appendChild(icon);
   configButton.appendChild(text);
 

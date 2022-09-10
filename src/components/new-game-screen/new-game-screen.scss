@@ -4,7 +4,7 @@
   width: calc(100% - 2rem);
   height: calc(100% - 2rem);
   min-width: 0;
-  max-width: 1200px;
+  max-width: 1280px;
   display: grid;
   gap: 1rem;
   justify-self: center;
@@ -106,6 +106,17 @@ body.rainbow-mode {
     .emoji-set {
       padding-right: 0.5rem;
       @extend .rainbow-text;
+    }
+
+    &.prefer-custom {
+      .config-button {
+        .text,
+        .icon {
+          > * {
+            @extend .rainbow-text;
+          }
+        }
+      }
     }
   }
 }

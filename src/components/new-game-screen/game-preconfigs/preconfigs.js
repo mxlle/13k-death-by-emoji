@@ -1,4 +1,4 @@
-import { cuteAnimals1, flags, niceFlags } from "../../../emojis/sets";
+import { cuteAnimals1, flags, niceFlags, red } from "../../../emojis/sets";
 
 export const gamePreconfigs = [
   {
@@ -55,6 +55,41 @@ export const gamePreconfigs = [
     },
   },
   {
+    id: "7",
+    icon: "🐶🐰🐥",
+    name: "Cuteness overload",
+    emojiPool: cuteAnimals1,
+    config: {
+      practiceMode: false,
+      blindMode: false,
+      level: 12,
+    },
+  },
+  {
+    id: "9",
+    icon: "🍎♥️🚒",
+    name: "Seeing red",
+    emojiPool: red,
+    config: {
+      practiceMode: false,
+      blindMode: true,
+      level: 12,
+    },
+  },
+  {
+    id: "11",
+    icon: "☠️",
+    //: "Tru dead",
+    name: "[Coming soon]",
+    disabled: true,
+    config: {
+      practiceMode: false,
+      blindMode: true,
+      level: 12,
+      slots: 1, // TODO - implement
+    },
+  },
+  {
     id: "6",
     icon: niceFlags,
     name: "Fun with flags",
@@ -67,14 +102,14 @@ export const gamePreconfigs = [
     },
   },
   {
-    id: "7",
-    icon: "🐶🐰🐥",
-    name: "Cuteness overload",
-    emojiPool: cuteAnimals1,
+    id: "10",
+    icon: "🌈☠️🌈",
+    name: "Rainbow",
     config: {
       practiceMode: false,
-      blindMode: false,
-      level: 12,
+      blindMode: true,
+      level: 6,
+      rainbowMode: true,
     },
   },
   {
