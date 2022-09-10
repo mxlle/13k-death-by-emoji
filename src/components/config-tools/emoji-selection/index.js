@@ -18,6 +18,7 @@ import {
 } from "../../../utils/local-storage";
 
 let emojiSelectionButton, emojiSelectionScreen, dialog, textarea;
+let selectedName;
 
 export function createEmojiSelectionButton(afterSelectionCallback) {
   emojiSelectionButton = createButton({
@@ -61,6 +62,9 @@ async function showEmojiSelectionScreen() {
 function onConfigSubmitted() {
   const config = getConfigValue();
   setEmojiPool(config);
+  if (selectedName) {
+    setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, selectedName);
+  }
   updateEmojiSelectionButtonText();
 }
 
@@ -87,7 +91,7 @@ function createAdventureButtons(adventures) {
       text: id,
       onClick: () => {
         setConfigValue(emojis);
-        setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, name);
+        selectedName = name;
       },
     });
     btn.title = name;
