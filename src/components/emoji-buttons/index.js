@@ -40,7 +40,7 @@ export function initEmojiButtonField(set) {
 
 function onEmojiClick(emoji, emojiButton, event) {
   if (!isGameActive()) {
-    void speak(emoji, getCurrentVoice());
+    void speak(isEndOfGame() ? "Game over!" : emoji, getCurrentVoice());
     return;
   }
 
