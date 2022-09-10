@@ -12,7 +12,7 @@ export function createNumberInputComponent({
   const numberInputContainer = createElement({
     cssClass: "number-input-container",
   });
-  const numberInput = createElement({ tag: "input" });
+  const numberInput = createElement({ tag: "input", cssClass: "rbc" });
   numberInput.type = "number";
   numberInput.value = value;
   min && (numberInput.min = min);

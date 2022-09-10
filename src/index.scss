@@ -76,7 +76,7 @@ button {
   }
 }
 
-.no-background-btn {
+.no-bg-btn {
   background: none;
   border: none;
 
@@ -86,7 +86,7 @@ button {
 }
 
 button.icon-btn {
-  @extend .no-background-btn;
+  @extend .no-bg-btn;
   padding: 0.5rem;
   font-size: 0.75rem;
   color: #ccc;
@@ -98,6 +98,6 @@ button.icon-btn {
   }
 }
 
-body.rainbow-mode button .emoji {
+body.rainbow-mode .rbc {
   @extend .rainbow-text;
 }

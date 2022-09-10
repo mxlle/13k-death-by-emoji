@@ -1,6 +1,9 @@
 import "./config-screen.scss";
 
-import { appendEmoji, createElement } from "../../../utils/html-utils";
+import {
+  appendRainbowCapableText,
+  createElement,
+} from "../../../utils/html-utils";
 import {
   CUSTOM_GAME_ID,
   getEmojiPool,
@@ -159,18 +162,21 @@ function updateScoreModifiers() {
 
 function updateBlindButtonText() {
   blindButton.innerHTML = "";
-  appendEmoji(blindButton, globals.blindMode ? "🗣️" : "🗣️ + 👁️");
+  appendRainbowCapableText(blindButton, globals.blindMode ? "🗣️" : "🗣️ + 👁️");
 }
 
 function updateRainbowButtonText() {
   rainbowButton.innerHTML = "";
-  appendEmoji(rainbowButton, globals.rainbowMode ? "on" : "off");
+  appendRainbowCapableText(rainbowButton, globals.rainbowMode ? "on" : "off");
 }
 
 function updateLanguageButtonText() {
   const languages = getLanguagesText() ?? "";
   languageButton.innerHTML = "";
-  appendEmoji(languageButton, languages.length > 0 ? `${languages}` : "🌐");
+  appendRainbowCapableText(
+    languageButton,
+    languages.length > 0 ? `${languages}` : "🌐"
+  );
 }
 
 function getGoalInputValue() {

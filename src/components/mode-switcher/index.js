@@ -1,4 +1,7 @@
-import { appendEmoji, createElement } from "../../utils/html-utils";
+import {
+  appendRainbowCapableText,
+  createElement,
+} from "../../utils/html-utils";
 import { globals } from "../../globals";
 
 import "./mode-switcher.scss";
@@ -27,7 +30,7 @@ export function createModeSwitcher(onModeChangeCallback) {
 
   function adjustText() {
     switchButton.innerHTML = "";
-    appendEmoji(
+    appendRainbowCapableText(
       switchButton,
       globals.practiceMode ? "🐣 Practice" : "☠️ Sudden death"
     );

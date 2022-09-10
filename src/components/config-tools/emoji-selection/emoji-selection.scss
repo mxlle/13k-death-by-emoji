@@ -14,17 +14,9 @@
     letter-spacing: -0.4rem;
     padding: 0 0.5rem;
 
-    :first-child {
+    &:not(.rbc) :first-child {
       z-index: 1;
     }
-  }
-}
-
-body.rainbow-mode .emoji-selection-btn .emoji-container {
-  @extend .rainbow-text;
-
-  :first-child {
-    z-index: initial;
   }
 }
 

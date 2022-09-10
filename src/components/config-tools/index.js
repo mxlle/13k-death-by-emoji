@@ -1,4 +1,7 @@
-import { appendEmoji, createElement } from "../../utils/html-utils";
+import {
+  appendRainbowCapableText,
+  createElement,
+} from "../../utils/html-utils";
 
 import "./config-tools.scss";
 import { openNewGameScreen } from "../new-game-screen";
@@ -12,14 +15,14 @@ export function createConfigTools() {
     cssClass: "icon-btn",
     onClick: () => openNewGameScreen(),
   });
-  appendEmoji(homeButton, "🏠");
+  appendRainbowCapableText(homeButton, "🏠");
 
   const configButton = createElement({
     tag: "button",
     cssClass: "icon-btn",
     onClick: () => showConfigScreen(),
   });
-  appendEmoji(configButton, "⚙️");
+  appendRainbowCapableText(configButton, "⚙️");
 
   configTools.appendChild(homeButton);
   configTools.appendChild(configButton);

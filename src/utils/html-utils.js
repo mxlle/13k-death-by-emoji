@@ -19,10 +19,8 @@ export function createElement({ tag, cssClass, text, onClick }) {
   return elem;
 }
 
-export function appendEmoji(element, emoji) {
-  element.appendChild(
-    createElement({ tag: "span", text: emoji, cssClass: "emoji" })
-  );
+export function appendRainbowCapableText(element, text) {
+  element.appendChild(createElement({ tag: "span", text, cssClass: "rbc" }));
 }
 
 function absorbEvent_(event) {

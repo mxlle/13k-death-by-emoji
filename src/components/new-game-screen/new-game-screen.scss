@@ -103,11 +103,6 @@
 
 body.rainbow-mode {
   .new-game-screen {
-    .emoji-set {
-      padding-right: 0.5rem;
-      @extend .rainbow-text;
-    }
-
     &.prefer-custom {
       .config-btn {
         .text,

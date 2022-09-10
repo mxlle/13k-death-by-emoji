@@ -1,4 +1,7 @@
-import { appendEmoji, createElement } from "../../utils/html-utils";
+import {
+  appendRainbowCapableText,
+  createElement,
+} from "../../utils/html-utils";
 
 import { globals, isEndOfGame } from "../../globals";
 
@@ -74,7 +77,7 @@ export function updateStorytellerButton() {
       storytellerButton.disabled = true;
     } else {
       storytellerButton.innerHTML = "";
-      appendEmoji(
+      appendRainbowCapableText(
         storytellerButton,
         globals.started ? "🗣️ Replay" : "🗣️ Start"
       );

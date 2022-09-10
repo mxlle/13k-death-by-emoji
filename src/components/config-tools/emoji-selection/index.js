@@ -35,7 +35,7 @@ export function createEmojiSelectionButton(afterSelectionCallback) {
 
 export function updateEmojiSelectionButtonText() {
   emojiSelectionButton.innerText = "";
-  const emojiContainer = createElement({ cssClass: "emoji-container" });
+  const emojiContainer = createElement({ cssClass: "emoji-container rbc" });
   getRandomEmojisFromPool().forEach((emoji) =>
     emojiContainer.appendChild(createElement({ text: emoji }))
   );

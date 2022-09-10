@@ -1,5 +1,5 @@
 import {
-  appendEmoji,
+  appendRainbowCapableText,
   convertLongPressToClick,
   createElement,
   getPositionFromEvent,
@@ -68,7 +68,7 @@ function createEmojiButton(emoji) {
     tag: "button",
     cssClass: "emoji-btn",
   });
-  appendEmoji(button, emoji);
+  appendRainbowCapableText(button, emoji);
 
   return button;
 }

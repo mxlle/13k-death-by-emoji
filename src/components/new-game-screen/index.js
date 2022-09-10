@@ -1,5 +1,8 @@
 import { createDialog } from "../dialog";
-import { createElement } from "../../utils/html-utils";
+import {
+  appendRainbowCapableText,
+  createElement,
+} from "../../utils/html-utils";
 import { newGame } from "../../game-logic";
 import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
@@ -63,12 +66,7 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
     const emojiSetText = getRandomEmojisFromPool().join("");
     const emojiCountText = `(${globals.level})`;
     replayButton.appendChild(createElement({ text: isGameOver ? "🔄" : "▶️" }));
-    replayButton.appendChild(
-      createElement({
-        text: playButtonText,
-        cssClass: globals.rainbowMode ? "rainbow-text" : "",
-      })
-    );
+    appendRainbowCapableText(replayButton, playButtonText);
     const configInfo = createElement({ cssClass: "config-info" });
 
     configInfo.appendChild(
