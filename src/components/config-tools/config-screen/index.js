@@ -54,6 +54,7 @@ function updateAll() {
   updateBlindButtonText();
   updateLanguageButtonText();
   updateEmojiSelectionButtonText();
+  updateRainbowButtonText();
   adjustGameModeTexts?.();
   configScreen.classList.toggle("practice-mode", globals.practiceMode);
 }
