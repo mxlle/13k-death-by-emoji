@@ -2,6 +2,7 @@ import "./config-screen.scss";
 
 import {
   appendRainbowCapableText,
+  createButton,
   createElement,
 } from "../../../utils/html-utils";
 import {
@@ -68,9 +69,8 @@ function createConfigScreen() {
     onClick: (event) => event.stopPropagation(),
   });
 
-  blindButton = createElement({
-    tag: "button",
-    cssClass: "blind-btn icon-btn",
+  blindButton = createButton({
+    iconBtn: true,
     onClick: () => {
       globals.blindMode = !globals.blindMode;
       setLocalStorageItem(LocalStorageKey.BLIND, !!globals.blindMode);
@@ -80,10 +80,8 @@ function createConfigScreen() {
   });
   updateBlindButtonText();
 
-  languageButton = createElement({
-    tag: "button",
-    cssClass: "language-btn icon-btn",
-    text: "🌐",
+  languageButton = createButton({
+    iconBtn: true,
     onClick: () => {
       toggleConfig(function onChange() {
         updateLanguageButtonText();
@@ -101,10 +99,8 @@ function createConfigScreen() {
     onChange: updateScoreModifiers,
   });
 
-  rainbowButton = createElement({
-    tag: "button",
-    cssClass: "rainbow-btn icon-btn",
-    text: "off",
+  rainbowButton = createButton({
+    iconBtn: true,
     onClick: () => {
       setRainbowMode(!globals.rainbowMode);
       updateRainbowButtonText();

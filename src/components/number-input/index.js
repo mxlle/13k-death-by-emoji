@@ -1,4 +1,4 @@
-import { createElement } from "../../utils/html-utils";
+import { createButton, createElement } from "../../utils/html-utils";
 
 import "./number-input.scss";
 
@@ -20,15 +20,15 @@ export function createNumberInputComponent({
   onChange && numberInput.addEventListener("change", onChange);
   onBlur && numberInput.addEventListener("blur", onBlur);
 
-  const decreaseButton = createElement({
-    tag: "button",
-    cssClass: "icon-btn",
-    text: "⬇️",
+  const decreaseButton = createButton({
+    iconBtn: true,
+    text: "▽️",
+    rbc: true,
   });
-  const increaseButton = createElement({
-    tag: "button",
-    cssClass: "icon-btn",
-    text: "⬆️",
+  const increaseButton = createButton({
+    iconBtn: true,
+    text: "△️",
+    rbc: true,
   });
 
   function checkDisabledStates() {

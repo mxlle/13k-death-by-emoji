@@ -65,7 +65,7 @@ button.emoji-btn {
   }
 
   &.combo-fly {
-    @extend .rainbow-text;
+    @extend %rainbow-text;
     font-size: 1.5rem;
     $transitionTime: 2s;
     $transitionCurve: ease-in-out;

@@ -1,6 +1,7 @@
 import { createDialog } from "../dialog";
 import {
   appendRainbowCapableText,
+  createButton,
   createElement,
 } from "../../utils/html-utils";
 import { newGame } from "../../game-logic";
@@ -65,7 +66,7 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
       (globals.practiceMode ? "🐣" : "☠️") + (globals.blindMode ? "🗣️" : "👁️");
     const emojiSetText = getRandomEmojisFromPool().join("");
     const emojiCountText = `(${globals.level})`;
-    replayButton.appendChild(createElement({ text: isGameOver ? "🔄" : "▶️" }));
+    appendRainbowCapableText(replayButton, isGameOver ? "↩" : "▶");
     appendRainbowCapableText(replayButton, playButtonText);
     const configInfo = createElement({ cssClass: "config-info" });
 
@@ -127,19 +128,15 @@ function setGameOverSection(isGameOver) {
 function createNewGameScreen() {
   newGameScreen = createElement({ cssClass: "new-game-screen" });
   gameOverSection = createElement({ cssClass: "game-over-section hidden" });
-  replayButton = createElement({
-    tag: "button",
-    cssClass: "replay-btn",
-    text: "Start game",
+  replayButton = createButton({
     onClick: () => {
       closeDialog();
       void newGame();
     },
   });
+  replayButton.classList.add("replay-btn");
 
-  configButton = createElement({
-    tag: "button",
-    cssClass: "config-btn",
+  configButton = createButton({
     onClick: async () => {
       const submit = await showConfigScreen();
       if (submit) {
@@ -148,6 +145,7 @@ function createNewGameScreen() {
       }
     },
   });
+  configButton.classList.add("config-btn");
   const icon = createElement({ cssClass: "icon" });
   const text = createElement({ cssClass: "text" });
   icon.appendChild(createElement({ text: "⚙️" }));

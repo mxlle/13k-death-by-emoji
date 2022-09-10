@@ -100,18 +100,3 @@
     }
   }
 }
-
-body.rainbow-mode {
-  .new-game-screen {
-    &.prefer-custom {
-      .config-btn {
-        .text,
-        .icon {
-          > * {
-            @extend .rainbow-text;
-          }
-        }
-      }
-    }
-  }
-}

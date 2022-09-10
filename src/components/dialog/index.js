@@ -1,4 +1,4 @@
-import { createElement } from "../../utils/html-utils";
+import { createButton, createElement } from "../../utils/html-utils";
 
 import "./dialog.scss";
 
@@ -32,18 +32,16 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   if (submitButtonText !== undefined) {
     buttons = createElement({ cssClass: "buttons" });
 
-    cancelButton = createElement({
-      tag: "button",
+    cancelButton = createButton({
       text: "Cancel",
       onClick: closeDialog,
     });
     buttons.appendChild(cancelButton);
-    submitButton = createElement({
-      tag: "button",
-      cssClass: "primary-btn",
+    submitButton = createButton({
       text: submitButtonText,
       onClick: closeDialog,
     });
+    submitButton.classList.add("primary-btn");
     buttons.appendChild(submitButton);
     dialog.appendChild(buttons);
   }

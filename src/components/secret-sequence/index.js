@@ -12,7 +12,7 @@ pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
 
 export function createSecretSequenceComponent() {
   domElement = createElement({
-    cssClass: "secret-sequence",
+    cssClass: "sequence",
   });
   updateSecretSequenceComponent();
 
@@ -77,7 +77,7 @@ function getSolutionTextInfinite() {
 
 function mapToElement(text) {
   return createElement({
-    cssClass: "secret-sequence-element rbc",
+    cssClass: "rbc",
     text,
   });
 }

@@ -1,6 +1,6 @@
 import {
-  appendRainbowCapableText,
   convertLongPressToClick,
+  createButton,
   createElement,
   getPositionFromEvent,
 } from "../../utils/html-utils";
@@ -64,11 +64,11 @@ function onEmojiClick(emoji, emojiButton, event) {
 }
 
 function createEmojiButton(emoji) {
-  const button = createElement({
-    tag: "button",
-    cssClass: "emoji-btn",
+  const button = createButton({
+    text: emoji,
+    rbc: true,
   });
-  appendRainbowCapableText(button, emoji);
+  button.classList.add("emoji-btn");
 
   return button;
 }

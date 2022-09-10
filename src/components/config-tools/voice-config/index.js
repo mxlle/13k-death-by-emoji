@@ -5,7 +5,7 @@ import {
   getVoiceListElement,
   speak,
 } from "../../../speech/speech";
-import { createElement } from "../../../utils/html-utils";
+import { createButton, createElement } from "../../../utils/html-utils";
 
 import "./voice-config.scss";
 import { globals } from "../../../globals";
@@ -45,10 +45,8 @@ export function createVoiceSelector() {
   configScreen.appendChild(selectionText);
 
   configScreen.appendChild(
-    createElement({
-      tag: "button",
+    createButton({
       text: "OK",
-      cssClass: "ok-btn",
       onClick: () => toggleConfig(),
     })
   );

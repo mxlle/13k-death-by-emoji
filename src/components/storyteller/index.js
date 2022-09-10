@@ -1,7 +1,4 @@
-import {
-  appendRainbowCapableText,
-  createElement,
-} from "../../utils/html-utils";
+import { appendRainbowCapableText, createButton } from "../../utils/html-utils";
 
 import { globals, isEndOfGame } from "../../globals";
 
@@ -22,12 +19,10 @@ pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
 });
 
 export function createStorytellerButton() {
-  storytellerButton = createElement({
-    tag: "button",
-    text: "🗣️ Start",
-    cssClass: "storyteller-btn",
+  storytellerButton = createButton({
     onClick: onPlayButtonClick,
   });
+  storytellerButton.classList.add("play-btn");
   updateStorytellerButton();
 
   return storytellerButton;

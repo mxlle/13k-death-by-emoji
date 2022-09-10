@@ -1,5 +1,6 @@
 import {
   appendRainbowCapableText,
+  createButton,
   createElement,
 } from "../../utils/html-utils";
 import { globals } from "../../globals";
@@ -11,9 +12,8 @@ import {
 } from "../../utils/local-storage";
 
 export function createModeSwitcher(onModeChangeCallback) {
-  const switchButton = createElement({
-    tag: "button",
-    cssClass: "icon-btn",
+  const switchButton = createButton({
+    iconBtn: true,
     onClick: () => {
       globals.practiceMode = !globals.practiceMode;
       setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, globals.practiceMode);

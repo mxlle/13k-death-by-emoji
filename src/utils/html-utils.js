@@ -23,6 +23,22 @@ export function appendRainbowCapableText(element, text) {
   element.appendChild(createElement({ tag: "span", text, cssClass: "rbc" }));
 }
 
+export function createButton({ text, onClick, iconBtn, rbc }) {
+  const button = createElement({
+    tag: "button",
+    cssClass: iconBtn ? "icon-btn" : "",
+    onClick,
+  });
+  if (text) {
+    if (rbc) {
+      appendRainbowCapableText(button, text);
+    } else {
+      button.innerHTML = text;
+    }
+  }
+  return button;
+}
+
 function absorbEvent_(event) {
   event.preventDefault && event.preventDefault();
   event.stopPropagation && event.stopPropagation();

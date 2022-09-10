@@ -1,6 +1,6 @@
 import "./emoji-selection.scss";
 
-import { createElement } from "../../../utils/html-utils";
+import { createButton, createElement } from "../../../utils/html-utils";
 import { preselections } from "./preselections";
 import {
   EMOJI_POOL_CUSTOM_NAME,
@@ -20,14 +20,14 @@ import {
 let emojiSelectionButton, emojiSelectionScreen, dialog, textarea;
 
 export function createEmojiSelectionButton(afterSelectionCallback) {
-  emojiSelectionButton = createElement({
-    tag: "button",
-    cssClass: "emoji-selection-btn icon-btn",
+  emojiSelectionButton = createButton({
+    iconBtn: true,
     onClick: async () => {
       await showEmojiSelectionScreen();
       if (afterSelectionCallback) afterSelectionCallback();
     },
   });
+  emojiSelectionButton.classList.add("emoji-selection-btn");
   updateEmojiSelectionButtonText();
 
   return emojiSelectionButton;
@@ -83,9 +83,7 @@ function createEmojiSelectionScreen() {
 function createAdventureButtons(adventures) {
   const buttonsContainer = createElement({ cssClass: "btn-container" });
   adventures.forEach(({ id, name, emojis }) => {
-    const btn = createElement({
-      tag: "button",
-      cssClass: "adventure-btn",
+    const btn = createButton({
       text: id,
       onClick: () => {
         setConfigValue(emojis);
