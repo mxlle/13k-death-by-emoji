@@ -70,6 +70,7 @@ export const gamePreconfigs = [
     icon: "🍎♥️🚒",
     name: "Seeing red",
     emojiPool: red,
+    emojiPoolName: "All red",
     config: {
       practiceMode: false,
       blindMode: true,

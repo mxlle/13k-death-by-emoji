@@ -4,12 +4,10 @@ import {
   death1,
   flags,
   foodAndDrink1,
-  miscObjects1,
-  nature1,
+  red,
   spaceDucks,
   sportActivityAndMusic1,
   travelPlacesAndTransport1,
-  weather1,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { isSpaceDucksVariant } from "../../../utils/local-storage";
@@ -24,9 +22,8 @@ const _preselections = [
   foodAndDrink1,
   sportActivityAndMusic1,
   clothingAndAccessories1,
-  nature1 + weather1,
   travelPlacesAndTransport1,
-  miscObjects1,
+  red,
   flags,
 ];
 
@@ -36,9 +33,8 @@ const _preselectionsNames = [
   "Food & Drink",
   "Sport, Activity & Music",
   "Clothing & Accessories",
-  "Nature & Weather",
   "Travel, Places & Transport",
-  "Misc. Objects",
+  "All red",
   "Flags",
 ];
 
