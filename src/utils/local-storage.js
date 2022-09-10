@@ -14,6 +14,7 @@ export const LocalStorageKey = {
   COMPLETED_GAMES: "completed",
   SPACE_DUCKS: "sd",
   RAINBOW_MODE: "rainbow",
+  GAME_HIGH_COUNT: "hc",
 };
 
 export function setLocalStorageItem(key, value) {
@@ -44,6 +45,19 @@ export function getArrayFromStorage(key) {
   }
 
   return item.split(",");
+}
+
+export function getGameHighCount(id) {
+  return parseInt(
+    getLocalStorageItem(LocalStorageKey.GAME_HIGH_COUNT + "." + id) ?? 0
+  );
+}
+
+export function setGameHighCount(id, count) {
+  const previousCount = getGameHighCount(id);
+  if (!previousCount || previousCount < count) {
+    setLocalStorageItem(LocalStorageKey.GAME_HIGH_COUNT + "." + id, count);
+  }
 }
 
 export function isSpaceDucksVariant() {

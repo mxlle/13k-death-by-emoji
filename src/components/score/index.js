@@ -3,6 +3,7 @@ import { globals } from "../../globals";
 import {
   getLocalStorageItem,
   LocalStorageKey,
+  setGameHighCount,
   setLocalStorageItem,
 } from "../../utils/local-storage";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
@@ -48,6 +49,11 @@ export function updateHighScore() {
     highScoreCount = globals.correctCount;
     updateScoreboard();
   }
+
+  setGameHighCount(
+    getLocalStorageItem(LocalStorageKey.CURRENT_GAME),
+    globals.correctCount
+  );
 }
 
 function updateScoreboard() {
