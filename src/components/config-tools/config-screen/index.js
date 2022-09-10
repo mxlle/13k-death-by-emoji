@@ -1,6 +1,6 @@
 import "./config-screen.scss";
 
-import { createElement } from "../../../utils/html-utils";
+import { appendEmoji, createElement } from "../../../utils/html-utils";
 import {
   CUSTOM_GAME_ID,
   getEmojiPool,
@@ -8,6 +8,7 @@ import {
   MAX_GOAL,
   MIN_GOAL,
   setLevel,
+  setRainbowMode,
 } from "../../../globals";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { createDialog } from "../../dialog";
@@ -24,7 +25,7 @@ import { getLanguagesText, toggleConfig } from "../voice-config";
 import { createModeSwitcher } from "../../mode-switcher";
 import { createNumberInputComponent } from "../../number-input";
 
-let configScreen, dialog, goalInputComponent;
+let configScreen, dialog, goalInputComponent, rainbowButton;
 let blindButton, languageButton, scoreModifiers, adjustGameModeTexts;
 
 export async function showConfigScreen() {
@@ -54,12 +55,7 @@ function updateAll() {
   updateLanguageButtonText();
   updateEmojiSelectionButtonText();
   adjustGameModeTexts?.();
-
-  if (globals.practiceMode) {
-    configScreen.classList.add("practice-mode");
-  } else {
-    configScreen.classList.remove("practice-mode");
-  }
+  configScreen.classList.toggle("practice-mode", globals.practiceMode);
 }
 
 function createConfigScreen() {
@@ -101,6 +97,17 @@ function createConfigScreen() {
     onChange: updateScoreModifiers,
   });
 
+  rainbowButton = createElement({
+    tag: "button",
+    cssClass: "rainbow-button icon-button",
+    text: "off",
+    onClick: () => {
+      setRainbowMode(!globals.rainbowMode);
+      updateRainbowButtonText();
+    },
+  });
+  updateRainbowButtonText();
+
   const { switchButton, modeInfo, adjustText } = createModeSwitcher(updateAll);
   adjustGameModeTexts = adjustText;
 
@@ -122,6 +129,8 @@ function createConfigScreen() {
     "Emoji set:",
     createEmojiSelectionButton(() => validateGoal())
   );
+
+  addConfigEntry("Rainbow mode:", rainbowButton);
 
   addConfigEntry("Resulting score:", scoreModifiers, "sudden-death-only info");
 }
@@ -148,12 +157,19 @@ function updateScoreModifiers() {
 }
 
 function updateBlindButtonText() {
-  blindButton.innerHTML = globals.blindMode ? "🗣️" : "🗣️ + 👁️";
+  blindButton.innerHTML = "";
+  appendEmoji(blindButton, globals.blindMode ? "🗣️" : "🗣️ + 👁️");
+}
+
+function updateRainbowButtonText() {
+  rainbowButton.innerHTML = "";
+  appendEmoji(rainbowButton, globals.rainbowMode ? "on" : "off");
 }
 
 function updateLanguageButtonText() {
   const languages = getLanguagesText() ?? "";
-  languageButton.innerHTML = languages.length > 0 ? `${languages}` : "🌐";
+  languageButton.innerHTML = "";
+  appendEmoji(languageButton, languages.length > 0 ? `${languages}` : "🌐");
 }
 
 function getGoalInputValue() {

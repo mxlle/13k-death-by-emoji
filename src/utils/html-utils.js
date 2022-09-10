@@ -19,6 +19,12 @@ export function createElement({ tag, cssClass, text, onClick }) {
   return elem;
 }
 
+export function appendEmoji(element, emoji) {
+  element.appendChild(
+    createElement({ tag: "span", text: emoji, cssClass: "emoji" })
+  );
+}
+
 function absorbEvent_(event) {
   event.preventDefault && event.preventDefault();
   event.stopPropagation && event.stopPropagation();

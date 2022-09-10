@@ -1,3 +1,5 @@
+@import "../../../theme";
+
 .emoji-selection-btn {
   font-size: 0.7rem;
   display: flex;
@@ -10,10 +12,19 @@
     font-size: 1.7rem;
     font-style: normal;
     letter-spacing: -0.4rem;
+    padding: 0 0.5rem;
 
     :first-child {
       z-index: 1;
     }
+  }
+}
+
+body.rainbow-mode .emoji-selection-btn .emoji-container {
+  @extend .rainbow-text;
+
+  :first-child {
+    z-index: initial;
   }
 }
 

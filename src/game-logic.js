@@ -139,6 +139,9 @@ function getConfigScoreModifier(positive) {
   if (!globals.blindMode && !positive) {
     modifier *= 2;
   }
+  if (globals.rainbowMode) {
+    modifier *= 2;
+  }
 
   return modifier;
 }

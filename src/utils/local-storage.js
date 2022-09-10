@@ -13,6 +13,7 @@ export const LocalStorageKey = {
   CURRENT_GAME: "currentGame",
   COMPLETED_GAMES: "completedGames",
   SPACE_DUCKS: "spaceDucks",
+  RAINBOW_MODE: "rainbowMode",
 };
 
 export function setLocalStorageItem(key, value) {

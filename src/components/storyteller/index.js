@@ -1,4 +1,4 @@
-import { createElement } from "../../utils/html-utils";
+import { appendEmoji, createElement } from "../../utils/html-utils";
 
 import { globals, isEndOfGame } from "../../globals";
 
@@ -25,6 +25,7 @@ export function createStorytellerButton() {
     cssClass: "storyteller-button",
     onClick: onPlayButtonClick,
   });
+  updateStorytellerButton();
 
   return storytellerButton;
 }
@@ -66,13 +67,17 @@ async function onPlayButtonClick() {
 
 export function updateStorytellerButton() {
   if (globals.isSpeaking) {
-    storytellerButton.innerHTML = `🗣️ Transmitting...`;
+    storytellerButton.innerHTML = `🗣️ broadcasting...`;
   } else {
     if (isEndOfGame()) {
       storytellerButton.innerHTML = "Game over";
       storytellerButton.disabled = true;
     } else {
-      storytellerButton.innerHTML = globals.started ? `🗣️ Replay` : "🗣️ Start";
+      storytellerButton.innerHTML = "";
+      appendEmoji(
+        storytellerButton,
+        globals.started ? "🗣️ Replay" : "🗣️ Start"
+      );
       storytellerButton.disabled = false;
     }
   }

@@ -54,3 +54,11 @@
     width: 2ch;
   }
 }
+
+body.rainbow-mode {
+  .config {
+    input {
+      @extend .rainbow-text;
+    }
+  }
+}

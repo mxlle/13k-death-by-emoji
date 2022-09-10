@@ -1,4 +1,5 @@
 import {
+  appendEmoji,
   convertLongPressToClick,
   createElement,
   getPositionFromEvent,
@@ -63,11 +64,13 @@ function onEmojiClick(emoji, emojiButton, event) {
 }
 
 function createEmojiButton(emoji) {
-  return createElement({
+  const button = createElement({
     tag: "button",
-    text: emoji,
     cssClass: "emoji-button secondary-button",
   });
+  appendEmoji(button, emoji);
+
+  return button;
 }
 
 function showScoreAtButton(clickEvent, score) {

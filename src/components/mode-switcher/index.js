@@ -1,4 +1,4 @@
-import { createElement } from "../../utils/html-utils";
+import { appendEmoji, createElement } from "../../utils/html-utils";
 import { globals } from "../../globals";
 
 import "./mode-switcher.scss";
@@ -26,9 +26,11 @@ export function createModeSwitcher(onModeChangeCallback) {
   adjustText();
 
   function adjustText() {
-    switchButton.innerHTML = globals.practiceMode
-      ? "🐣 Practice"
-      : "☠️ Sudden death";
+    switchButton.innerHTML = "";
+    appendEmoji(
+      switchButton,
+      globals.practiceMode ? "🐣 Practice" : "☠️ Sudden death"
+    );
     modeInfo.innerHTML = globals.practiceMode
       ? "In the Practice mode you have to replicate a limited non-repeating sequence. You can listen to it as many times as you want."
       : `In Sudden Death mode you have to keep up with an infinite sequence. If you fall ${globals.slots} slots behind you'll die. Each mistake costs you a slot.`;

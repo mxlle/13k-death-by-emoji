@@ -50,6 +50,16 @@ function createGamePreconfigButton(preconfig, onSelect) {
         setGameConfig({
           practiceMode: getRandomItem([true, false]),
           blindMode: getRandomItem([true, false]),
+          rainbowMode: getRandomItem([
+            true,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ]),
           level: randomIntFromInterval(MIN_GOAL, MAX_GOAL),
         });
         setEmojiPool(

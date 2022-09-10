@@ -15,7 +15,7 @@ export const EMOJI_POOL_CUSTOM_NAME = "Custom";
 export const CUSTOM_GAME_ID = "CUSTOM";
 
 const defaultGlobals = {
-  practiceMode: getLocalStorageItem(LocalStorageKey.PRACTICE_MODE),
+  practiceMode: false,
   slots: 3,
   queue: [],
   started: false,
@@ -30,20 +30,22 @@ const defaultGlobals = {
   emojiSet: [],
   shuffledEmojis: [],
   correctMatches: [],
-  blindMode: getLocalStorageItem(LocalStorageKey.BLIND),
+  blindMode: false,
   level: getLevel(),
+  rainbowMode: false,
 };
 
-export const globals = {
-  ...defaultGlobals,
-};
+export const globals = {};
+resetGlobals();
 
 export function resetGlobals() {
   Object.assign(globals, defaultGlobals);
-  globals.practiceMode = getLocalStorageItem(LocalStorageKey.PRACTICE_MODE);
-  globals.blindMode = getLocalStorageItem(LocalStorageKey.BLIND);
+  globals.practiceMode = !!getLocalStorageItem(LocalStorageKey.PRACTICE_MODE);
+  globals.blindMode = !!getLocalStorageItem(LocalStorageKey.BLIND);
+  globals.rainbowMode = !!getLocalStorageItem(LocalStorageKey.RAINBOW_MODE);
   globals.level = getLevel();
   globals.queue = [];
+  document.body.classList.toggle("rainbow-mode", globals.rainbowMode);
 }
 
 export function isGameActive() {
@@ -66,6 +68,12 @@ function getLevel() {
   return level ? Number(level) : DEFAULT_LEVEL;
 }
 
+export function setRainbowMode(rainbowMode) {
+  globals.rainbowMode = rainbowMode;
+  setLocalStorageItem(LocalStorageKey.RAINBOW_MODE, rainbowMode);
+  document.body.classList.toggle("rainbow-mode", globals.rainbowMode);
+}
+
 export function setGameConfig(config) {
   if (!config) return;
 
@@ -81,6 +89,12 @@ export function setGameConfig(config) {
   if (config.practiceMode !== undefined) {
     globals.practiceMode = config.practiceMode;
     setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, config.practiceMode);
+  }
+
+  const rainbowMode =
+    config.rainbowMode !== undefined ? config.rainbowMode : false;
+  if (globals.rainbowMode !== rainbowMode) {
+    setRainbowMode(rainbowMode);
   }
 }
 

@@ -97,3 +97,7 @@ button.icon-button {
     transform: scale(1.2);
   }
 }
+
+body.rainbow-mode button .emoji {
+  @extend .rainbow-text;
+}

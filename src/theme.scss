@@ -3,14 +3,12 @@ $secondary-color: cyan;
 $death-color: #992244;
 $life-color: #227744;
 $rainbow: linear-gradient(
-  to right,
-  red,
-  orange,
-  yellow,
-  green,
-  cyan,
-  blue,
-  violet
+  to bottom right,
+  red 20%,
+  orange 35%,
+  yellow 50%,
+  cyan 70%,
+  blue 85%
 );
 $font-family: sans-serif;
 $border-radius: 0.4rem;

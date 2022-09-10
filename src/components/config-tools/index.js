@@ -1,4 +1,4 @@
-import { createElement } from "../../utils/html-utils";
+import { appendEmoji, createElement } from "../../utils/html-utils";
 
 import "./config-tools.scss";
 import { openNewGameScreen } from "../new-game-screen";
@@ -7,23 +7,22 @@ import { showConfigScreen } from "./config-screen";
 export function createConfigTools() {
   const configTools = createElement({ cssClass: "config-tools" });
 
-  configTools.appendChild(
-    createElement({
-      tag: "button",
-      cssClass: "emoji icon-button",
-      text: "🏠",
-      onClick: () => openNewGameScreen(),
-    })
-  );
+  const homeButton = createElement({
+    tag: "button",
+    cssClass: "icon-button",
+    onClick: () => openNewGameScreen(),
+  });
+  appendEmoji(homeButton, "🏠");
 
-  configTools.appendChild(
-    createElement({
-      tag: "button",
-      cssClass: "emoji icon-button",
-      text: "⚙️",
-      onClick: () => showConfigScreen(),
-    })
-  );
+  const configButton = createElement({
+    tag: "button",
+    cssClass: "icon-button",
+    onClick: () => showConfigScreen(),
+  });
+  appendEmoji(configButton, "⚙️");
+
+  configTools.appendChild(homeButton);
+  configTools.appendChild(configButton);
 
   return configTools;
 }
