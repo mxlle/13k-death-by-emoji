@@ -79,7 +79,7 @@ export async function playInfiniteSequence(onNextEmoji) {
 }
 
 export function evaluatePlay(emoji) {
-  const correct = getWantedEmoji() === emoji;
+  const correct = getWantedEmoji() === emoji; // || true;
 
   if (correct) {
     globals.correctCount++;
@@ -102,8 +102,12 @@ export function evaluatePlay(emoji) {
   return { correct, scoreForAction };
 }
 
+export function getComboMultiplier(streak) {
+  return Math.floor(Math.sqrt(Math.max(streak, 1)));
+}
+
 function getScoreForAction(action) {
-  const comboMultiplier = globals.streak;
+  const comboMultiplier = getComboMultiplier(globals.streak);
   return getPointsByAction(action) * comboMultiplier;
 }
 

@@ -9,12 +9,16 @@ import { globals, isEndOfGame, isGameActive } from "../../globals";
 import { updateStorytellerButton } from "../storyteller";
 import { speak } from "../../speech/speech";
 import { getCurrentVoice } from "../config-tools/voice-config";
-import { evaluatePlay } from "../../game-logic";
+import { evaluatePlay, getComboMultiplier } from "../../game-logic";
 import { updateHighScore, updateScore } from "../score";
 import { updateSecretSequenceComponent } from "../secret-sequence";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
+import { splitEmojis } from "../../emojis/emoji-util";
+import { party } from "../../emojis/sets";
+import { getRandomItem } from "../../utils/array-utils";
 
 const buttonMap = {};
+const partyList = splitEmojis(party);
 
 export function initEmojiButtonField(set) {
   const field = createElement({ cssClass: "emoji-field" });
@@ -70,19 +74,40 @@ function showScoreAtButton(clickEvent, score) {
   const isPositive = score > 0;
   if (globals.practiceMode) {
     score = isPositive ? 1 : "❌";
+  } else if (
+    isPositive &&
+    getComboMultiplier(globals.streak) > 1 &&
+    getComboMultiplier(globals.streak) > getComboMultiplier(globals.streak - 1)
+  ) {
+    setTimeout(() => showComboAtButton(clickEvent), 150);
   }
+
   const scoreElement = createElement({
     text: isPositive ? "+" + score : score,
     cssClass: "score-fly",
   });
-  const { x, y } = getPositionFromEvent(clickEvent);
-  scoreElement.style.setProperty("--init-top", Math.round(y) + "px");
-  scoreElement.style.setProperty("--init-left", Math.round(x) + "px");
   scoreElement.classList.add(isPositive ? "positive" : "negative");
-  document.body.appendChild(scoreElement);
+  const { x, y } = getPositionFromEvent(clickEvent);
+  flyElementFrom(scoreElement, x, y);
+}
 
-  setTimeout(() => scoreElement.classList.add("transition-end"), 150);
-  setTimeout(() => document.body.removeChild(scoreElement), 5000);
+function showComboAtButton(clickEvent) {
+  const comboElement = createElement({
+    text: `Combo ${getComboMultiplier(globals.streak)}x `,
+    cssClass: "score-fly combo-fly",
+  });
+  comboElement.setAttribute("data-party", getRandomItem(partyList));
+  const { x, y } = getPositionFromEvent(clickEvent);
+  flyElementFrom(comboElement, x, y);
+}
+
+function flyElementFrom(element, x, y) {
+  element.style.setProperty("--init-top", Math.round(y) + "px");
+  element.style.setProperty("--init-left", Math.round(x) + "px");
+  document.body.appendChild(element);
+
+  setTimeout(() => element.classList.add("transition-end"), 150);
+  setTimeout(() => document.body.removeChild(element), 5000);
 }
 
 function onEndOfGame() {

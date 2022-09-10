@@ -2,6 +2,16 @@ $main-color: #5599ff;
 $secondary-color: cyan;
 $death-color: #992244;
 $life-color: #227744;
+$rainbow: linear-gradient(
+  to right,
+  red,
+  orange,
+  yellow,
+  green,
+  cyan,
+  blue,
+  violet
+);
 $font-family: sans-serif;
 $border-radius: 0.4rem;
 
@@ -16,4 +26,10 @@ $border-radius: 0.4rem;
   &.touching {
     @content;
   }
+}
+
+.rainbow-text {
+  background: $rainbow;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }

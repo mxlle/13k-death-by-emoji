@@ -3,6 +3,8 @@ export const death2 = "🧨🦹🦖🦛🪓🪦🏴‍☠️";
 
 export const spaceDucks = "🦆 🚀 ✏️ ⭐ 🌈 🐈 🎒 🎓 📱 💻 ⏱️ 🗃️";
 
+export const party = "🚀🎉🎊😎💪🙌🙌🎈";
+
 // copied from https://getemoji.com/
 export const cuteAnimals1 = "🐶🐈🐯🐭🐹🐰🐿️🐥🐧🐸🐢🐝";
 export const animals1 =
