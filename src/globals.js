@@ -9,7 +9,7 @@ import { shuffleArray } from "./utils/random-utils";
 
 export const DEFAULT_LEVEL = 6;
 export const MIN_GOAL = 3;
-export const MAX_GOAL = 20;
+export const MAX_GOAL = 16;
 
 export const EMOJI_POOL_CUSTOM_NAME = "Custom";
 export const CUSTOM_GAME_ID = "CUSTOM";
