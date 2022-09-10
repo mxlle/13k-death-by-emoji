@@ -6,7 +6,6 @@ import {
 
 import "./emoji-buttons.scss";
 import { globals, isEndOfGame, isGameActive } from "../../globals";
-import { updateScoreModifiers } from "../config-tools";
 import { updateStorytellerButton } from "../storyteller";
 import { speak } from "../../speech/speech";
 import { getCurrentVoice } from "../config-tools/voice-config";
@@ -51,7 +50,6 @@ function onEmojiClick(emoji, emojiButton, event) {
     if (!globals.practiceMode) emojiButton.classList.remove("correct", "wrong");
   }, 500);
 
-  updateScoreModifiers();
   updateStorytellerButton();
   updateSecretSequenceComponent();
 
