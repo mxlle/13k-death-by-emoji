@@ -66,7 +66,7 @@ function onEmojiClick(emoji, emojiButton, event) {
 function createEmojiButton(emoji) {
   const button = createElement({
     tag: "button",
-    cssClass: "emoji-button secondary-button",
+    cssClass: "emoji-btn",
   });
   appendEmoji(button, emoji);
 

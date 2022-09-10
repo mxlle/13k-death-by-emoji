@@ -22,7 +22,7 @@ export function createStorytellerButton() {
   storytellerButton = createElement({
     tag: "button",
     text: "🗣️ Start",
-    cssClass: "storyteller-button",
+    cssClass: "storyteller-btn",
     onClick: onPlayButtonClick,
   });
   updateStorytellerButton();

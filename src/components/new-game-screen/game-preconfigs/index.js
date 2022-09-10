@@ -44,7 +44,7 @@ export function createGamePreconfigs(onSelect) {
 function createGamePreconfigButton(preconfig, onSelect) {
   const gamePreconfigButton = createElement({
     tag: "button",
-    cssClass: "preconfig-button secondary-button",
+    cssClass: "preconfig-btn",
     onClick: () => {
       if (preconfig.surpriseMe) {
         setGameConfig({

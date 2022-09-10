@@ -9,14 +9,14 @@ export function createConfigTools() {
 
   const homeButton = createElement({
     tag: "button",
-    cssClass: "icon-button",
+    cssClass: "icon-btn",
     onClick: () => openNewGameScreen(),
   });
   appendEmoji(homeButton, "🏠");
 
   const configButton = createElement({
     tag: "button",
-    cssClass: "icon-button",
+    cssClass: "icon-btn",
     onClick: () => showConfigScreen(),
   });
   appendEmoji(configButton, "⚙️");

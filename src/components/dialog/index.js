@@ -34,13 +34,13 @@ export function createDialog(innerElement, submitButtonText, headerText) {
 
     cancelButton = createElement({
       tag: "button",
-      cssClass: "secondary-button",
       text: "Cancel",
       onClick: closeDialog,
     });
     buttons.appendChild(cancelButton);
     submitButton = createElement({
       tag: "button",
+      cssClass: "primary-btn",
       text: submitButtonText,
       onClick: closeDialog,
     });

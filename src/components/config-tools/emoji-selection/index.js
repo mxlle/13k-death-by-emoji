@@ -22,7 +22,7 @@ let emojiSelectionButton, emojiSelectionScreen, dialog, textarea;
 export function createEmojiSelectionButton(afterSelectionCallback) {
   emojiSelectionButton = createElement({
     tag: "button",
-    cssClass: "emoji-selection-btn icon-button",
+    cssClass: "emoji-selection-btn icon-btn",
     onClick: async () => {
       await showEmojiSelectionScreen();
       if (afterSelectionCallback) afterSelectionCallback();
@@ -81,11 +81,11 @@ function createEmojiSelectionScreen() {
 }
 
 function createAdventureButtons(adventures) {
-  const buttonsContainer = createElement({ cssClass: "button-container" });
+  const buttonsContainer = createElement({ cssClass: "btn-container" });
   adventures.forEach(({ id, name, emojis }) => {
     const btn = createElement({
       tag: "button",
-      cssClass: "adventure-btn secondary-button",
+      cssClass: "adventure-btn",
       text: id,
       onClick: () => {
         setConfigValue(emojis);

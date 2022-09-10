@@ -10,7 +10,7 @@ import {
 export function createModeSwitcher(onModeChangeCallback) {
   const switchButton = createElement({
     tag: "button",
-    cssClass: "icon-button",
+    cssClass: "icon-btn",
     onClick: () => {
       globals.practiceMode = !globals.practiceMode;
       setLocalStorageItem(LocalStorageKey.PRACTICE_MODE, globals.practiceMode);

@@ -22,12 +22,12 @@ export function createNumberInputComponent({
 
   const decreaseButton = createElement({
     tag: "button",
-    cssClass: "icon-button",
+    cssClass: "icon-btn",
     text: "⬇️",
   });
   const increaseButton = createElement({
     tag: "button",
-    cssClass: "icon-button",
+    cssClass: "icon-btn",
     text: "⬆️",
   });
 

@@ -53,7 +53,7 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
   }
 
   replayButton.classList.toggle("hidden", !showBigPlayButton);
-  newGameScreen.classList.toggle("no-big-play-button", !showBigPlayButton);
+  newGameScreen.classList.toggle("no-big-play-btn", !showBigPlayButton);
   newGameScreen.classList.toggle("prefer-custom", lastGameWasCustom);
 
   if (showBigPlayButton) {
@@ -131,7 +131,7 @@ function createNewGameScreen() {
   gameOverSection = createElement({ cssClass: "game-over-section hidden" });
   replayButton = createElement({
     tag: "button",
-    cssClass: "replay-button secondary-button",
+    cssClass: "replay-btn",
     text: "Start game",
     onClick: () => {
       closeDialog();
@@ -141,7 +141,7 @@ function createNewGameScreen() {
 
   configButton = createElement({
     tag: "button",
-    cssClass: "secondary-button config-button",
+    cssClass: "config-btn",
     onClick: async () => {
       const submit = await showConfigScreen();
       if (submit) {

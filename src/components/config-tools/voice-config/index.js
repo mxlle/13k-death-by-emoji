@@ -48,7 +48,7 @@ export function createVoiceSelector() {
     createElement({
       tag: "button",
       text: "OK",
-      cssClass: "ok-button",
+      cssClass: "ok-btn",
       onClick: () => toggleConfig(),
     })
   );

@@ -67,7 +67,7 @@ function createConfigScreen() {
 
   blindButton = createElement({
     tag: "button",
-    cssClass: "blind-button icon-button",
+    cssClass: "blind-btn icon-btn",
     onClick: () => {
       globals.blindMode = !globals.blindMode;
       setLocalStorageItem(LocalStorageKey.BLIND, !!globals.blindMode);
@@ -79,7 +79,7 @@ function createConfigScreen() {
 
   languageButton = createElement({
     tag: "button",
-    cssClass: "language-button icon-button",
+    cssClass: "language-btn icon-btn",
     text: "🌐",
     onClick: () => {
       toggleConfig(function onChange() {
@@ -100,7 +100,7 @@ function createConfigScreen() {
 
   rainbowButton = createElement({
     tag: "button",
-    cssClass: "rainbow-button icon-button",
+    cssClass: "rainbow-btn icon-btn",
     text: "off",
     onClick: () => {
       setRainbowMode(!globals.rainbowMode);
