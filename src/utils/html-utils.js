@@ -38,8 +38,8 @@ export function convertLongPressToClick(
   clickHandler,
   touchingClassTimeout = 300
 ) {
-  function onTouchEnd(event, promise) {
-    promise.then(() => event.target.classList.remove("touching"));
+  function onTouchEnd(event, promise, target) {
+    promise.then(() => target.classList.remove("touching"));
     return absorbEvent_(event);
   }
 
@@ -49,12 +49,13 @@ export function convertLongPressToClick(
   node.addEventListener(
     "touchstart",
     function (event) {
-      event.target.classList.add("touching");
+      const target = event.currentTarget;
+      target.classList.add("touching");
       clickHandler && clickHandler(event);
       const sleepPromise = sleep(touchingClassTimeout);
       node.addEventListener(
         "touchend",
-        (_event) => onTouchEnd(_event, sleepPromise),
+        (_event) => onTouchEnd(_event, sleepPromise, target),
         innerEventOptions
       );
       node.addEventListener("touchmove", absorbEvent_, innerEventOptions);
