@@ -49,7 +49,7 @@ export function openNewGameScreen(openImmediately = false, isGameOver = false) {
     playButtonText = "Play again";
   } else {
     dialog.changeHeader("Select game");
-    playButtonText = "Start game";
+    playButtonText = "Previous config";
   }
 
   replayButton.classList.toggle("hidden", !showBigPlayButton);
