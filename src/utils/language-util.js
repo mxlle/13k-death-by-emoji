@@ -9,7 +9,7 @@ export function getLanguagesFromVoices(voices) {
 }
 
 export function getShortLanguageName(lang) {
-  return lang?.split("-")[0];
+  return lang?.slice(0, 2);
 }
 
 export function getDefaultLanguage() {
