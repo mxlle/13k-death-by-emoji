@@ -18,8 +18,6 @@ function init() {
 
   initGameData();
 
-  document.body.appendChild(createVoiceSelector());
-
   const header = createElement({ tag: "header" });
 
   header.appendChild(createConfigTools());
@@ -27,6 +25,8 @@ function init() {
   document.body.appendChild(header);
 
   document.body.appendChild(createGameField());
+
+  createVoiceSelector();
 
   openNewGameScreen(true);
 }

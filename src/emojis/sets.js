@@ -1,4 +1,4 @@
-export const death1 = "🔫 💣 👻 ⛓ 💀 🌋 🗡️ 🌪️ 🦈 ⚔️️ 🐗 🦂 ⚰️ 🔪 🏹";
+export const death1 = "💀 🌋 🔫 💣 👻 ⛓ 🗡️ 🌪️ 🦈 ⚔️️ 🐗 🦂 ⚰️ 🔪 🏹";
 export const death2 = "🧨🦹🦖🦛🪓🪦🏴‍☠️";
 
 export const spaceDucks = "🦆 🚀 ✏️ ⭐ 🌈 🐈 🎒 🎓 📱 💻 ⏱️ 🗃️";

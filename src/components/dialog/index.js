@@ -2,6 +2,8 @@ import { createButton, createElement } from "../../utils/html-utils";
 
 import "./dialog.scss";
 
+let zIndexCounter = 0;
+
 export function createDialog(innerElement, submitButtonText, headerText) {
   const dialog = createElement({
     cssClass: "dialog",
@@ -24,6 +26,7 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   dialog.appendChild(dialogContent);
 
   function closeDialog() {
+    zIndexCounter--;
     dialog.classList.remove("open");
     //setTimeout(() => document.body.removeChild(dialog), 700);
   }
@@ -51,7 +54,8 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   return {
     open: (openImmediately) => {
       //document.body.appendChild(dialog);
-
+      zIndexCounter++;
+      dialog.style.zIndex = zIndexCounter.toString();
       if (openImmediately) {
         dialog.classList.add("open");
       } else {

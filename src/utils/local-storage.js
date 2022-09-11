@@ -1,9 +1,10 @@
+import { getDefaultLanguage } from "./language-util";
+
 const LOCAL_STORAGE_PREFIX = "☠️👻🔫";
 
 export const LocalStorageKey = {
   PRACTICE_MODE: "practice",
   LANGUAGES: "langs",
-  VOICES: "voices",
   LEVEL: "level",
   EMOJI_POOL: "emojis",
   EMOJI_POOL_NAME: "emojiName",
@@ -34,7 +35,11 @@ export function removeLocalStorageItem(key) {
 }
 
 export function getSelectedLanguagesFromStorage() {
-  return getArrayFromStorage(LocalStorageKey.LANGUAGES);
+  const languages = getArrayFromStorage(LocalStorageKey.LANGUAGES);
+  if (languages.length === 0) {
+    return [getDefaultLanguage()];
+  }
+  return languages;
 }
 
 export function getArrayFromStorage(key) {

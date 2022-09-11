@@ -1,14 +1,11 @@
 import { createElement } from "../utils/html-utils";
-import { randomInt } from "../utils/random-utils";
-import {
-  getLocalStorageItem,
-  getSelectedLanguagesFromStorage,
-  LocalStorageKey,
-  setLocalStorageItem,
-} from "../utils/local-storage";
+import { getSelectedLanguagesFromStorage } from "../utils/local-storage";
+import { splitEmojis } from "../emojis/emoji-util";
+import { getDefaultSet } from "../components/config-tools/emoji-selection/preselections";
 
 const synth = window.speechSynthesis;
-const utterMap = {};
+const utterThis = new SpeechSynthesisUtterance();
+const testEmojis = splitEmojis(getDefaultSet()).slice(0, 3);
 
 export function getAvailableVoices() {
   return new Promise((resolve) => {
@@ -18,9 +15,8 @@ export function getAvailableVoices() {
   });
 }
 
-export function speak(text, voice, rate) {
-  let utterThis = initVoice(voice);
-
+export function speak(text, language, rate) {
+  utterThis.lang = language;
   utterThis.text = text;
   utterThis.rate = rate ?? 1;
   utterThis.pitch = Math.sqrt(utterThis.rate);
@@ -36,109 +32,66 @@ export function speak(text, voice, rate) {
   });
 }
 
-function initVoices(voices) {
-  for (let voice of voices) {
-    initVoice(voice);
-  }
-}
-
-function initVoice(voice) {
-  let utterThis = utterMap[voice?.name];
-  if (!utterThis) {
-    utterThis = new SpeechSynthesisUtterance();
-    utterThis.voice = voice;
-    utterThis.lang = voice?.lang;
-    utterMap[voice?.name] = utterThis;
-  }
-  return utterThis;
-}
-
 export function isSpeaking() {
   return synth.speaking;
 }
 
-export function getVoiceListElement(voices, onChange) {
-  const voiceSelect = createElement({ tag: "select" });
-  voiceSelect.setAttribute("multiple", true);
+export function getLanguageListElement(languages, onChange) {
+  const languageList = createElement({ cssClass: "list" });
+  const selectedLanguages = getSelectedLanguagesFromStorage();
+  const checkboxes = [];
 
-  const savedVoices = getLocalStorageItem(LocalStorageKey.VOICES) ?? [];
+  function onChangeLanguage() {
+    const selectedLanguages = [];
 
-  for (let i = 0; i < voices.length; i++) {
-    let option = createElement({ tag: "option" });
-    option.textContent = voices[i].name + " (" + voices[i].lang + ")";
-
-    if (!voices[i].localService) {
-      option.textContent = "[online!] " + option.textContent;
+    for (let i = 0; i < checkboxes.length; i++) {
+      const languageElement = checkboxes[i];
+      if (languageElement.checked) {
+        selectedLanguages.push(languageElement.getAttribute("id"));
+      }
     }
 
-    if (voices[i].default) {
-      option.textContent += " -- DEFAULT";
-    }
-
-    option.setAttribute("data-lang", voices[i].lang);
-    option.setAttribute("data-name", voices[i].name);
-    if (savedVoices.includes(voices[i].name)) {
-      option.setAttribute("selected", "selected");
-    }
-    voiceSelect.appendChild(option);
+    onChange(selectedLanguages);
   }
 
-  voiceSelect.addEventListener("change", (_event) => {
-    setLocalStorageItem(LocalStorageKey.VOICES, getSelectedVoices(voiceSelect));
-    setLocalStorageItem(
-      LocalStorageKey.LANGUAGES,
-      getSelectedLanguages(voiceSelect)
-    );
-    initVoices(getAllSelectedVoices(voiceSelect, voices));
-    onChange && onChange();
+  languages.sort().forEach((lang) => {
+    const checkbox = createElement({
+      tag: "input",
+    });
+    const label = createElement({
+      text: lang,
+      tag: "label",
+    });
+
+    checkbox.type = "checkbox";
+    checkbox.id = lang;
+    checkbox.name = lang;
+    checkbox.checked = selectedLanguages.includes(lang);
+    checkbox.addEventListener("change", (event) => {
+      const checked = event.currentTarget.checked;
+      label.classList.toggle("selected", checked);
+      if (checked) {
+        label.setAttribute("data-emoji", "🗣️");
+        speak("Testing language...", "en").then(async () => {
+          for (let i = 0; i < testEmojis.length; i++) {
+            const emoji = testEmojis[i];
+            label.setAttribute("data-emoji", emoji);
+            await speak(emoji, lang);
+            label.removeAttribute("data-emoji");
+          }
+        });
+      }
+      onChangeLanguage();
+    });
+
+    label.setAttribute("for", lang);
+    label.appendChild(checkbox);
+    label.classList.toggle("selected", checkbox.checked);
+
+    languageList.appendChild(label);
+
+    checkboxes.push(checkbox);
   });
 
-  initVoices(getAllSelectedVoices(voiceSelect, voices));
-
-  return voiceSelect;
-}
-
-export function getSelectedVoice(voiceSelect, voices) {
-  const selectedOptions = getSelectedVoices(voiceSelect);
-  let selectedOption = selectedOptions[randomInt(selectedOptions.length)];
-
-  for (let i = 0; i < voices.length; i++) {
-    if (voices[i].name === selectedOption) {
-      return voices[i];
-    }
-  }
-}
-
-function getAllSelectedVoices(voiceSelect, voices) {
-  const selectedOptions = getSelectedVoices(voiceSelect);
-  const selectedVoices = [];
-
-  for (let i = 0; i < voices.length; i++) {
-    if (selectedOptions.includes(voices[i].name)) {
-      selectedVoices.push(voices[i]);
-    }
-  }
-
-  return selectedVoices;
-}
-
-function getSelectedVoices(voiceSelect) {
-  return Array.from(voiceSelect.selectedOptions).map((option) =>
-    option.getAttribute("data-name")
-  );
-}
-
-export function getSelectedLanguages(voiceSelect) {
-  if (!voiceSelect) {
-    return getSelectedLanguagesFromStorage();
-  }
-
-  const languages = Array.from(voiceSelect.selectedOptions).map((option) => {
-    const lang = option.getAttribute("data-lang");
-
-    return lang && lang.length > 2 ? lang.substring(0, 2) : lang;
-  });
-  return languages.filter((lang, index) => {
-    return languages.indexOf(lang) === index;
-  });
+  return languageList;
 }

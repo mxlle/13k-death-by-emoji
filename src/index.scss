@@ -48,7 +48,8 @@ header {
   }
 }
 
-button {
+button,
+label {
   font-family: $font-family;
   cursor: pointer;
   color: white;

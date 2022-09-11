@@ -5,4 +5,12 @@
   gap: 0.5rem;
   margin-left: 0.5rem;
   align-items: center;
+
+  .info {
+    padding: 0.5rem;
+    font-family: monospace;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #777;
+  }
 }

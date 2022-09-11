@@ -25,7 +25,7 @@ import {
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
-import { getLanguagesText, toggleConfig } from "../voice-config";
+import { getLanguagesText, openLanguageSelection } from "../voice-config";
 import { createModeSwitcher } from "../../mode-switcher";
 import { createNumberInputComponent } from "../../number-input";
 
@@ -83,9 +83,9 @@ function createConfigScreen() {
   languageButton = createButton({
     iconBtn: true,
     onClick: () => {
-      toggleConfig(function onChange() {
+      openLanguageSelection(function onChange() {
         updateLanguageButtonText();
-        updateScoreModifiers();
+        // updateScoreModifiers(); // not needed if language is not used for score
       });
     },
   });

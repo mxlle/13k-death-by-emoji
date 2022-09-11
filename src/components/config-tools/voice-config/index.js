@@ -1,42 +1,40 @@
 import {
   getAvailableVoices,
-  getSelectedLanguages,
-  getSelectedVoice,
-  getVoiceListElement,
+  getLanguageListElement,
   speak,
 } from "../../../speech/speech";
-import { createButton, createElement } from "../../../utils/html-utils";
+import { createElement } from "../../../utils/html-utils";
 
 import "./voice-config.scss";
 import { globals } from "../../../globals";
+import {
+  getSelectedLanguagesFromStorage,
+  LocalStorageKey,
+  setLocalStorageItem,
+} from "../../../utils/local-storage";
+import { createDialog } from "../../dialog";
+import { getLanguagesFromVoices } from "../../../utils/language-util";
 
 let voices = [],
-  voiceListElement = undefined,
-  hostElement = undefined,
+  languages = [],
+  languageListElement = undefined,
   configScreen = undefined,
+  dialog = undefined,
   selectionText = undefined,
-  onChangeCallback = () => {},
-  isVisible = false;
+  selectedLangs = [];
 
 export function createVoiceSelector() {
   getAvailableVoices().then((_voices) => {
     voices = _voices;
-    voiceListElement = getVoiceListElement(voices, onChange);
-    voiceListElement.setAttribute("size", voices.length);
-    configScreen.appendChild(voiceListElement);
+    languages = getLanguagesFromVoices(voices);
+    languageListElement = getLanguageListElement(languages, onChange);
+    configScreen.appendChild(languageListElement);
   });
-
-  hostElement = createElement({
-    cssClass: "backdrop",
-    onClick: () => toggleConfig(),
-  });
-  hostElement.style.display = "none";
 
   configScreen = createElement({
     cssClass: "voice-config",
     onClick: (event) => event.stopPropagation(),
   });
-  hostElement.appendChild(configScreen);
 
   selectionText = createElement({
     cssClass: "selection",
@@ -44,45 +42,43 @@ export function createVoiceSelector() {
   });
   configScreen.appendChild(selectionText);
 
-  configScreen.appendChild(
-    createButton({
-      text: "OK",
-      onClick: () => toggleConfig(),
-    })
-  );
-
   const info = createElement({
     cssClass: "info",
     text: "Info: activate random mode by selecting multiple values",
   });
   configScreen.appendChild(info);
 
-  globals.languageFactor = getSelectedLanguages(voiceListElement)?.length || 1;
+  dialog = createDialog(configScreen, "OK", "Language selection");
 
-  return hostElement;
+  globals.languageFactor = getSelectedLanguagesFromStorage()?.length || 1;
+
+  return dialog;
 }
 
-export function toggleConfig(onChange) {
-  if (onChange) {
-    onChangeCallback = onChange;
-  }
-  if (!voiceListElement) {
+export function openLanguageSelection(onChange) {
+  if (!languageListElement) {
     speak("");
   }
-  isVisible = !isVisible;
-  hostElement.style.display = isVisible ? "inherit" : "none";
+
+  return dialog.open().then((isConfirmed) => {
+    if (isConfirmed) {
+      onConfirm();
+      onChange();
+    }
+  });
 }
 
-function onChange() {
-  globals.languageFactor = getSelectedLanguages(voiceListElement)?.length || 1;
-  selectionText.innerHTML = "Selection: " + getLanguagesText();
-  onChangeCallback();
+function onChange(selectedLanguages) {
+  console.debug("selected languages changes", selectedLanguages);
+  selectedLangs = selectedLanguages;
+  selectionText.innerHTML = "Selection: " + selectedLanguages.join(", ");
 }
 
-export function getCurrentVoice() {
-  return voiceListElement && getSelectedVoice(voiceListElement, voices);
+function onConfirm() {
+  globals.languageFactor = selectedLangs?.length || 1;
+  setLocalStorageItem(LocalStorageKey.LANGUAGES, selectedLangs);
 }
 
 export function getLanguagesText() {
-  return getSelectedLanguages(voiceListElement).join(", ");
+  return getSelectedLanguagesFromStorage().join(", ");
 }

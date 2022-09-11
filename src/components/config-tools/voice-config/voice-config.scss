@@ -1,21 +1,8 @@
-.backdrop {
-  position: absolute;
-  z-index: 2;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  background: rgba(0, 0, 0, 0.75);
-}
-
 .voice-config {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   padding: 1.5rem;
-  background: #333;
-  max-width: 15rem;
+  max-width: 640px;
+  width: calc(100% - 3rem);
+  justify-self: center;
   display: flex;
   gap: 1rem;
   flex-direction: column;
@@ -24,13 +11,44 @@
     font-size: 0.75rem;
     font-style: italic;
   }
+}
+@import "../../../theme";
 
-  select {
-    max-height: 40vh;
-    width: 100%;
-  }
+.list {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(4.25rem, 1fr));
+  grid-auto-rows: 3.25rem;
 
-  button {
-    order: 3;
+  label {
+    cursor: pointer;
+    padding: 0.75rem;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.25rem;
+    align-items: center;
+    font-size: 1.25rem;
+    font-family: monospace;
+
+    &.selected {
+      border-color: $main-color;
+      background: rgba($main-color, 0.1);
+
+      @include hover {
+        background: rgba($main-color, 0.2);
+      }
+
+      &:after {
+        content: "✓";
+      }
+
+      &[data-emoji]:after {
+        content: attr(data-emoji);
+      }
+    }
+
+    input {
+      display: none;
+    }
   }
 }

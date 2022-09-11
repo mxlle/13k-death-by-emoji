@@ -9,7 +9,6 @@ import "./emoji-buttons.scss";
 import { globals, isEndOfGame, isGameActive } from "../../globals";
 import { updateStorytellerButton } from "../storyteller";
 import { speak } from "../../speech/speech";
-import { getCurrentVoice } from "../config-tools/voice-config";
 import { evaluatePlay, getComboMultiplier } from "../../game-logic";
 import { updateHighScore, updateScore } from "../score";
 import { updateSecretSequenceComponent } from "../secret-sequence";
@@ -40,7 +39,7 @@ export function initEmojiButtonField(set) {
 
 function onEmojiClick(emoji, emojiButton, event) {
   if (!isGameActive()) {
-    void speak(isEndOfGame() ? "Game over!" : emoji, getCurrentVoice());
+    void speak(isEndOfGame() ? "Game over!" : emoji, globals.currentLanguage);
     return;
   }
 

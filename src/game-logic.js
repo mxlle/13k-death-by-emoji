@@ -1,5 +1,4 @@
 import { getEmojiPool, globals, resetGlobals } from "./globals";
-import { getCurrentVoice } from "./components/config-tools/voice-config";
 import { speak } from "./speech/speech";
 import { getRandomItem } from "./utils/array-utils";
 import { shuffleArray } from "./utils/random-utils";
@@ -29,6 +28,7 @@ export function newGame(optionalEmojiPool) {
   initGameData(optionalEmojiPool);
   waitTime = DEFAULT_WAIT_TIME;
   rate = 1;
+  speak("", globals.currentLanguage); // to init voice
   pubSubService.publish(PubSubEvent.NEW_GAME);
 }
 
@@ -153,8 +153,7 @@ function getWantedEmoji() {
 }
 
 async function speakWithVoice(text, rate) {
-  const voice = getCurrentVoice();
-  await speak(text, voice, rate);
+  await speak(text, globals.currentLanguage, rate);
 }
 
 function increaseRate() {

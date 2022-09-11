@@ -1,11 +1,13 @@
 import {
   getLocalStorageItem,
+  getSelectedLanguagesFromStorage,
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
 import { preselections } from "./components/config-tools/emoji-selection/preselections";
 import { splitEmojis } from "./emojis/emoji-util";
 import { shuffleArray } from "./utils/random-utils";
+import { getRandomItem } from "./utils/array-utils";
 
 export const DEFAULT_LEVEL = 6;
 export const MIN_GOAL = 3;
@@ -31,6 +33,7 @@ const defaultGlobals = {
   emojiSet: [],
   shuffledEmojis: [],
   correctMatches: [],
+  currentLanguage: undefined,
   blindMode: false,
   level: getLevel(),
   rainbowMode: false,
@@ -46,6 +49,7 @@ export function resetGlobals() {
   globals.rainbowMode = !!getLocalStorageItem(LocalStorageKey.RAINBOW_MODE);
   globals.level = getLevel();
   globals.queue = [];
+  globals.currentLanguage = getRandomItem(getSelectedLanguagesFromStorage());
   document.body.classList.toggle("rainbow-mode", globals.rainbowMode);
 }
 
