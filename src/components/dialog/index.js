@@ -78,5 +78,8 @@ export function createDialog(innerElement, submitButtonText, headerText) {
     changeHeader: (newHeaderText) => {
       if (header) header.innerText = newHeaderText;
     },
+    toggleSubmitDisabled: (isDisabled) => {
+      if (submitButton) submitButton.disabled = isDisabled;
+    },
   };
 }

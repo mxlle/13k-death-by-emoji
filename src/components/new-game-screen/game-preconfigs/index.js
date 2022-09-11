@@ -20,6 +20,7 @@ import { splitEmojis } from "../../../emojis/emoji-util";
 import { preselections } from "../../config-tools/emoji-selection/preselections";
 import {
   getLocalStorageItem,
+  getSelectedLanguagesFromStorage,
   LocalStorageKey,
   setLocalStorageItem,
 } from "../../../utils/local-storage";
@@ -29,6 +30,8 @@ import {
   getAchievedStars,
   updateStars,
 } from "../../stars";
+import { getLanguagesWithoutDefault } from "../../../utils/language-util";
+import { openLanguageSelection } from "../../config-tools/voice-config";
 
 export function createGamePreconfigs(onSelect) {
   const gamePreconfigsContainer = createElement({
@@ -49,44 +52,7 @@ function createGamePreconfigButton(preconfig, onSelect) {
     tag: "button",
     cssClass: "preconfig-btn",
     onClick: () => {
-      if (preconfig.surpriseMe) {
-        setGameConfig({
-          practiceMode: getRandomItem([true, false]),
-          blindMode: getRandomItem([true, false]),
-          rainbowMode: getRandomItem([
-            true,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-            false,
-          ]),
-          level: randomIntFromInterval(MIN_GOAL, MAX_GOAL),
-        });
-        setEmojiPool(
-          shuffleArray(splitEmojis(allOldEmojis)).slice(0, MAX_GOAL)
-        );
-        setLocalStorageItem(
-          LocalStorageKey.EMOJI_POOL_NAME,
-          EMOJI_POOL_CUSTOM_NAME
-        );
-        newGame();
-      } else {
-        setGameConfig(preconfig.config);
-        setEmojiPool(preconfig.emojiPool ?? preselections[0].emojis);
-        const emojiPoolName =
-          preconfig.emojiPoolName ??
-          (preconfig.emojiPool
-            ? EMOJI_POOL_CUSTOM_NAME
-            : preselections[0].name);
-        setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, emojiPoolName);
-        newGame();
-      }
-      setLocalStorageItem(LocalStorageKey.CURRENT_GAME, preconfig.id);
-
-      onSelect?.();
+      onGamePreconfigClick(preconfig, onSelect);
     },
   });
   const icon = createElement({ text: preconfig.icon, cssClass: "icon" });
@@ -116,4 +82,42 @@ function createGamePreconfigButton(preconfig, onSelect) {
   });
 
   return gamePreconfigButton;
+}
+
+async function onGamePreconfigClick(preconfig, onSelect) {
+  if (preconfig.surpriseMe) {
+    preconfig = createSurpriseConfig();
+  }
+
+  if (preconfig.useSecondLanguage) {
+    const languagesWithoutDefault = getLanguagesWithoutDefault(
+      getSelectedLanguagesFromStorage()
+    );
+    if (!languagesWithoutDefault.length) {
+      await openLanguageSelection(true);
+    }
+  }
+
+  setGameConfig(preconfig.config);
+  setEmojiPool(preconfig.emojiPool ?? preselections[0].emojis);
+  const emojiPoolName =
+    preconfig.emojiPoolName ??
+    (preconfig.emojiPool ? EMOJI_POOL_CUSTOM_NAME : preselections[0].name);
+  setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, emojiPoolName);
+  newGame(preconfig.useSecondLanguage);
+  setLocalStorageItem(LocalStorageKey.CURRENT_GAME, preconfig.id);
+
+  onSelect?.();
+}
+
+function createSurpriseConfig() {
+  return {
+    emojiPool: shuffleArray(splitEmojis(allOldEmojis)).slice(0, MAX_GOAL),
+    config: {
+      practiceMode: getRandomItem([true, false]),
+      blindMode: getRandomItem([true, false]),
+      rainbowMode: Math.random() < 0.125,
+      level: randomIntFromInterval(MIN_GOAL, MAX_GOAL),
+    },
+  };
 }

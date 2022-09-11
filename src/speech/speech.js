@@ -2,6 +2,7 @@ import { createElement } from "../utils/html-utils";
 import { getSelectedLanguagesFromStorage } from "../utils/local-storage";
 import { splitEmojis } from "../emojis/emoji-util";
 import { getDefaultSet } from "../components/config-tools/emoji-selection/preselections";
+import { getDefaultLanguage } from "../utils/language-util";
 
 const synth = window.speechSynthesis;
 const utterThis = new SpeechSynthesisUtterance();
@@ -87,6 +88,7 @@ export function getLanguageListElement(languages, onChange) {
     label.setAttribute("for", lang);
     label.appendChild(checkbox);
     label.classList.toggle("selected", checkbox.checked);
+    label.classList.toggle("default", lang === getDefaultLanguage());
 
     languageList.appendChild(label);
 

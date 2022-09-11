@@ -1,4 +1,4 @@
-import { removeDuplicates } from "./array-utils";
+import { getRandomItem, removeDuplicates } from "./array-utils";
 
 export function getLanguagesFromVoices(voices) {
   return removeDuplicates(
@@ -14,4 +14,19 @@ export function getShortLanguageName(lang) {
 
 export function getDefaultLanguage() {
   return getShortLanguageName(navigator.language);
+}
+
+export function getLanguagesWithoutDefault(
+  languages,
+  defaultLanguage = getDefaultLanguage()
+) {
+  return languages.filter((lang) => lang !== defaultLanguage);
+}
+
+export function getLanguageForGame(languages, useNonDefaultLanguage = false) {
+  if (useNonDefaultLanguage) {
+    languages = getLanguagesWithoutDefault(languages);
+  }
+
+  return getRandomItem(languages);
 }

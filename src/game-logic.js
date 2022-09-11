@@ -1,10 +1,16 @@
-import { getEmojiPool, globals, resetGlobals } from "./globals";
+import { CUSTOM_GAME_ID, getEmojiPool, globals, resetGlobals } from "./globals";
 import { speak } from "./speech/speech";
 import { getRandomItem } from "./utils/array-utils";
 import { shuffleArray } from "./utils/random-utils";
 import { splitEmojis } from "./emojis/emoji-util";
 import { waitForPromiseAndTime } from "./utils/promise-utils";
 import { pubSubService, PubSubEvent } from "./utils/pub-sub-service";
+import {
+  getLocalStorageItem,
+  getSelectedLanguagesFromStorage,
+  LocalStorageKey,
+} from "./utils/local-storage";
+import { getLanguageForGame } from "./utils/language-util";
 
 const CHANGE_RATE_INTERVAL = 10;
 
@@ -22,18 +28,28 @@ export const ScoreAction = {
   WRONG: "wrong",
 };
 
-export function newGame(optionalEmojiPool) {
+export function newGame(useNonDefaultLanguage) {
   document.body.classList.remove("game-over");
   resetGlobals();
-  initGameData(optionalEmojiPool);
+  initGameData();
+  if (
+    useNonDefaultLanguage ||
+    getLocalStorageItem(LocalStorageKey.CURRENT_GAME) === CUSTOM_GAME_ID
+  ) {
+    globals.currentLanguage = getLanguageForGame(
+      getSelectedLanguagesFromStorage(),
+      useNonDefaultLanguage
+    );
+  }
+
   waitTime = DEFAULT_WAIT_TIME;
   rate = 1;
   speak("", globals.currentLanguage); // to init voice
   pubSubService.publish(PubSubEvent.NEW_GAME);
 }
 
-export function initGameData(optionalEmojiPool) {
-  const emojiPool = optionalEmojiPool || getEmojiPool();
+export function initGameData() {
+  const emojiPool = getEmojiPool();
   globals.emojiSet = shuffleArray(splitEmojis(emojiPool)).slice(
     0,
     globals.level

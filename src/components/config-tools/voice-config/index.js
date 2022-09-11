@@ -13,7 +13,10 @@ import {
   setLocalStorageItem,
 } from "../../../utils/local-storage";
 import { createDialog } from "../../dialog";
-import { getLanguagesFromVoices } from "../../../utils/language-util";
+import {
+  getLanguagesFromVoices,
+  getLanguagesWithoutDefault,
+} from "../../../utils/language-util";
 
 let voices = [],
   languages = [],
@@ -21,7 +24,8 @@ let voices = [],
   configScreen = undefined,
   dialog = undefined,
   selectionText = undefined,
-  selectedLangs = [];
+  isNonDefaultMode = false,
+  selectedLangs = getSelectedLanguagesFromStorage();
 
 export function createVoiceSelector() {
   getAvailableVoices().then((_voices) => {
@@ -55,23 +59,47 @@ export function createVoiceSelector() {
   return dialog;
 }
 
-export function openLanguageSelection(onChange) {
+export function openLanguageSelection(isSecondLanguageSelection = false) {
   if (!languageListElement) {
     speak("");
   }
 
+  isNonDefaultMode = isSecondLanguageSelection;
+  languageListElement?.classList.toggle(
+    "no-default",
+    isSecondLanguageSelection
+  );
+  onChange(getSelectedLanguagesFromStorage());
+
   return dialog.open().then((isConfirmed) => {
     if (isConfirmed) {
       onConfirm();
-      onChange();
     }
+
+    return isConfirmed;
   });
 }
 
 function onChange(selectedLanguages) {
   console.debug("selected languages changes", selectedLanguages);
   selectedLangs = selectedLanguages;
-  selectionText.innerHTML = "Selection: " + selectedLanguages.join(", ");
+  selectionText.innerHTML = "Selection: " + getSelectionText();
+  setSubmitDisabledState();
+}
+
+function getSelectionText() {
+  return (
+    (isNonDefaultMode
+      ? getLanguagesWithoutDefault(selectedLangs)
+      : selectedLangs
+    ).join(", ") || "?"
+  );
+}
+
+function setSubmitDisabledState() {
+  dialog.toggleSubmitDisabled(
+    isNonDefaultMode && getLanguagesWithoutDefault(selectedLangs).length <= 0
+  );
 }
 
 function onConfirm() {

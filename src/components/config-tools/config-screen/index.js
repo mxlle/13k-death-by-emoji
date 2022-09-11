@@ -83,9 +83,11 @@ function createConfigScreen() {
   languageButton = createButton({
     iconBtn: true,
     onClick: () => {
-      openLanguageSelection(function onChange() {
-        updateLanguageButtonText();
-        // updateScoreModifiers(); // not needed if language is not used for score
+      openLanguageSelection().then(function onConfirm(isConfirmed) {
+        if (isConfirmed) {
+          updateLanguageButtonText();
+          // updateScoreModifiers(); // not needed if language is not used for score
+        }
       });
     },
   });

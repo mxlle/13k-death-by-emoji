@@ -1,13 +1,12 @@
 import {
   getLocalStorageItem,
-  getSelectedLanguagesFromStorage,
   LocalStorageKey,
   setLocalStorageItem,
 } from "./utils/local-storage";
 import { preselections } from "./components/config-tools/emoji-selection/preselections";
 import { splitEmojis } from "./emojis/emoji-util";
 import { shuffleArray } from "./utils/random-utils";
-import { getRandomItem } from "./utils/array-utils";
+import { getDefaultLanguage } from "./utils/language-util";
 
 export const DEFAULT_LEVEL = 6;
 export const MIN_GOAL = 3;
@@ -49,7 +48,7 @@ export function resetGlobals() {
   globals.rainbowMode = !!getLocalStorageItem(LocalStorageKey.RAINBOW_MODE);
   globals.level = getLevel();
   globals.queue = [];
-  globals.currentLanguage = getRandomItem(getSelectedLanguagesFromStorage());
+  globals.currentLanguage = getDefaultLanguage();
   document.body.classList.toggle("rainbow-mode", globals.rainbowMode);
 }
 
