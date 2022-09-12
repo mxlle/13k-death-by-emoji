@@ -2,7 +2,7 @@ export function splitEmojis(string) {
   const list = [];
   while (string.length) {
     const [char] = string.match(
-      /^[\u{1F1E6}-\u{1F1FF}]{2}|.[\ufe0e\ufe0f]?[\u{1F3FB}-\u{1F3FF}]?(\u200d\p{Emoji}[\ufe0e\ufe0f]?|[\u{E0020}-\u{E007F}])*[\ufe0e\ufe0f]?/u
+      /^[\u{1F1E6}-\u{1F1FF}]{2}|.[\ufe0e\ufe0f]?[\u{1F3FB}-\u{1F3FF}]?(\u200d(\p{Emoji}|[\u2600-\u26ff])[\ufe0e\ufe0f]?|[\u{E0020}-\u{E007F}])*[\ufe0e\ufe0f]?/u
     );
     if (isCharacterEmoji(char)) {
       list.push(char);
@@ -13,7 +13,7 @@ export function splitEmojis(string) {
 }
 
 export function isCharacterEmoji(char) {
-  const regexExp = /\p{Emoji}/u;
+  const regexExp = /\p{Emoji}|[\u2600-\u26ff]/u;
 
   return regexExp.test(char);
 }

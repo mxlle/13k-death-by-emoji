@@ -7,8 +7,7 @@ export const party = "🚀🎉🎊😎💪🙌🙌🎈";
 
 export const red = "🔴🍅🍎🍓🍒♥️♦️🌹🚨🚒🦀🐞🍷🏓";
 
-const nostalgia_base = "☮☃☎☁☂☀☠⚛☘⚜⚖☄⚔☢☣☯";
-export const nostalgia = nostalgia_base.split("").join("\ufe0e") + "\ufe0e";
+export const nostalgia = "☮♕☏☂☼☠⚛☘⚜⚖☄⚔☢☣☯⚒";
 
 // copied from https://getemoji.com/
 export const cuteAnimals1 = "🐶🐈🐯🐭🐹🐰🐿️🐥🐧🐸🐢🐝";
