@@ -1,7 +1,7 @@
 @import "../../../theme";
 
 .config {
-  font-size: 1rem;
+  font-size: 0.9rem;
   display: grid;
   justify-self: center;
   grid-template-columns: min-content minmax(0, 1fr);
@@ -40,7 +40,7 @@
   }
 
   .icon-btn:not(.pool-btn) {
-    font-size: 1.7rem;
+    font-size: 1.2rem;
   }
 
   input {
