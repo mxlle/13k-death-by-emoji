@@ -1,15 +1,9 @@
 import { getRandomItem, removeDuplicates } from "./array-utils";
 
-let voiceDefaultLang;
-
 export function getLanguagesFromVoices(voices) {
   return removeDuplicates(
     voices
       .map((voice) => {
-        if (voice.default) {
-          voiceDefaultLang = getShortLanguageName(voice.lang);
-        }
-
         return getShortLanguageName(voice.lang);
       })
       .filter((lang) => lang)
@@ -21,7 +15,7 @@ export function getShortLanguageName(lang) {
 }
 
 export function getDefaultLanguage() {
-  return getShortLanguageName(voiceDefaultLang ?? navigator.language);
+  return getShortLanguageName(navigator.language);
 }
 
 export function getLanguagesWithoutDefault(
