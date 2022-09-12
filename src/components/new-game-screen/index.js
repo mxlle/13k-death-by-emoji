@@ -23,6 +23,7 @@ import { getResultAndRecordText, getScoreAndHighScoreText } from "../score";
 import { createGamePreconfigs } from "./game-preconfigs";
 import { speak } from "../../speech/speech";
 import { createStarComponent, getAchievedStars } from "../stars";
+import { gamePreconfigs } from "./game-preconfigs/preconfigs";
 
 let newGameScreen, dialog, replayButton, gameOverSection, configButton;
 
@@ -118,7 +119,9 @@ function createNewGameScreen() {
   replayButton = createButton({
     onClick: () => {
       closeDialog();
-      void newGame();
+      const preconfigId = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
+      const preconfig = gamePreconfigs.find((p) => p.id === preconfigId);
+      void newGame(preconfig?.useSecondLanguage);
     },
   });
   replayButton.classList.add("replay-btn");
@@ -140,10 +143,8 @@ function createNewGameScreen() {
   configButton.appendChild(icon);
   configButton.appendChild(text);
 
-  const gamePreconfigs = createGamePreconfigs(closeDialog);
-
   newGameScreen.appendChild(gameOverSection);
   newGameScreen.appendChild(replayButton);
-  newGameScreen.appendChild(gamePreconfigs);
+  newGameScreen.appendChild(createGamePreconfigs(closeDialog));
   newGameScreen.appendChild(configButton);
 }
