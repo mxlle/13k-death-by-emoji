@@ -1,7 +1,6 @@
 .stars {
   display: flex;
   justify-content: center;
-  font-size: 0.75rem;
   transition: transform 0.3s, color 0.3s;
 
   &.zero {
