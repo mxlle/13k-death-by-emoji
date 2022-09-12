@@ -8,7 +8,7 @@ import { getDefaultLanguage } from "../../utils/language-util";
 import { globals } from "../../globals";
 
 export function createConfigTools() {
-  const configTools = createElement({ cssClass: "config-tools" });
+  const configTools = createElement({ cssClass: "tools" });
 
   const homeButton = createButton({
     iconBtn: true,

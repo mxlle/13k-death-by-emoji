@@ -60,7 +60,7 @@ function updateAll() {
   updateEmojiSelectionButtonText();
   updateRainbowButtonText();
   adjustGameModeTexts?.();
-  configScreen.classList.toggle("practice-mode", globals.practiceMode);
+  configScreen.classList.toggle("practice", globals.practiceMode);
 }
 
 function createConfigScreen() {

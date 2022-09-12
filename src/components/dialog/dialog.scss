@@ -22,7 +22,7 @@
     grid-template-rows: min-content 1fr min-content;
   }
 
-  .dialog-content {
+  .content {
     display: grid;
     margin-bottom: 1.5rem;
     overflow-y: auto;
@@ -34,7 +34,7 @@
   }
 }
 
-.buttons {
+.btns {
   background: black;
   display: grid;
   gap: 1rem;

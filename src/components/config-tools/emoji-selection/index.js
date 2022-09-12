@@ -28,7 +28,7 @@ export function createEmojiSelectionButton(afterSelectionCallback) {
       if (afterSelectionCallback) afterSelectionCallback();
     },
   });
-  emojiSelectionButton.classList.add("emoji-selection-btn");
+  emojiSelectionButton.classList.add("pool-btn");
   updateEmojiSelectionButtonText();
 
   return emojiSelectionButton;
@@ -36,7 +36,7 @@ export function createEmojiSelectionButton(afterSelectionCallback) {
 
 export function updateEmojiSelectionButtonText() {
   emojiSelectionButton.innerText = "";
-  const emojiContainer = createElement({ cssClass: "emoji-container rbc" });
+  const emojiContainer = createElement({ cssClass: "emoji-box rbc" });
   getRandomEmojisFromPool().forEach((emoji) =>
     emojiContainer.appendChild(createElement({ text: emoji }))
   );

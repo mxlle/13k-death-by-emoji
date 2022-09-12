@@ -61,10 +61,6 @@ function createGamePreconfigButton(preconfig, onSelect) {
   gamePreconfigButton.appendChild(icon);
   gamePreconfigButton.appendChild(text);
 
-  if (preconfig.disabled) {
-    gamePreconfigButton.disabled = true;
-  }
-
   const starParams = [
     preconfig.id,
     preconfig.config?.practiceMode,

@@ -114,7 +114,7 @@ function setGameOverSection(isGameOver) {
 }
 
 function createNewGameScreen() {
-  newGameScreen = createElement({ cssClass: "new-game-screen" });
+  newGameScreen = createElement({ cssClass: "selector" });
   gameOverSection = createElement({ cssClass: "game-over-section hidden" });
   replayButton = createButton({
     onClick: () => {

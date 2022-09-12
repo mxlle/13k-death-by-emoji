@@ -11,7 +11,7 @@ pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
   createGameField();
 });
 
-const gameField = createElement({ cssClass: "game-field" });
+const gameField = createElement({ cssClass: "field" });
 
 export function createGameField() {
   gameField.innerHTML = "";

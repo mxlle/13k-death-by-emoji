@@ -29,21 +29,18 @@ body {
   }
 }
 
-.game-field {
+.field {
   width: 100%;
-  height: 100%;
+  height: calc(100% - 2rem);
 }
 
 header {
-  position: absolute;
-  top: 0;
-  width: calc(100% - 2rem);
-  margin: 0.5rem 0;
+  padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
 
-  .scoreboard {
+  :nth-child(2) {
     margin-left: auto;
   }
 }

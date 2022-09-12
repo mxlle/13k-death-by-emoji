@@ -21,7 +21,7 @@ export function createDialog(innerElement, submitButtonText, headerText) {
     dialog.classList.add("has-header");
   }
 
-  const dialogContent = createElement({ cssClass: "dialog-content" });
+  const dialogContent = createElement({ cssClass: "content" });
   dialogContent.appendChild(innerElement);
   dialog.appendChild(dialogContent);
 
@@ -33,7 +33,7 @@ export function createDialog(innerElement, submitButtonText, headerText) {
 
   let buttons, cancelButton, submitButton;
   if (submitButtonText !== undefined) {
-    buttons = createElement({ cssClass: "buttons" });
+    buttons = createElement({ cssClass: "btns" });
 
     cancelButton = createButton({
       text: "Cancel",

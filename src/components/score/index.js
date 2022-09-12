@@ -28,7 +28,7 @@ function init() {
 }
 
 export function createScoreboard() {
-  scoreboard = createElement({ cssClass: "scoreboard" });
+  scoreboard = createElement({});
   init();
   return scoreboard;
 }

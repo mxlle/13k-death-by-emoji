@@ -1,6 +1,6 @@
 @import "../../theme";
 
-.emoji-field {
+.emojis {
   display: grid;
   gap: 2rem 1rem;
   grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
@@ -36,7 +36,7 @@ button.emoji-btn {
   }
 }
 
-.practice-mode {
+.practice {
   .correct {
     pointer-events: none;
     cursor: default;
@@ -62,7 +62,7 @@ button.emoji-btn {
     color: $death-color;
   }
 
-  &.transition-end {
+  &.end {
     opacity: 0;
     top: 0;
   }

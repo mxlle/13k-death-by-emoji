@@ -21,7 +21,7 @@ const buttonMap = {};
 const partyList = splitEmojis(party);
 
 export function initEmojiButtonField(set) {
-  const field = createElement({ cssClass: "emoji-field" });
+  const field = createElement({ cssClass: "emojis" });
   for (const emoji of set) {
     const button = createEmojiButton(emoji);
     button.addEventListener("mousedown", (event) => {
@@ -34,7 +34,7 @@ export function initEmojiButtonField(set) {
     buttonMap[emoji] = button;
   }
   if (globals.practiceMode) {
-    field.classList.add("practice-mode");
+    field.classList.add("practice");
   }
 
   return field;
@@ -111,7 +111,7 @@ function flyElementFrom(element, x, y) {
   element.style.setProperty("--init-left", Math.round(x) + "px");
   document.body.appendChild(element);
 
-  setTimeout(() => element.classList.add("transition-end"), 150);
+  setTimeout(() => element.classList.add("end"), 150);
   setTimeout(() => document.body.removeChild(element), 5000);
 }
 

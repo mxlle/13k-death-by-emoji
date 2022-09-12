@@ -10,7 +10,7 @@ export function createNumberInputComponent({
   onBlur,
 }) {
   const numberInputContainer = createElement({
-    cssClass: "number-input-container",
+    cssClass: "number-input",
   });
   const numberInput = createElement({ tag: "input", cssClass: "rbc" });
   numberInput.type = "number";
