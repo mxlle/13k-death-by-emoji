@@ -35,6 +35,9 @@ body {
 }
 
 header {
+  position: absolute;
+  top: 0;
+  width: calc(100% - 1.5rem);
   padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;

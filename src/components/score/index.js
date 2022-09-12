@@ -10,8 +10,6 @@ import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 import { getGameCountToSave } from "../../game-logic";
 
 let scoreboard,
-  highScore,
-  highScoreCount,
   score = 0;
 
 pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
@@ -20,10 +18,6 @@ pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
 
 function init() {
   score = 0;
-  highScore = getLocalStorageItem(LocalStorageKey.HIGH_SCORE);
-  highScore = highScore ? Number(highScore) : undefined;
-  highScoreCount = getLocalStorageItem(LocalStorageKey.HIGH_SCORE_COUNT);
-  highScoreCount = highScoreCount ? Number(highScoreCount) : 0;
   updateScoreboard();
 }
 
@@ -39,16 +33,15 @@ export function updateScore(scoreForAction) {
 }
 
 export function updateHighScore() {
+  const highScore = getLocalStorageItem(LocalStorageKey.HIGH_SCORE);
+  const highScoreCount = getLocalStorageItem(LocalStorageKey.HIGH_SCORE_COUNT);
+
   if (!highScore || highScore < score) {
     setLocalStorageItem(LocalStorageKey.HIGH_SCORE, score);
-    highScore = score;
-    updateScoreboard();
   }
 
   if (!highScoreCount || highScoreCount < globals.correctCount) {
     setLocalStorageItem(LocalStorageKey.HIGH_SCORE_COUNT, globals.correctCount);
-    highScoreCount = globals.correctCount;
-    updateScoreboard();
   }
 
   setGameHighCount(
@@ -61,9 +54,6 @@ function updateScoreboard() {
   let text = getSimpleCount();
   if (!globals.practiceMode) {
     text += "&nbsp;&nbsp;&nbsp;" + getSimpleScore();
-    if (highScore) {
-      text += `&nbsp;&nbsp;&nbsp;(🥇 ${highScoreCount} / ${highScore})`;
-    }
   }
   scoreboard.innerHTML = text;
 }
@@ -86,12 +76,16 @@ export function getScore() {
 }
 
 export function getScoreAndHighScoreText() {
+  const highScore = getLocalStorageItem(LocalStorageKey.HIGH_SCORE);
   return `Your score: ${getSimpleScore()}  🥇 High score: ${highScore}`;
 }
 
 export function getResultAndRecordText() {
   let resultText = `Your result: ${getSimpleCount()}`;
   if (!globals.practiceMode) {
+    const highScoreCount = getLocalStorageItem(
+      LocalStorageKey.HIGH_SCORE_COUNT
+    );
     resultText += `  🥇 Record: ${highScoreCount}`;
   }
   return resultText;
