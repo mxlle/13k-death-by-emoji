@@ -33,6 +33,9 @@ export function initEmojiButtonField(set) {
     field.appendChild(button);
     buttonMap[emoji] = button;
   }
+  if (globals.practiceMode) {
+    field.classList.add("practice-mode");
+  }
 
   return field;
 }

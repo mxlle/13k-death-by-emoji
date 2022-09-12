@@ -28,15 +28,18 @@ button.emoji-btn {
   &.correct {
     border-color: $life-color;
     background-color: rgba($life-color, 0.3);
-    pointer-events: none;
-    cursor: default;
   }
 
   &.wrong {
     border-color: $death-color;
     background-color: rgba($death-color, 0.3);
+  }
+}
+
+.practice-mode {
+  .correct {
     pointer-events: none;
-    cursor: not-allowed;
+    cursor: default;
   }
 }
 
