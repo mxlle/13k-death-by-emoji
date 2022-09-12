@@ -49,7 +49,7 @@ export function resetGlobals() {
   globals.level = getLevel();
   globals.queue = [];
   globals.currentLanguage = getDefaultLanguage();
-  document.body.classList.toggle("rainbow-mode", globals.rainbowMode);
+  document.body.classList.toggle("rainbow", globals.rainbowMode);
 }
 
 export function isGameActive() {
@@ -75,7 +75,7 @@ function getLevel() {
 export function setRainbowMode(rainbowMode) {
   globals.rainbowMode = rainbowMode;
   setLocalStorageItem(LocalStorageKey.RAINBOW_MODE, rainbowMode);
-  document.body.classList.toggle("rainbow-mode", globals.rainbowMode);
+  document.body.classList.toggle("rainbow", globals.rainbowMode);
 }
 
 export function setGameConfig(config) {

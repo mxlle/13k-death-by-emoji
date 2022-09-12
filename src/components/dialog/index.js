@@ -14,7 +14,6 @@ export function createDialog(innerElement, submitButtonText, headerText) {
   if (headerText) {
     header = createElement({
       tag: "h2",
-      cssClass: "dialog-header",
       text: headerText,
     });
     dialog.appendChild(header);
