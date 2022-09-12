@@ -7,7 +7,6 @@ import {
   red,
   spaceDucks,
   sportActivityAndMusic1,
-  travelPlacesAndTransport1,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { isSpaceDucksVariant } from "../../../utils/local-storage";
@@ -22,7 +21,6 @@ const _preselections = [
   foodAndDrink1,
   sportActivityAndMusic1,
   clothingAndAccessories1,
-  travelPlacesAndTransport1,
   red,
   flags,
 ];
@@ -33,7 +31,6 @@ const _preselectionsNames = [
   "Food & Drink",
   "Sport, Activity & Music",
   "Clothing & Accessories",
-  "Travel, Places & Transport",
   "All red",
   "Flags",
 ];

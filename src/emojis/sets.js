@@ -10,7 +10,8 @@ export const red = "🔴🍅🍎🍓🍒♥️♦️🌹🚨🚒🦀🐞🍷🏓
 // copied from https://getemoji.com/
 export const cuteAnimals1 = "🐶🐈🐯🐭🐹🐰🐿️🐥🐧🐸🐢🐝";
 export const animals1 =
-  "🐶🐵🐒🐕🐩🐺🐱🐈🦁🐯🐅🐆🐴🐎🦄🐮🐂🐃🐄🐷🐖🐗🐽🐏🐑🐐🐪🐫🐘🐭🐁🐀🐹🐰🐇🐿️🐻🐨🐼🐾🦃🐔🐓🐣🐤🐥🐦🐧🕊️🦆🐸🐊🐢🐍🐲🐉🐳🐋🐬🦈🐟🐠🐡🦀🐙🐚🐌🐛🐜🐝🐞🕷️🕸️🦂";
+  cuteAnimals1 +
+  "🐵🐒🐕🐩🐺🐱🦁🐅🐆🐴🐎🦄🐮🐂🐃🐄🐷🐖🐗🐑🐐🐪🐫🐘🐁🐀🐇🐻🐨🐼🐾🦃🐔🐓🐣🐤🐦🕊️🦆🐊🐍🐲🐉🐳🐋🐬🦈🐟🐠🐡🦀🐙🐚🐌🐛🐜🐞🕷️🕸️🦂";
 export const animals2 =
   "🦓🦍🦧🦣🦛🦏🦒🦘🦬🐻‍❄️🦞🦫🦦🦎🦖🦕🦅🦉🦇 ‍🪶🦤🦚🦜🦢🦩🪱🦋🪰🪲🪳🦟🦗🦡🦙🦥🦊🦌🦝🦨🦔";
 
@@ -27,9 +28,9 @@ export const travelPlacesAndTransport1 =
   "🚌🚗🎡🎢🎪🗽⛲️🏟🏗🏠⛰️🌋🏕️⛺️🏖️🏜️🏝️🚂🚃🚄🚅🚆🚇🚈🚉🚊🚝🚞🚋🚌🚍🚎🚐🚑🚒🚓🚔🚕🚖🚘🚙🚚🚛🚜🏎️🏍️🚲🚏🛣️🛤️🚨🚦🚧⚓⛵🚤🛳️⛴️🛥️🚢✈️🚁🚟🚠🚡🛰️🚀";
 
 export const sportActivityAndMusic1 =
-  "🎃🎄🎆🎇✨🎈🎉🎊🎀🎁🏆🏅⚽⚾🏀🏐🏈🏉🎾🎳🏏🏑🏒🏓🏸⛳️🏹⛸️🎣🎽🎿🎯🎱🔮🎮🕹️🎰🎲♠️♥️♦️♣️🃏🀄🎴🎭🖼️🎨🎬🎼🎵🎶🎙️🎚️🎛️🎤🎧📻🎷🎸🎹🎺🎻";
+  "🏀⚽⚾🏐🏈🎾🎳🏓🏸⛳️⛸️🎣🎽🎿🎯🎱🔮🎮🕹️🎰🎲️🖼️🎨🎬🎼🎵🎶🎙️🎚️🎛️🎤🎧📻🎷🎸🎹🎺🎻";
 export const sportActivityAndMusic2 =
-  "⚽️⚾️🪀🥅⛳🥊🥋🛹🛼🥌🥇🪁🪃🤿🩰♟️🥏🧩🛷🥁🪘🪗🪕";
+  "️🪀🥅⛳🥊🥋🛹🛼🥌🥇🪁🪃🤿🩰♟️🥏🧩🛷🥁🪘🪗🪕";
 
 export const clothingAndAccessories1 =
   "👕👓🕶️👔👖👗👘👙👚👛👜👝🛍️🎒👞👟👠👡👢👑👒🎩🎓⛑️📿💄💍💎💼";
@@ -45,8 +46,8 @@ export const allOldEmojis =
   animals1 +
   foodAndDrink1 +
   nature1 +
-  weather1 +
-  travelPlacesAndTransport1 +
+  //weather1 +
+  //travelPlacesAndTransport1 +
   sportActivityAndMusic1 +
   clothingAndAccessories1; // +
 //miscObjects1;
