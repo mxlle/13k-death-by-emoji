@@ -45,14 +45,7 @@ export const miscObjects2 =
   "⌚️🧭⏱️⏲️⏰🧯🪙🪜🧰🪛🪚🪤🧱🧲💣🧨🪓🏺🕳🩹🩺🩸🧬🦠🧪🧹🪠🧺🧻💩🚰🪥🪒🧽🪣🧴🛎🪑🧸🪆🪞🪟🛒🪄️🤖";
 
 export const allOldEmojis =
-  animals1 +
-  foodAndDrink1 +
-  nature1 +
-  //weather1 +
-  //travelPlacesAndTransport1 +
-  sportActivityAndMusic1 +
-  clothingAndAccessories1; // +
-//miscObjects1;
+  animals1 + foodAndDrink1 + nature1 + sportActivityAndMusic1;
 export const allNewEmojis =
   animals2 +
   foodAndDrink2 +

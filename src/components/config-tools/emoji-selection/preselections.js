@@ -1,6 +1,5 @@
 import {
   animals1,
-  clothingAndAccessories1,
   death1,
   flags,
   foodAndDrink1,
@@ -22,7 +21,6 @@ const _preselections = [
   animals1,
   foodAndDrink1,
   sportActivityAndMusic1,
-  clothingAndAccessories1,
   red,
   flags,
   nostalgia,
@@ -33,7 +31,6 @@ const _preselectionsNames = [
   "Animals",
   "Food & Drink",
   "Sport, Activity & Music",
-  "Clothing & Accessories",
   "All red",
   "Flags",
   nostalgiaName,
