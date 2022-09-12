@@ -7,6 +7,7 @@ import { getDefaultLanguage } from "../utils/language-util";
 const synth = window.speechSynthesis;
 const utterThis = new SpeechSynthesisUtterance();
 const testEmojis = splitEmojis(getDefaultSet()).slice(0, 3);
+let lastLang = null;
 
 export function getAvailableVoices() {
   return new Promise((resolve) => {
@@ -17,7 +18,10 @@ export function getAvailableVoices() {
 }
 
 export function speak(text, language, rate) {
-  utterThis.lang = language;
+  if (lastLang !== language) {
+    utterThis.lang = language;
+    lastLang = language;
+  }
   utterThis.text = text;
   utterThis.rate = rate ?? 1;
   utterThis.pitch = Math.sqrt(utterThis.rate);
