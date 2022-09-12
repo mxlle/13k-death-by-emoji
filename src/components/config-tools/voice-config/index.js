@@ -27,18 +27,23 @@ let voices = [],
   isNonDefaultMode = false,
   selectedLangs = getSelectedLanguagesFromStorage();
 
-export function createVoiceSelector() {
+function retrieveVoices() {
   getAvailableVoices().then((_voices) => {
+    if (!!languageListElement || !configScreen) return;
     voices = _voices;
     languages = getLanguagesFromVoices(voices);
     languageListElement = getLanguageListElement(languages, onChange);
     configScreen.appendChild(languageListElement);
   });
+}
 
+export function createVoiceSelector() {
   configScreen = createElement({
     cssClass: "voice-config",
     onClick: (event) => event.stopPropagation(),
   });
+
+  retrieveVoices();
 
   selectionText = createElement({
     cssClass: "selection",

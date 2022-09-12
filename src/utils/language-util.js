@@ -7,7 +7,7 @@ export function getLanguagesFromVoices(voices) {
     voices
       .map((voice) => {
         if (voice.default) {
-          voiceDefaultLang = voice.lang;
+          voiceDefaultLang = getShortLanguageName(voice.lang);
         }
 
         return getShortLanguageName(voice.lang);
