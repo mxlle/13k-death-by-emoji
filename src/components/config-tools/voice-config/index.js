@@ -59,6 +59,8 @@ export function createVoiceSelector() {
 
   dialog = createDialog(configScreen, "OK", "Language selection");
 
+  retrieveVoices();
+
   globals.languageFactor = getSelectedLanguagesFromStorage()?.length || 1;
 
   return dialog;
