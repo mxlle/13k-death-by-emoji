@@ -12,3 +12,9 @@
   max-width: 16rem;
   text-align: center;
 }
+
+@media (max-height: 800px) {
+  .info-text {
+    display: none;
+  }
+}

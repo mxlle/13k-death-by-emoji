@@ -1,38 +1,34 @@
 @import "../../theme";
 
 .emojis {
-  display: grid;
-  gap: 2rem 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(4rem, 1fr));
-  grid-auto-rows: 1fr;
-  margin-top: 2rem;
-  width: 90%;
-  max-width: 800px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 1.5rem 0;
+  max-width: 900px;
 }
 
 button.emoji-btn {
   font-size: 2rem;
   padding: 0.5rem;
-  width: 4rem;
-  height: 4rem;
-  margin: 0 auto;
+  margin: 0.75rem;
+  width: 4.5rem;
+  height: 4.5rem;
   border-radius: 50%;
   border: none;
   transition: transform 0.5s;
 
   @include hover {
-    transform: scale(2) rotate(-360deg);
+    transform: scale(1.5) rotate(-360deg);
     transition: transform 0.3s;
   }
 
   &.correct {
-    border-color: $life-color;
-    background-color: rgba($life-color, 0.3);
+    background-color: rgba($life-color, 0.4);
   }
 
   &.wrong {
-    border-color: $death-color;
-    background-color: rgba($death-color, 0.3);
+    background-color: rgba($death-color, 0.4);
   }
 }
 
@@ -46,6 +42,7 @@ button.emoji-btn {
 .score-fly {
   $transitionTime: 1.3s;
   $transitionCurve: ease-in;
+  pointer-events: none;
   position: absolute;
   top: var(--init-top, 50vh);
   left: var(--init-left, 50vw);
