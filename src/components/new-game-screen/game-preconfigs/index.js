@@ -94,7 +94,8 @@ async function onGamePreconfigClick(preconfig, onSelect) {
       getSelectedLanguagesFromStorage()
     );
     if (!languagesWithoutDefault.length) {
-      await openLanguageSelection(true);
+      const confirmed = await openLanguageSelection(true);
+      if (!confirmed) return;
     }
   }
 
