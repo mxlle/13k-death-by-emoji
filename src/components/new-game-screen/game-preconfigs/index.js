@@ -101,8 +101,8 @@ async function onGamePreconfigClick(preconfig, onSelect) {
     preconfig.emojiPoolName ??
     (preconfig.emojiPool ? EMOJI_POOL_CUSTOM_NAME : preselections[0].name);
   setLocalStorageItem(LocalStorageKey.EMOJI_POOL_NAME, emojiPoolName);
-  newGame(preconfig.useSecondLanguage, preconfig.slots, preconfig.rate);
   setLocalStorageItem(LocalStorageKey.CURRENT_GAME, preconfig.id);
+  newGame(preconfig.useSecondLanguage, preconfig.slots, preconfig.rate);
 
   onSelect?.();
 }

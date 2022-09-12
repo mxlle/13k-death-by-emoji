@@ -33,10 +33,10 @@ export function newGame(useNonDefaultLanguage, slots, initialRate) {
   document.body.classList.remove("game-over");
   resetGlobals();
   initGameData();
-  if (
-    useNonDefaultLanguage ||
-    getLocalStorageItem(LocalStorageKey.CURRENT_GAME) === CUSTOM_GAME_ID
-  ) {
+  const currentGameId = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
+  document.body.setAttribute("data-id", currentGameId);
+
+  if (useNonDefaultLanguage || currentGameId === CUSTOM_GAME_ID) {
     globals.currentLanguage = getLanguageForGame(
       getSelectedLanguagesFromStorage(),
       useNonDefaultLanguage
