@@ -19,8 +19,9 @@ export function getAvailableVoices() {
 
 export function speak(text, language, rate) {
   if (lastLang !== language) {
-    utterThis.lang = language;
-    lastLang = language;
+    const nextLanguage = language === getDefaultLanguage() ? null : language;
+    utterThis.lang = nextLanguage;
+    lastLang = nextLanguage;
   }
   utterThis.text = text;
   utterThis.rate = rate ?? 1;
