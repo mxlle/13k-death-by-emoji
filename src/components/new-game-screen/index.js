@@ -4,7 +4,7 @@ import {
   createButton,
   createElement,
 } from "../../utils/html-utils";
-import { getGameCountToSave, newGame } from "../../game-logic";
+import { newGame } from "../../game-logic";
 import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
@@ -22,7 +22,7 @@ import {
 import { getResultAndRecordText, getScoreAndHighScoreText } from "../score";
 import { createGamePreconfigs } from "./game-preconfigs";
 import { speak } from "../../speech/speech";
-import { createStarComponent, getAchievedStars } from "../stars";
+import { createStarComponent, getCurrentAchievedStars } from "../stars";
 import { gamePreconfigs } from "./game-preconfigs/preconfigs";
 
 let newGameScreen, dialog, replayButton, gameOverSection, configButton;
@@ -89,12 +89,7 @@ function closeDialog() {
 
 function setGameOverSection(isGameOver) {
   gameOverSection.classList.toggle("hidden", !isGameOver);
-  const achievedStars = getAchievedStars(
-    undefined,
-    globals.practiceMode,
-    globals.shuffledEmojis?.length,
-    getGameCountToSave()
-  );
+  const achievedStars = getCurrentAchievedStars();
 
   gameOverSection.classList.toggle("negative", achievedStars === 0);
   gameOverSection.classList.toggle("good", achievedStars === 3);

@@ -43,8 +43,9 @@ header {
   flex-wrap: wrap;
   align-items: center;
 
-  :nth-child(2) {
+  > :nth-child(2) {
     margin-left: auto;
+    margin-right: 1rem;
   }
 }
 

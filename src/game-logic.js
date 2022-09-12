@@ -11,6 +11,7 @@ import {
   LocalStorageKey,
 } from "./utils/local-storage";
 import { getLanguageForGame } from "./utils/language-util";
+import { getCurrentAchievedStars } from "./components/stars";
 
 const CHANGE_RATE_INTERVAL = 10;
 
@@ -100,6 +101,8 @@ export async function playInfiniteSequence(onNextEmoji) {
 export function evaluatePlay(emoji) {
   const correct = getWantedEmoji() === emoji; // || true;
 
+  const previousStars = getCurrentAchievedStars();
+
   if (correct) {
     globals.correctCount++;
   } else {
@@ -118,7 +121,13 @@ export function evaluatePlay(emoji) {
     correct ? ScoreAction.CORRECT : ScoreAction.WRONG
   );
 
-  return { correct, scoreForAction };
+  const newStars = getCurrentAchievedStars();
+  const starsIncreased = newStars > previousStars;
+  if (starsIncreased) {
+    pubSubService.publish(PubSubEvent.STARS_CHANGED, newStars);
+  }
+
+  return { correct, scoreForAction, starsIncreased };
 }
 
 export function getComboMultiplier(streak) {

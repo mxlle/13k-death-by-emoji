@@ -8,6 +8,7 @@ import { initGameData } from "./game-logic";
 import { openNewGameScreen } from "./components/new-game-screen";
 import { createGameField } from "./components/game-field";
 import { isSpaceDucksVariant } from "./utils/local-storage";
+import { getStarsForGameField } from "./components/stars";
 
 function init() {
   if (isSpaceDucksVariant()) {
@@ -22,6 +23,8 @@ function init() {
 
   header.appendChild(createConfigTools());
   header.appendChild(createScoreboard());
+  header.appendChild(getStarsForGameField());
+
   document.body.appendChild(header);
 
   document.body.appendChild(createGameField());

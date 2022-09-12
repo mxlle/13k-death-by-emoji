@@ -2,8 +2,14 @@
   display: flex;
   justify-content: center;
   font-size: 0.75rem;
+  transition: transform 0.3s, color 0.3s;
 
   &.zero {
     opacity: 0.2;
+  }
+
+  &.new-star {
+    transform: scale(3);
+    color: gold;
   }
 }

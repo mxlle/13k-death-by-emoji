@@ -2,9 +2,12 @@ import { createElement } from "../../utils/html-utils";
 import { getGameHighCount } from "../../utils/local-storage";
 
 import "./stars.scss";
+import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
+import { globals } from "../../globals";
+import { getGameCountToSave } from "../../game-logic";
 
 const EMPTY_STAR = "☆";
-const FULL_STAR = "★";
+export const FULL_STAR = "★";
 const zeroClass = "zero";
 
 export function createStarComponent(achievedStars) {
@@ -53,4 +56,26 @@ export function getAchievedStars(id, isPractice, expected, achievedCount) {
   }
 
   return 0;
+}
+
+export function getCurrentAchievedStars() {
+  return getAchievedStars(
+    undefined,
+    globals.practiceMode,
+    globals.level,
+    getGameCountToSave()
+  );
+}
+
+export function getStarsForGameField() {
+  const stars = createStarComponent(0);
+
+  pubSubService.subscribe(PubSubEvent.STARS_CHANGED, (achievedStars) => {
+    console.log("Star update", achievedStars);
+    updateStars(stars, achievedStars);
+    stars.classList.toggle("new-star", true);
+    setTimeout(() => stars.classList.toggle("new-star", false), 300);
+  });
+
+  return stars;
 }
