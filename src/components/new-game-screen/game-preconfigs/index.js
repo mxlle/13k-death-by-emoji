@@ -8,7 +8,7 @@ import {
   setEmojiPool,
   setGameConfig,
 } from "../../../globals";
-import { newGame } from "../../../game-logic";
+import { getAchievedStars, newGame } from "../../../game-logic";
 import { gamePreconfigs } from "./preconfigs";
 import { getRandomItem } from "../../../utils/array-utils";
 import { allOldEmojis } from "../../../emojis/sets";
@@ -25,11 +25,7 @@ import {
   setLocalStorageItem,
 } from "../../../utils/local-storage";
 import { PubSubEvent, pubSubService } from "../../../utils/pub-sub-service";
-import {
-  createStarComponent,
-  getAchievedStars,
-  updateStars,
-} from "../../stars";
+import { createStarComponent, updateStars } from "../../stars";
 import { getLanguagesWithoutDefault } from "../../../utils/language-util";
 import { openLanguageSelection } from "../../config-tools/voice-config";
 

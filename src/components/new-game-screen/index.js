@@ -4,7 +4,7 @@ import {
   createButton,
   createElement,
 } from "../../utils/html-utils";
-import { newGame } from "../../game-logic";
+import { getCurrentAchievedStars, newGame } from "../../game-logic";
 import { showConfigScreen } from "../config-tools/config-screen";
 import { PubSubEvent, pubSubService } from "../../utils/pub-sub-service";
 
@@ -22,7 +22,7 @@ import {
 import { getResultAndRecordText, getScoreAndHighScoreText } from "../score";
 import { createGamePreconfigs } from "./game-preconfigs";
 import { speak } from "../../speech/speech";
-import { createStarComponent, getCurrentAchievedStars } from "../stars";
+import { createStarComponent } from "../stars";
 import { gamePreconfigs } from "./game-preconfigs/preconfigs";
 
 let newGameScreen, dialog, replayButton, gameOverSection, configButton;

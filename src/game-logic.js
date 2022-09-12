@@ -4,14 +4,14 @@ import { getRandomItem } from "./utils/array-utils";
 import { shuffleArray } from "./utils/random-utils";
 import { splitEmojis } from "./emojis/emoji-util";
 import { waitForPromiseAndTime } from "./utils/promise-utils";
-import { pubSubService, PubSubEvent } from "./utils/pub-sub-service";
+import { PubSubEvent, pubSubService } from "./utils/pub-sub-service";
 import {
+  getGameHighCount,
   getLocalStorageItem,
   getSelectedLanguagesFromStorage,
   LocalStorageKey,
 } from "./utils/local-storage";
 import { getLanguageForGame } from "./utils/language-util";
-import { getCurrentAchievedStars } from "./components/stars";
 
 const CHANGE_RATE_INTERVAL = 10;
 
@@ -197,4 +197,41 @@ export function getGameCountToSave() {
     globals.correctCount >= globals.shuffledEmojis.length
     ? globals.correctCount + 1
     : globals.correctCount;
+}
+
+export function getAchievedStars(id, isPractice, expected, achievedCount) {
+  achievedCount = achievedCount ?? getGameHighCount(id);
+
+  if (isPractice) {
+    if (achievedCount > expected) {
+      return 3;
+    }
+    if (achievedCount === expected) {
+      return 2;
+    }
+    if (achievedCount >= expected / 2) {
+      return 1;
+    }
+  } else {
+    if (achievedCount >= 73) {
+      return 3;
+    }
+    if (achievedCount >= 42) {
+      return 2;
+    }
+    if (achievedCount >= 13) {
+      return 1;
+    }
+  }
+
+  return 0;
+}
+
+export function getCurrentAchievedStars() {
+  return getAchievedStars(
+    undefined,
+    globals.practiceMode,
+    globals.level,
+    getGameCountToSave()
+  );
 }
