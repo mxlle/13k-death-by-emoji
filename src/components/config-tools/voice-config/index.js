@@ -43,8 +43,6 @@ export function createVoiceSelector() {
     onClick: (event) => event.stopPropagation(),
   });
 
-  retrieveVoices();
-
   selectionText = createElement({
     cssClass: "selection",
     text: "Selection: " + getLanguagesText(),
