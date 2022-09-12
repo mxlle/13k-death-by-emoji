@@ -78,14 +78,13 @@ export const gamePreconfigs = [
   {
     id: "11",
     icon: "☠️",
-    //: "Tru dead",
-    name: "[Coming soon]",
-    disabled: true,
+    name: "Tru dead",
+    slots: 1,
+    rate: 1.2,
     config: {
       practiceMode: false,
       blindMode: true,
-      level: 12,
-      slots: 1, // TODO - implement
+      level: 3,
     },
   },
   {

@@ -121,7 +121,11 @@ function createNewGameScreen() {
       closeDialog();
       const preconfigId = getLocalStorageItem(LocalStorageKey.CURRENT_GAME);
       const preconfig = gamePreconfigs.find((p) => p.id === preconfigId);
-      void newGame(preconfig?.useSecondLanguage);
+      void newGame(
+        preconfig?.useSecondLanguage,
+        preconfig?.slots,
+        preconfig?.rate
+      );
     },
   });
   replayButton.classList.add("replay-btn");

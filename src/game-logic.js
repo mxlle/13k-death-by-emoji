@@ -28,7 +28,7 @@ export const ScoreAction = {
   WRONG: "wrong",
 };
 
-export function newGame(useNonDefaultLanguage) {
+export function newGame(useNonDefaultLanguage, slots, initialRate) {
   document.body.classList.remove("game-over");
   resetGlobals();
   initGameData();
@@ -43,7 +43,10 @@ export function newGame(useNonDefaultLanguage) {
   }
 
   waitTime = DEFAULT_WAIT_TIME;
-  rate = 1;
+  rate = initialRate ?? 1;
+  if (slots) {
+    globals.slots = slots;
+  }
   speak("", globals.currentLanguage); // to init voice
   pubSubService.publish(PubSubEvent.NEW_GAME);
 }
