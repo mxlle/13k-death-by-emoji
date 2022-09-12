@@ -1,4 +1,12 @@
-import { cuteAnimals1, flags, niceFlags, red } from "../../../emojis/sets";
+import {
+  cuteAnimals1,
+  flags,
+  niceFlags,
+  nostalgia,
+  red,
+} from "../../../emojis/sets";
+
+export const nostalgiaName = "Nostalgia";
 
 export const gamePreconfigs = [
   {
@@ -21,24 +29,24 @@ export const gamePreconfigs = [
       level: 6,
     },
   },
-  {
-    id: "3",
-    icon: "☠️👁️",
-    name: "Meet death",
-    config: {
-      practiceMode: false,
-      blindMode: false,
-      level: 6,
-    },
-  },
+  // {
+  //   id: "3",
+  //   icon: "☠️👁️",
+  //   name: "Meet death",
+  //   config: {
+  //     practiceMode: false,
+  //     blindMode: false,
+  //     level: 6,
+  //   },
+  // },
   {
     id: "4",
     icon: "☠️🗣️",
-    name: "Deathly blind",
+    name: "Meet death",
     config: {
       practiceMode: false,
       blindMode: true,
-      level: 12,
+      level: 6,
     },
   },
   {
@@ -115,5 +123,17 @@ export const gamePreconfigs = [
     icon: "🎁",
     name: "Surprise me",
     surpriseMe: true,
+  },
+  {
+    id: "12",
+    icon: nostalgia.substring(0, 3),
+    name: nostalgiaName,
+    emojiPool: nostalgia,
+    emojiPoolName: nostalgiaName,
+    config: {
+      practiceMode: false,
+      blindMode: true,
+      level: 8,
+    },
   },
 ];

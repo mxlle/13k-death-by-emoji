@@ -4,12 +4,14 @@ import {
   death1,
   flags,
   foodAndDrink1,
+  nostalgia,
   red,
   spaceDucks,
   sportActivityAndMusic1,
 } from "../../../emojis/sets";
 import { splitEmojis } from "../../../emojis/emoji-util";
 import { isSpaceDucksVariant } from "../../../utils/local-storage";
+import { nostalgiaName } from "../../new-game-screen/game-preconfigs/preconfigs";
 
 export function getDefaultSet() {
   return isSpaceDucksVariant() ? spaceDucks : death1;
@@ -23,6 +25,7 @@ const _preselections = [
   clothingAndAccessories1,
   red,
   flags,
+  nostalgia,
 ];
 
 const _preselectionsNames = [
@@ -33,6 +36,7 @@ const _preselectionsNames = [
   "Clothing & Accessories",
   "All red",
   "Flags",
+  nostalgiaName,
 ];
 
 export const preselections = _preselections.map((set, index) => ({
