@@ -38,9 +38,7 @@ async function onPlayButtonClick() {
   storytellerButton.classList.add("activated");
 
   const onNextEmoji = () => {
-    if (!globals.blindMode) {
-      updateSecretSequenceComponent();
-    }
+    updateSecretSequenceComponent();
   };
 
   globals.started = true;

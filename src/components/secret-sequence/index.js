@@ -32,18 +32,25 @@ export function updateSecretSequenceComponent() {
 function getSolutionText() {
   const textParts = [];
   for (let i = 0; i < globals.shuffledEmojis.length; i++) {
-    textParts.push(
+    const hasNotHeardYet =
+      globals.playCounter === 0 ||
+      (globals.playCounter === 1 && i > globals.currentIndex);
+    const showCurrentEmoji =
       globals.correctMatches[i] ||
-        (isGameActive() &&
-          globals.isSpeaking &&
-          !globals.blindMode &&
-          i === globals.currentIndex)
+      (isGameActive() &&
+        globals.isSpeaking &&
+        !globals.blindMode &&
+        i === globals.currentIndex);
+    textParts.push(
+      hasNotHeardYet
+        ? "_"
+        : showCurrentEmoji
         ? globals.shuffledEmojis[i]
         : i < globals.clickCounter
         ? "❌"
-        : i === globals.clickCounter
-        ? "❔"
-        : "❓"
+        : i === globals.currentIndex && globals.isSpeaking
+        ? "❓"
+        : "❔"
     );
   }
 
@@ -60,9 +67,9 @@ function getSolutionTextInfinite() {
     if (globals.endOfGame) {
       textParts.push("☠️");
     } else if (i === globals.queue.length - 1) {
-      textParts.push(globals.blindMode ? "❔" : globals.queue[i]);
+      textParts.push(globals.blindMode ? "❓" : globals.queue[i]);
     } else {
-      textParts.push("❓");
+      textParts.push("❔");
     }
   }
 
