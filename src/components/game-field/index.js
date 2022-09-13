@@ -30,7 +30,7 @@ export function createGameField() {
 function createInfo() {
   const info = createElement({
     cssClass: "info-text",
-    text: "Listen to the emoji sequence and replicate it with the buttons below at the same time.",
+    text: "Listen to the emoji sequence and echo it with the buttons below at the same time.",
   });
 
   if (!globals.practiceMode) {

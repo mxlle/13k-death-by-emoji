@@ -35,7 +35,7 @@ export function createModeSwitcher(onModeChangeCallback) {
       globals.practiceMode ? "🐣 Practice" : "☠️ Sudden death"
     );
     modeInfo.innerHTML = globals.practiceMode
-      ? "In the Practice mode you have to replicate a limited non-repeating sequence. You can listen to it as many times as you want."
+      ? "In the Practice mode you have to echo a limited non-repeating sequence. You can listen to it as many times as you want."
       : `In Sudden Death mode you have to keep up with an infinite sequence. If you fall ${globals.slots} slots behind you'll die. Each mistake costs you a slot.`;
   }
 

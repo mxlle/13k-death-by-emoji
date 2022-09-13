@@ -14,7 +14,7 @@ function init() {
   if (isSpaceDucksVariant()) {
     document.title = "Space ducks emoji vocabulary";
   } else {
-    document.title = "Death by emoji";
+    document.title = "Deadly echo";
   }
 
   initGameData();
