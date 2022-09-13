@@ -37,5 +37,9 @@ export function getStarsForGameField() {
     setTimeout(() => stars.classList.toggle("new-star", false), 300);
   });
 
+  pubSubService.subscribe(PubSubEvent.NEW_GAME, () => {
+    updateStars(stars, 0);
+  });
+
   return stars;
 }
