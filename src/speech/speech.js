@@ -27,20 +27,13 @@ export function speak(text, language, rate) {
   utterThis.text = text;
   utterThis.rate = rate ?? 1;
   utterThis.pitch = Math.sqrt(utterThis.rate);
-  synth.speak(utterThis);
 
   return new Promise((resolve) => {
-    const id = setInterval(() => {
-      if (!isSpeaking()) {
-        clearInterval(id);
-        resolve();
-      }
-    }, 100);
+    utterThis.onend = () => {
+      resolve();
+    };
+    synth.speak(utterThis);
   });
-}
-
-export function isSpeaking() {
-  return synth.speaking;
 }
 
 export function getLanguageListElement(languages, onChange) {

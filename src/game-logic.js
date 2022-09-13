@@ -181,7 +181,9 @@ function getWantedEmoji() {
 }
 
 async function speakWithVoice(text, rate) {
+  console.debug("start speaking", text);
   await speak(text, globals.currentLanguage, rate);
+  console.debug("end speaking", text);
 }
 
 function increaseRate() {
