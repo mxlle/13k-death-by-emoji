@@ -64,7 +64,7 @@ async function onPlayButtonClick() {
 
 export function updateStorytellerButton() {
   if (globals.isSpeaking) {
-    storytellerButton.innerHTML = `🗣️ broadcasting...`;
+    storytellerButton.innerHTML = `🗣️ speaking...`;
   } else {
     if (isEndOfGame()) {
       storytellerButton.innerHTML = "Game over";
