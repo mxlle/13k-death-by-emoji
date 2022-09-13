@@ -5,9 +5,7 @@ import { getDefaultSet } from "../components/config-tools/emoji-selection/presel
 import { getDefaultLanguage } from "../utils/language-util";
 
 const synth = window.speechSynthesis;
-const utterThis = new SpeechSynthesisUtterance();
 const testEmojis = splitEmojis(getDefaultSet()).slice(0, 3);
-let lastLang = null;
 
 export function getAvailableVoices() {
   return new Promise((resolve) => {
@@ -18,12 +16,9 @@ export function getAvailableVoices() {
 }
 
 export function speak(text, language, rate) {
-  if (lastLang !== language) {
-    const nextLanguage =
-      language === getDefaultLanguage() ? getDefaultLanguage(true) : language;
-    utterThis.lang = nextLanguage;
-    lastLang = nextLanguage;
-  }
+  const utterThis = new SpeechSynthesisUtterance();
+  utterThis.lang =
+    language === getDefaultLanguage() ? getDefaultLanguage(true) : language;
   utterThis.text = text;
   utterThis.rate = rate ?? 1;
   utterThis.pitch = Math.sqrt(utterThis.rate);
